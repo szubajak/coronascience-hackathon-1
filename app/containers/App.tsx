@@ -4,6 +4,7 @@ import Introduction from './Introduction';
 import Informations from './Informations';
 import Settings from './Settings'
 import Profil from './Profil'
+import Symptom from './Symptom'
 import Icon from 'react-native-vector-icons/AntDesign';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -12,7 +13,7 @@ import { colors } from '../styles/App.style';
 function HomeScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
+      <Text>Stay @ home!</Text>
     </View>
   );
 }
@@ -58,7 +59,7 @@ export default function App() {
 
         <Tab.Screen
           name="AddSympome"
-          component={HomeScreen}
+          component={Symptom}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Icon name='plussquare' color={color} size={size} />
