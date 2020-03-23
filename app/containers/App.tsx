@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import Introduction from './Introduction';
+import FrequentlyAskedQuestions from './FrequentlyAskedQuestions';
 import Informations from './Informations';
 import Settings from './Settings'
 import Profil from './Profil'
@@ -12,17 +11,10 @@ import { colors } from '../styles/App.style';
 
 function HomeScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Stay @ home!</Text>
-    </View>
+    <FrequentlyAskedQuestions/>
   );
 }
 
-function SettingsScreen() {
-  return (
-    <Introduction/>
-  );
-}
 
 const Tab = createBottomTabNavigator();
 
