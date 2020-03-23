@@ -8,7 +8,7 @@
   <strong>Document your sympthoms</strong><br>
   and help understand the coronavirus.
 </p>
-
+<!--
 <p align="center">
   <a href="https://github.com/facebook/react-native/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="React Native is released under the MIT license." />
@@ -28,7 +28,7 @@
   <a href="https://twitter.com/intent/follow?screen_name=reactnative">
     <img src="https://img.shields.io/twitter/follow/reactnative.svg?label=Follow%20@reactnative" alt="Follow @reactnative" />
   </a>
-</p>
+</p>-->
 
 <h3 align="center">
   <a href="https://reactnative.dev/docs/getting-started">Getting Started</a>
