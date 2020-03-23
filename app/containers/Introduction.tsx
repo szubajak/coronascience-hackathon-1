@@ -3,10 +3,11 @@ import {
     SafeAreaView,
     StyleSheet,
     ScrollView,
-    View,
-    Text,
     StatusBar,
+    Alert
   } from 'react-native';
+  
+  import { View, Button, Text } from 'native-base';
 
 import {
     Header,
@@ -15,6 +16,9 @@ import {
     DebugInstructions,
     ReloadInstructions,
   } from 'react-native/Libraries/NewAppScreen';
+import { localeString } from '../locales';
+import { colors, AppFonts } from '../styles/App.style';
+
 
 interface PropsType {
 }
@@ -48,8 +52,13 @@ class Introduction extends Component<PropsType, State> {
               <View style={styles.sectionContainer}>
                 <Text style={styles.sectionTitle}>Step One</Text>
                 <Text style={styles.sectionDescription}>
-                  Fight Corona
+                  Fight Corona {localeString("lang")}
                 </Text>
+                <Button full rounded
+                  onPress={() => Alert.alert('Simple Button pressed')}
+                >
+                  <Text>{localeString("login")}</Text>
+                </Button>
               </View>
               <View style={styles.sectionContainer}>
                 <Text style={styles.sectionTitle}>See Your Changes</Text>
@@ -115,6 +124,15 @@ const styles = StyleSheet.create({
       padding: 4,
       paddingRight: 12,
       textAlign: 'right',
+    },
+    button: {
+      bottom: 15,
+      width: 300,
+      height: 60,
+      alignSelf: 'center',
+      backgroundColor: colors.primaryNormal,
+      alignItems: 'center',
+      justifyContent: 'center'
     },
   });
 

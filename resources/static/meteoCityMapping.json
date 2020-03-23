@@ -1,0 +1,86 @@
+{
+    "PBE": {
+        "code": "PBE",
+        "latitude": 46.95,
+        "longitude": 7.42,
+        "indicativ": "5523"
+    },
+    "PBS": {
+        "code": "PBS",
+        "latitude": 47.56,
+        "longitude": 7.58,
+        "indicativ": "1943"
+    },
+    "PBU": {
+        "code": "PBU",
+        "latitude":  47.17,
+        "longitude": 9.47,
+        "indicativ": "0863"
+    },
+    "PCF": {
+        "code": "PCF",
+        "latitude": 47.11,
+        "longitude": 6.83,
+        "indicativ": "8547"
+    },
+    "PDS": {
+        "code": "PDS",
+        "latitude": 46.83,
+        "longitude": 9.85,
+        "indicativ": "0437"
+    },
+    "PGE": {
+        "code": "PGE",
+        "latitude": 46.19,
+        "longitude": 6.15,
+        "indicativ": "8391"
+    },
+    "PLO": {
+        "code": "PLO",
+        "latitude": 46.17,
+        "longitude": 8.79,
+        "indicativ": "9398"
+    },
+    "PLS": {
+        "code": "PLS",
+        "latitude": 46.52,
+        "longitude": 6.64,
+        "indicativ": "8135"
+    },
+    "PLU": {
+        "code": "PLU",
+        "latitude": 46.00,
+        "longitude": 8.96,
+        "indicativ": "9479"
+    },
+    "PLZ": {
+        "code": "PLZ",
+        "latitude": 47.06,
+        "longitude": 8.30,
+        "indicativ": "4593"
+    },
+    "PMU": {
+        "code": "PMU",
+        "latitude": 47.63,
+        "longitude": 9.24,
+        "indicativ": "1093"
+    },
+    "PNE": {
+        "code": "PNE",
+        "latitude": 47.00,
+        "longitude": 6.95,
+        "indicativ": "6337"
+    },
+    "PVI": {
+        "code": "PVI",
+        "latitude": 46.29,
+        "longitude": 7.88,
+        "indicativ": "7252"
+    },
+    "PZH": {
+        "code": "PZH",
+        "latitude":  47.38,
+        "longitude": 8.57,
+        "indicativ": "3702"
+    }
+}

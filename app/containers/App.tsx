@@ -1,84 +1,91 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-import { createStackNavigator } from '@react-navigation/stack';
+import * as React from 'react';
+import { Text, View } from 'react-native';
 import Introduction from './Introduction';
+import Informations from './Informations';
+import Settings from './Settings'
+import Profil from './Profil'
+import Icon from 'react-native-vector-icons/AntDesign';
 import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { colors } from '../styles/App.style';
 
-declare var global: {HermesInternal: null | {}};
-const Stack = createStackNavigator();
-
-function CoronaScienceStack() {
+function HomeScreen() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Introduction" component={Introduction} />
-    </Stack.Navigator>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Home!</Text>
+    </View>
   );
 }
 
-
-const App = () => {
+function SettingsScreen() {
   return (
-    <>
-      <NavigationContainer>
-        <CoronaScienceStack />
-      </NavigationContainer>
-    </>
+    <Introduction/>
   );
-};
+}
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
+const Tab = createBottomTabNavigator();
 
-export default App;
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        tabBarOptions={{
+          activeTintColor: colors.secondaryDark,
+          inactiveTintColor: 'gray',
+          showLabel: false,
+          adaptive: true,
+        }}
+      >
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name='home' color={color} size={size} />
+            )
+          }}
+        />
+
+        <Tab.Screen
+          name="Informations"
+          component={Informations}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name='info' color={color} size={size} />
+            )
+          }}
+        />
+
+        <Tab.Screen
+          name="AddSympome"
+          component={HomeScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name='plussquare' color={color} size={size} />
+            )
+          }}
+        />
+
+        <Tab.Screen
+          name="Settings"
+          component={Settings}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name='setting' color={color} size={size} />
+            )
+          }}
+        />
+
+        <Tab.Screen
+          name="Profil"
+          component={Profil}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name='user' color={color} size={size} />
+            )
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
