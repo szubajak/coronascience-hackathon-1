@@ -32,14 +32,15 @@ class Settings extends Component<PropsType, State> {
     return (
       <>
         <StatusBar barStyle="dark-content" />
-        <SafeAreaView>
+        <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
+        <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
             <HeaderBanner title='Einstellungen'/>
             <ScrollView 
                 style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
                 contentInsetAdjustmentBehavior="automatic">
                 <View>
                     <Text style={[AppStyle.sectionTitle]}>
-                        Persönliche Daten
+                        Benutzeroberfläche
                     </Text>
                 </View>
                 <Separator/>
