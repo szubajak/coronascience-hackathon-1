@@ -29,8 +29,6 @@ export const colors = {
     darkGray: '#888888',
     lightGray: '#efeff4',
 
-
-
     primaryNormal: '#FFFFFF',
     primaryLight: '#FFFFFF',
     primaryDark: '#cccccc',
@@ -39,6 +37,8 @@ export const colors = {
     secondaryLight: '#c9435a',
     secondaryDark: '#5e000a',
 
+    headerGradientBegin : '#930031',
+    headerGradientEnd : '#770058',
 
 
     success: '#69C344',
@@ -73,12 +73,14 @@ export default StyleSheet.create({
         borderColor: colors.secondaryNormal,
         width: '100%',
         marginTop: 15,
-        height: 35
+        height: 35,
     },
 
     sectionTitle:{
         fontSize: TextSize.normal,
         color: colors.secondaryNormal,
-        marginTop: 20
-    }
+    },
+    textQuestion:{
+        fontSize: TextSize.very_small
+    },
 });

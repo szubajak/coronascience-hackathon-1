@@ -33,7 +33,8 @@ class Informations extends Component<PropsType, State> {
     return (
       <>
         <StatusBar barStyle="dark-content" />
-        <SafeAreaView>
+        <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
+        <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
             <HeaderBanner title='Informationen'/>
             <ScrollView 
                 style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
@@ -45,7 +46,7 @@ class Informations extends Component<PropsType, State> {
                 </View>
                 <Separator/>
                 <View>
-                    <Text>
+                    <Text style={[AppStyle.textQuestion]}>
                         Infoline (täglich 24h): <Text onPress={() => this.openURL('tel:0041584630000')}>+41 58 463 00 00</Text>
                     </Text>
                     
@@ -81,14 +82,14 @@ class Informations extends Component<PropsType, State> {
                     </Button>
                 </View>
                 
-                <View>
+                <View style={{marginTop:25}}>
                     <Text style={[AppStyle.sectionTitle]}>
                         Aertefon
                     </Text>
                 </View>
                 <Separator/>
                 <View>
-                    <Text>
+                    <Text style={[AppStyle.textQuestion]}>
                         Infoline (täglich 24h): 0800 33 66 55
                     </Text>
                     <Button style={[AppStyle.button]}
