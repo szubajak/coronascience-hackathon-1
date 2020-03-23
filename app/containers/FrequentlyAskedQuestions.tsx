@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { SafeAreaView, ScrollView, Linking, Image, StyleSheet } from 'react-native';
-import { View, Text, Grid, List, ListItem, Button, Icon, Col, Row } from 'native-base';
-import AppStyle, { colors } from '../styles/App.style';
-import { Separator } from '../components/Separator'
-import { HeaderBanner } from '../components/HeaderBanner'
-import { Rect, LinearGradient, Stop } from 'react-native-svg';
+import { SafeAreaView, ScrollView, Image, StyleSheet, FlatList } from 'react-native';
+import { View, Text, List, ListItem, Button, Icon, Item } from 'native-base';
+import { colors } from '../styles/App.style';
 
 
 interface PropsType {
@@ -14,6 +11,31 @@ interface State {
 }
 
 class FrequentlyAskedQuestions extends Component<PropsType, State> {
+  questions = [{
+                id: 0,
+                text: "Was ist COVID-19?",
+                link: ""
+              },
+              {
+                id: 1,
+                text: "Wie kann ich helfen?",
+                link: ""
+              },
+              {
+                id: 2,
+                text: "Wieso sind meine Daten so wichtig?",
+                link: ""
+              },
+              {
+                id: 3,
+                text: "Welche Daten werden gespeichert?",
+                link: ""
+              },
+              {
+                id: 4,
+                text: "Habe ich einen direkten Nutzen?",
+                link: ""
+              }];
 
   constructor(props: PropsType) {
     super(props);
@@ -33,36 +55,27 @@ class FrequentlyAskedQuestions extends Component<PropsType, State> {
           </View>
         </View>
         <View style={{flex: 1, marginHorizontal: 20}}>
-              <Button iconRight rounded style={{margin: 5 }}>
-
+              <Button iconRight rounded
+                style={styles.prominentButton}
+                onPress={() => this.openURL('https://i4mi.bfh.ch')}>
                 <Text>Symptome und Informationen erfassen</Text>
                 <Icon name='add-circle' />
               </Button>
-              <Button iconRight rounded style={{margin: 5, marginVertical: 10 }}>
+              <Button iconRight rounded
+                style={styles.prominentButton}
+                onPress={() => this.openURL('https://i4mi.bfh.ch')}>
                 <Text>Profilangaben vervollständigen</Text>
                 <Icon name='person' />
               </Button>
         </View>
-        <View style={{flex: 4}}>
-        <ScrollView>
-          <List>
-            <ListItem>
-              <Text>Was ist COVID-19?</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Wie kann ich helfen?</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Wieso ist meine Datenspende so wichtig?</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Welche Daten werden gespeichert?</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Habe ich einen direkten Nutzen?</Text>
-            </ListItem>
-          </List>
-        </ScrollView>
+        <View style={{flex: 4, marginTop: 30}}>
+          <FlatList
+            data={this.questions}
+            renderItem={({ item }) =>
+              <ListItem onPress={() => alert(item.text)}>
+                <Text style={styles.listText}>{item.text}</Text>
+              </ListItem>}
+          />
         </View>
       </SafeAreaView>
       </>
@@ -79,6 +92,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     flexWrap: 'wrap'
+  },
+  listText: {
+    color: colors.secondaryNormal,
+    fontWeight: 'bold',
+    marginHorizontal: 10,
+  },
+  prominentButton: {
+    margin: 5,
+    marginBottom: 10,
+    backgroundColor: colors.secondaryNormal
   }
 });
 
