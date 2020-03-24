@@ -49,7 +49,7 @@ class Dashboard extends Component<PropsType, State> {
         <View style={{flex: 1, flexDirection: 'row', paddingHorizontal: 50, paddingVertical: 40.}}>
             <Image
               style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
-              source={require('../assets/img/virus.png')}
+              source={require('../../resources/images/virus.png')}
             />
           <View style={{flex: 3, flexDirection: 'row', width: '60%', alignItems: 'center'}}>
             <Text style={styles.logoText}>Gemeinsam bekämpfen wir COVID-19!</Text>
