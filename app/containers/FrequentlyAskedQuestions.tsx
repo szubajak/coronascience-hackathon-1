@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { SafeAreaView, Image, StyleSheet, FlatList, Alert, StatusBar } from 'react-native';
+import { SafeAreaView, Image, StyleSheet, FlatList, Alert, StatusBar, TouchableOpacity } from 'react-native';
 import { View, Text, ListItem, Button, Icon } from 'native-base';
-import { colors } from '../styles/App.style';
-
+import AppStyle, { colors, AppFonts, TextSize } from '../styles/App.style';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface PropsType {
   navigation: any
@@ -56,18 +56,24 @@ class FrequentlyAskedQuestions extends Component<PropsType, State> {
           </View>
         </View>
         <View style={{flex: 1, marginHorizontal: 20}}>
-              <Button iconRight rounded
-                style={styles.prominentButton}
-                onPress={() => this.props.navigation.navigate('AddSymptoms')}>
-                <Text>Symptome und Informationen erfassen</Text>
-                <Icon name='add-circle' />
-              </Button>
-              <Button iconRight rounded
-                style={styles.prominentButton}
-                onPress={() => this.props.navigation.navigate('Profile')}>
-                <Text>Profilangaben vervollständigen</Text>
-                <Icon name='person' />
-              </Button>
+          <Button iconRight rounded
+            style={styles.prominentButton}
+            onPress={() => this.props.navigation.navigate('AddSymptoms')}>
+            <Text>Symptome und Informationen erfassen</Text>
+            <Icon name='add-circle' />
+          </Button>
+
+          <TouchableOpacity activeOpacity = { .5 } >
+            <LinearGradient 
+                colors={[colors.headerGradientBegin, colors.headerGradientEnd]}
+                style={[AppStyle.button, {borderRadius: 25}]}  
+                start={{x: 0, y: 1}} 
+                end={{x: 1, y: 0.9}}
+                locations={[0, 0.3, 0.9]} >
+                <Text style={[styles.largeButtonText]}>Profilangaben vervollständigen</Text>
+                <Icon name='person' />   
+          </LinearGradient>
+          </TouchableOpacity>
         </View>
         <View style={{flex: 4, marginTop: 30}}>
           <FlatList
@@ -103,7 +109,28 @@ const styles = StyleSheet.create({
     margin: 5,
     marginBottom: 10,
     backgroundColor: colors.secondaryNormal
-  }
+  },
+  LinearGradientStyle: {
+    height: 40,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 5,
+    marginBottom: 20
+  },
+ 
+  buttonText: {
+   fontSize: 18,
+   textAlign: 'center',
+   margin: 7,
+   color : '#fff',
+   backgroundColor: 'transparent' 
+ },
+
+ largeButtonText:{
+  fontSize: TextSize.small,
+  color: colors.white,
+
+ }
 });
 
 export default FrequentlyAskedQuestions;
