@@ -87,7 +87,6 @@ class Symptom extends Component<PropsType, State> {
   render() {
     return (
       <>
-        <StatusBar backgroundColor={colors.headerGradientEnd} barStyle="light-content" />
         <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
             <HeaderBanner title='Symptome erfassen'/>
