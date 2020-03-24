@@ -1,23 +1,11 @@
 import React, { Component } from 'react';
-import { SafeAreaView, Image, StyleSheet, FlatList, Alert, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Image, StyleSheet, FlatList, Alert, TouchableOpacity, Dimensions } from 'react-native';
 import { View, Text, ListItem, Icon } from 'native-base';
 import AppStyle, { colors, TextSize } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
 
-interface PropsType {
-  navigation: any
-}
-interface ButtonProps {
-  navigation: any,
-  target: string,
-  icon: string,
-  title: string
-}
-
-interface State {
-}
-
-class LargeButton extends Component<ButtonProps> {
+class LargeButton extends Component<{navigation: any, target: string, icon: string, title: string}> {
+  smallScreen = Dimensions.get('window').width < 360;
   render() {
     return (
       <>
@@ -29,7 +17,9 @@ class LargeButton extends Component<ButtonProps> {
             end={{x: 1, y: 0.9}}
             locations={[0, 1]} >
             <Text style={styles.largeButtonText}>{this.props.title}</Text>
-            <Icon name={this.props.icon} style={styles.largeButtonIcon}/>
+            {!this.smallScreen &&
+              <Icon name={this.props.icon} style={styles.largeButtonIcon}/>
+            }
       </LinearGradient>
       </TouchableOpacity>
       </>
@@ -37,7 +27,7 @@ class LargeButton extends Component<ButtonProps> {
   }
 }
 
-class Dashboard extends Component<PropsType, State> {
+class Dashboard extends Component<{navigation: any}> {
   questions = [
                 {
                   id: '0',
@@ -70,10 +60,6 @@ class Dashboard extends Component<PropsType, State> {
                   description: "Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus brains sit​​, morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium. Qui animated corpse, cricket bat max brucks terribilem incessu zomby."
                 }
               ];
-
-  constructor(props: PropsType) {
-    super(props);
-  }
 
   render() {
     return (
