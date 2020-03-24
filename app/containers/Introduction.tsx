@@ -37,7 +37,7 @@ class Introduction extends Component<PropsType, State> {
   render() {
     return (
       <>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar backgroundColor={colors.headerGradientEnd} barStyle="light-content" />
         <SafeAreaView>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
