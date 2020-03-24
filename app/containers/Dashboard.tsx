@@ -11,7 +11,7 @@ interface PropsType {
 interface State {
 }
 
-class FrequentlyAskedQuestions extends Component<PropsType, State> {
+class Dashboard extends Component<PropsType, State> {
   questions = [{
                 id: 0,
                 text: "Was ist COVID-19?",
@@ -133,4 +133,4 @@ const styles = StyleSheet.create({
  }
 });
 
-export default FrequentlyAskedQuestions;
+export default Dashboard;

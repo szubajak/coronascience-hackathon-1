@@ -1,5 +1,5 @@
 import * as React from 'react';
-import FrequentlyAskedQuestions from './FrequentlyAskedQuestions';
+import Dashboard from './Dashboard';
 import Informations from './Informations';
 import Settings from './Settings'
 import Profil from './Profil'
@@ -12,9 +12,9 @@ import { colors } from '../styles/App.style';
 const Tab = createBottomTabNavigator();
 
 function HomeScreen() {
-  const nav = useNavigation();
+  const navigation = useNavigation();
   return (
-    <FrequentlyAskedQuestions nav={nav}/>
+    <Dashboard navigation={navigation}/>
   );
 }
 
