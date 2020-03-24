@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { SafeAreaView, Image, StyleSheet, FlatList } from 'react-native';
+import { SafeAreaView, Image, StyleSheet, FlatList, Alert, StatusBar } from 'react-native';
 import { View, Text, ListItem, Button, Icon } from 'native-base';
 import { colors } from '../styles/App.style';
 
 
 interface PropsType {
-  nav: any
+  navigation: any
 }
 
 interface State {
@@ -58,13 +58,13 @@ class FrequentlyAskedQuestions extends Component<PropsType, State> {
         <View style={{flex: 1, marginHorizontal: 20}}>
               <Button iconRight rounded
                 style={styles.prominentButton}
-                onPress={() => this.props.nav.navigate('AddSymptoms')}>
+                onPress={() => this.props.navigation.navigate('AddSymptoms')}>
                 <Text>Symptome und Informationen erfassen</Text>
                 <Icon name='add-circle' />
               </Button>
               <Button iconRight rounded
                 style={styles.prominentButton}
-                onPress={() => this.props.nav.navigate('Profile')}>
+                onPress={() => this.props.navigation.navigate('Profile')}>
                 <Text>Profilangaben vervollständigen</Text>
                 <Icon name='person' />
               </Button>
@@ -73,7 +73,7 @@ class FrequentlyAskedQuestions extends Component<PropsType, State> {
           <FlatList
             data={this.questions}
             renderItem={({ item }) =>
-              <ListItem onPress={() => alert(item.text)}>
+              <ListItem onPress={() => Alert.alert(item.text)}>
                 <Text style={styles.listText}>{item.text}</Text>
               </ListItem>}
           />
