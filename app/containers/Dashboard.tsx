@@ -1,42 +1,75 @@
 import React, { Component } from 'react';
-import { SafeAreaView, Image, StyleSheet, FlatList, Alert, StatusBar, TouchableOpacity } from 'react-native';
-import { View, Text, ListItem, Button, Icon } from 'native-base';
-import AppStyle, { colors, AppFonts, TextSize } from '../styles/App.style';
+import { SafeAreaView, Image, StyleSheet, FlatList, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, ListItem, Icon } from 'native-base';
+import AppStyle, { colors, TextSize } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
 
 interface PropsType {
   navigation: any
 }
+interface ButtonProps {
+  navigation: any,
+  target: string,
+  icon: string,
+  title: string
+}
 
 interface State {
 }
 
+class LargeButton extends Component<ButtonProps> {
+  render() {
+    return (
+      <>
+      <TouchableOpacity activeOpacity = { 0.5 } onPress={() => this.props.navigation.navigate(this.props.target)} style={styles.largeButton}>
+        <LinearGradient
+            colors={[colors.headerGradientEnd, colors.headerGradientBegin]}
+            style={[AppStyle.button, styles.LinearGradientStyle]}
+            start={{x: 0, y: 1}}
+            end={{x: 1, y: 0.9}}
+            locations={[0, 1]} >
+            <Text style={styles.largeButtonText}>{this.props.title}</Text>
+            <Icon name={this.props.icon} style={styles.largeButtonIcon}/>
+      </LinearGradient>
+      </TouchableOpacity>
+      </>
+    );
+  }
+}
+
 class Dashboard extends Component<PropsType, State> {
-  questions = [{
-                id: 0,
-                text: "Was ist COVID-19?",
-                link: ""
-              },
-              {
-                id: 1,
-                text: "Wie kann ich helfen?",
-                link: ""
-              },
-              {
-                id: 2,
-                text: "Wieso sind meine Daten so wichtig?",
-                link: ""
-              },
-              {
-                id: 3,
-                text: "Welche Daten werden gespeichert?",
-                link: ""
-              },
-              {
-                id: 4,
-                text: "Habe ich einen direkten Nutzen?",
-                link: ""
-              }];
+  questions = [
+                {
+                  id: '0',
+                  text: "Was ist COVID-19?",
+                  link: "",
+                  description: "Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus brains sit​​, morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium. Qui animated corpse, cricket bat max brucks terribilem incessu zomby."
+                },
+                {
+                  id: '1',
+                  text: "Wie kann ich helfen?",
+                  link: "",
+                  description: "Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus brains sit​​, morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium. Qui animated corpse, cricket bat max brucks terribilem incessu zomby."
+                },
+                {
+                  id: '2',
+                  text: "Wieso sind meine Daten so wichtig?",
+                  link: "",
+                  description: "Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus brains sit​​, morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium. Qui animated corpse, cricket bat max brucks terribilem incessu zomby."
+                },
+                {
+                  id: '3',
+                  text: "Welche Daten werden gespeichert?",
+                  link: "",
+                  description: "Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus brains sit​​, morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium. Qui animated corpse, cricket bat max brucks terribilem incessu zomby."
+                },
+                {
+                  id: '4',
+                  text: "Habe ich einen direkten Nutzen?",
+                  link: "",
+                  description: "Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus brains sit​​, morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium. Qui animated corpse, cricket bat max brucks terribilem incessu zomby."
+                }
+              ];
 
   constructor(props: PropsType) {
     super(props);
@@ -56,26 +89,16 @@ class Dashboard extends Component<PropsType, State> {
           </View>
         </View>
         <View style={{flex: 1, marginHorizontal: 20}}>
-          <Button iconRight rounded
-            style={styles.prominentButton}
-            onPress={() => this.props.navigation.navigate('AddSymptoms')}>
-            <Text>Symptome und Informationen erfassen</Text>
-            <Icon name='add-circle' />
-          </Button>
-
-          <TouchableOpacity activeOpacity = { .5 } >
-            <LinearGradient 
-                colors={[colors.headerGradientBegin, colors.headerGradientEnd]}
-                style={[AppStyle.button, {borderRadius: 25}]}  
-                start={{x: 0, y: 1}} 
-                end={{x: 1, y: 0.9}}
-                locations={[0, 0.3, 0.9]} >
-                <Text style={[styles.largeButtonText]}>Profilangaben vervollständigen</Text>
-                <Icon name='person' />   
-          </LinearGradient>
-          </TouchableOpacity>
+          <LargeButton title="Symptome erfassen"
+                       target="AddSymptoms"
+                       icon="add-circle"
+                       navigation={this.props.navigation} />
+          <LargeButton title="Profilangaben vervollständigen"
+                       target="Profile"
+                       icon="person"
+                       navigation={this.props.navigation} />
         </View>
-        <View style={{flex: 4, marginTop: 30}}>
+        <View style={{flex: 3, marginTop: 30}}>
           <FlatList
             data={this.questions}
             renderItem={({ item }) =>
@@ -105,31 +128,31 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginHorizontal: 10,
   },
-  prominentButton: {
-    margin: 5,
-    marginBottom: 10,
-    backgroundColor: colors.secondaryNormal
-  },
   LinearGradientStyle: {
-    height: 40,
-    paddingLeft: 15,
-    paddingRight: 15,
-    borderRadius: 5,
-    marginBottom: 20
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    height: 50,
+    borderRadius: 15,
+    borderWidth: 0
   },
- 
-  buttonText: {
-   fontSize: 18,
-   textAlign: 'center',
-   margin: 7,
-   color : '#fff',
-   backgroundColor: 'transparent' 
- },
-
- largeButtonText:{
-  fontSize: TextSize.small,
-  color: colors.white,
-
+  largeButton: {
+    shadowColor: 'rgba(0, 0, 0, 1)',
+    shadowOpacity: 0.4,
+    elevation: 5,
+    shadowRadius: 4 ,
+    shadowOffset : { width: 5, height: 5},
+  },
+  largeButtonIcon: {
+    color: colors.white
+  },
+  largeButtonText:{
+    marginTop: 3,
+    borderWidth: 0,
+    marginRight: 0,
+    fontSize: TextSize.small,
+    color: colors.white,
  }
 });
 
