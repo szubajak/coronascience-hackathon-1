@@ -5,18 +5,18 @@ import Settings from './Settings'
 import Profil from './Profil'
 import Symptom from './Symptom'
 import Icon from 'react-native-vector-icons/AntDesign';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../styles/App.style';
 
+const Tab = createBottomTabNavigator();
+
 function HomeScreen() {
+  const nav = useNavigation();
   return (
-    <FrequentlyAskedQuestions/>
+    <FrequentlyAskedQuestions nav={nav}/>
   );
 }
-
-
-const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
@@ -50,7 +50,7 @@ export default function App() {
         />
 
         <Tab.Screen
-          name="AddSympome"
+          name="AddSymptoms"
           component={Symptom}
           options={{
             tabBarIcon: ({ color, size }) => (
@@ -70,7 +70,7 @@ export default function App() {
         />
 
         <Tab.Screen
-          name="Profil"
+          name="Profile"
           component={Profil}
           options={{
             tabBarIcon: ({ color, size }) => (

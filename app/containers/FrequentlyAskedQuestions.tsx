@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { SafeAreaView, ScrollView, Image, StyleSheet, FlatList } from 'react-native';
-import { View, Text, List, ListItem, Button, Icon, Item } from 'native-base';
+import { SafeAreaView, Image, StyleSheet, FlatList } from 'react-native';
+import { View, Text, ListItem, Button, Icon } from 'native-base';
 import { colors } from '../styles/App.style';
 
 
 interface PropsType {
+  nav: any
 }
 
 interface State {
@@ -57,13 +58,13 @@ class FrequentlyAskedQuestions extends Component<PropsType, State> {
         <View style={{flex: 1, marginHorizontal: 20}}>
               <Button iconRight rounded
                 style={styles.prominentButton}
-                onPress={() => this.openURL('https://i4mi.bfh.ch')}>
+                onPress={() => this.props.nav.navigate('AddSymptoms')}>
                 <Text>Symptome und Informationen erfassen</Text>
                 <Icon name='add-circle' />
               </Button>
               <Button iconRight rounded
                 style={styles.prominentButton}
-                onPress={() => this.openURL('https://i4mi.bfh.ch')}>
+                onPress={() => this.props.nav.navigate('Profile')}>
                 <Text>Profilangaben vervollständigen</Text>
                 <Icon name='person' />
               </Button>
