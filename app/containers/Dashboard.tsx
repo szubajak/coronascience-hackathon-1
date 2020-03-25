@@ -4,6 +4,14 @@ import { View, Text, Icon, Card, CardItem, Body } from 'native-base';
 import AppStyle, { colors, TextSize } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
 
+
+/**
+ * Component to display a prominent button with color gradient, used to navigate to another tab
+ * @param: navigation the Tab.Navigator object
+ * @param: target the name of the tab the button should navigate to
+ * @param: icon the name of the icon to be used in the button (only if screen is big enough) - should be from the ionicons set from https://oblador.github.io/react-native-vector-icons/
+ * @param: title the text displayed on the button
+ **/
 class LargeButton extends Component<{navigation: any, target: string, icon: string, title: string}> {
   smallScreen = Dimensions.get('window').width < 360;
   render() {
@@ -27,8 +35,39 @@ class LargeButton extends Component<{navigation: any, target: string, icon: stri
   }
 }
 
+/**
+ * Component to display a numerical value with a description text and an icon
+ **/
 class InfoCard extends Component<{item: {text: string, icon: string, count: number}}> {
-  numberText = this.props.item.count < 1000 ? this.props.item.count : Math.floor(this.props.item.count / 1000) + '\'' + this.props.item.count % 1000;
+  constructor(props: {item: {text: string, icon: string, count: number}}) {
+      super(props);
+      this.state = { numberText: '...'};
+      let i = props.item.count;
+
+      setInterval(() => {
+      this.setState(() => {
+        i = Math.floor(i + Math.random() * 10)
+        return { numberText: this.numberToString(i)  };
+      });
+    },
+    1000);
+  }
+
+  /**
+   * Formats the number to a string with apostroph every three digits
+   **/
+  private numberToString(number: number) {
+    let numberString = number.toString();
+    for(let i = numberString.length - 3; i > 0; i = i - 3){
+      let lastpart = numberString.substring(i, numberString.length);
+      let firstpart = numberString.substring(0,i);
+      console.log('\ni=' + i + ' first: ' + firstpart + ' last: ' + lastpart);
+      numberString = firstpart + '\'' + lastpart;
+      console.log('numberstring: ' + numberString)
+    }
+    return numberString;
+  }
+
   render () {
     return (
       <>
@@ -39,7 +78,7 @@ class InfoCard extends Component<{item: {text: string, icon: string, count: numb
                 <View style={styles.infoCardIconBackground}>
                   <Icon name={this.props.item.icon} style={styles.infoCardIcon} />
                 </View>
-                <Text style={styles.infoCardNumber}>{this.numberText}</Text>
+                <Text style={styles.infoCardNumber}>{this.state.numberText}</Text>
               </View>
             </Body>
           </CardItem>
@@ -53,6 +92,17 @@ class InfoCard extends Component<{item: {text: string, icon: string, count: numb
 }
 
 class Dashboard extends Component<{navigation: any}> {
+  userCard: React.RefObject<unknown>;
+  dataCard: React.RefObject<unknown>;
+
+  constructor(props: {navigation: any}) {
+    super(props);
+    this.userCard = React.createRef();
+    this.dataCard = React.createRef();
+
+  //  this.userCard.current.setState(123);
+
+  }
   render() {
     return (
       <>
@@ -77,8 +127,8 @@ class Dashboard extends Component<{navigation: any}> {
                        navigation={this.props.navigation} />
         </View>
         <View style={{flex: 2, marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', margin: 5}}>
-          <InfoCard item={{text: 'Nutzerinnen und Nutzer', icon: 'people', count: 174}} />
-          <InfoCard item={{text: 'gespendete Datensätze', icon: 'gift', count: 1999}} />
+          <InfoCard item={{text: 'Nutzerinnen und Nutzer', icon: 'people', count: 174}}/>
+          <InfoCard item={{text: 'gespendete Datensätze', icon: 'gift', count: 1901}} />
         </View>
       </SafeAreaView>
       </>
