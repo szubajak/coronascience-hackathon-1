@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, StatusBar, Linking } from 'react-native';
+import { SafeAreaView, ScrollView, Linking } from 'react-native';
 import { View, Button, Text } from 'native-base';
 import AppStyle, { colors, AppFonts } from '../styles/App.style';
 import { Separator } from '../components/Separator'

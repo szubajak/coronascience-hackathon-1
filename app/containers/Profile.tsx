@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, StatusBar, Linking, Switch } from 'react-native';
-import { View, Button, Text, ListItem, Left, Right, Icon } from 'native-base';
+import { SafeAreaView, StyleSheet, ScrollView, Linking, Switch } from 'react-native';
+import { View, Text, ListItem, Left, Right, Icon } from 'native-base';
 import AppStyle, { colors, AppFonts, TextSize } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
 import { localeString } from '../locales';
-
 
 interface PropsType {
 }
@@ -13,7 +12,7 @@ interface PropsType {
 interface State {
 }
 
-class Profil extends Component<PropsType, State> {
+class Profile extends Component<PropsType, State> {
 
   constructor(props: PropsType) {
     super(props);
@@ -44,7 +43,7 @@ class Profil extends Component<PropsType, State> {
                     </Text>
                 </View>
                 <Separator/>
-                <ListItem noIndent itemDivider='false'>
+                <ListItem noIndent itemDivider={false}>
                   <Left>
                     <Text>Deutch</Text>
                   </Left>
@@ -81,6 +80,4 @@ class Profil extends Component<PropsType, State> {
 
 }
 
-
-
-export default Profil;
+export default Profile;

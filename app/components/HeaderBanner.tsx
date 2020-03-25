@@ -1,15 +1,18 @@
 import * as React from 'react';
 import {View, Button} from "native-base";
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Alert, TouchableHighlight} from 'react-native';
 import Svg, {Defs, LinearGradient, Rect, Stop, Text} from 'react-native-svg';
 import {colors, AppFonts, TextSize} from '../styles/App.style';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 interface PropsType {
     title: string;
+    btnClose?: boolean;
+    onClose?: ()=>void;
 }
 
-export const HeaderBanner: React.FunctionComponent<PropsType> = ({ title }) =>
+export const HeaderBanner: React.FunctionComponent<PropsType> = ({ title, btnClose = false, onClose }) =>
     <View style={{marginBottom: 20}}>
             <Svg width='100%' height='60'>
                 <Defs>
@@ -19,13 +22,16 @@ export const HeaderBanner: React.FunctionComponent<PropsType> = ({ title }) =>
                 </LinearGradient>
                 </Defs>
                 <Rect x='0' y='0' width='100%' height='100%' fill='url(#linearMain)'/>
-                <Text
+                <Text z-index="10"
                     x="50%" y="60%"
                     fill="white"
                     fontSize={TextSize.big}
                     textAnchor="middle">
                         {title}
-                </Text>                
-            </Svg>  
+                </Text>
+            </Svg>
+            {btnClose && <TouchableHighlight onPress={onClose} style={{left:20, top: "50%", position: "absolute"}}>
+                <Icon name='close' color={colors.white} size={25} style={{left:20, top: "-50%"}} />
+            </TouchableHighlight> }
     </View>  
     ;

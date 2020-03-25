@@ -1,23 +1,9 @@
 import React, { Component } from 'react';
-import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
-    StatusBar,
-    Alert
-  } from 'react-native';
-  
-  import { View, Button, Text } from 'native-base';
-
-import {
-    Header,
-    LearnMoreLinks,
-    Colors,
-    DebugInstructions,
-    ReloadInstructions,
-  } from 'react-native/Libraries/NewAppScreen';
+import { SafeAreaView, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Button, Text } from 'native-base';
+import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 import { localeString } from '../locales';
-import { colors, AppFonts } from '../styles/App.style';
+import { colors } from '../styles/App.style';
 
 
 interface PropsType {
