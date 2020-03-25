@@ -1,5 +1,5 @@
-import React, { Component, isValidElement } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, StatusBar, Linking, Alert } from 'react-native';
+import React, { Component } from 'react';
+import { SafeAreaView, StyleSheet, ScrollView, StatusBar, Linking, Alert, Image, FlatList } from 'react-native';
 import AppStyle, { colors, AppFonts, TextSize } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
@@ -17,10 +17,45 @@ interface State {
   dateTimeSymptome: Date;
 }
 
+interface AnswerOption {
+  display: string;
+  code: string;
+  selected: boolean
+}
+
 export enum YesNo{
   NO = 'Nein',
   YES = 'Ja'
 }
+
+
+/**
+ * Component to display a selector where the user can input a symptom severity$
+ * @param symptom: the symptom, with a display text property and a code (e.g. snomed or loinc)
+ **/
+class SymptomSeverity extends Component<{symptom: {display: string, code: string}, answerOptions: [AnswerOption]}> {
+  render() {
+    return (
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={[AppStyle.textQuestion, {flex: 1, marginTop: 23}]}>{this.props.symptom.display}</Text>
+          <View style={{flex: 3, alignItems: 'flex-end'}}>
+            <FlatList
+              horizontal
+              data={this.props.answerOptions}
+              renderItem={({ item }) =>
+                <View style={{flex: 1, marginLeft: 5}}>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>{item.display}</Text>
+                  </Button>
+                </View>}
+              keyExtractor={item => item.code}
+            />
+          </View>
+      </View>
+    );
+  }
+}
+
 
 class Symptom extends Component<PropsType, State> {
 
@@ -35,15 +70,6 @@ class Symptom extends Component<PropsType, State> {
     }
   }
 
-  openURL( _url : string){
-    Linking.canOpenURL(_url).then(supported => {
-        if (supported) {
-          Linking.openURL(_url);
-        } else {
-          console.log("Don't know how to open URI: " + _url);
-        }
-      });
-  }
 
   showDateTimePicker(){
     this.setState({ isDateTimePickerVisible: true });
@@ -89,73 +115,41 @@ class Symptom extends Component<PropsType, State> {
       <>
         <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
-            <HeaderBanner title='Symptome erfassen'/>
+            <HeaderBanner title='Erfassung'/>
             <ScrollView
-                style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
+                style={{height: '100%', paddingHorizontal:'10%'}}
                 contentInsetAdjustmentBehavior="automatic">
                 <View>
-                    <Text style={[AppStyle.textQuestion]}>
-                        Bitte wähle die zutreffenden Symptome aus:
-                    </Text>
-                </View>
-                <Grid>
-                  <Row>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Fieber</Text>
-                      </Button>
-                    </Col>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Husten</Text>
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Müdigkeit</Text>
-                      </Button>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Halsschmerzen</Text>
-                      </Button>
-                    </Col>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Atemnot</Text>
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Kopfschmerzen</Text>
-                      </Button>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Durchfall</Text>
-                      </Button>
-                    </Col>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Übelkeit</Text>
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Andere</Text>
-                      </Button>
-                    </Col>
-                  </Row>
-                  <Row>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Ich habe keine Symptome</Text>
-                      </Button>
-                  </Row>
-              </Grid>
+                  <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Text style={[AppStyle.sectionTitle]}>Symptome</Text>
+                    <View style={{flexDirection: 'row', marginTop: 5}}>
+                      <Text style={[AppStyle.textQuestion]}>{new Date().toString().slice(4,21)}</Text>
+                      <Image source={require('../../resources/images/icon_add.png')} style={{width: 15, height: 15}} />
+                    </View>
+                  </View>
+                <Separator/>
+              </View>
+
+              <SymptomSeverity
+                symptom={{display: 'Temperatur (in C)', code: '123'}}
+                answerOptions={[{display: '< 37.5', code: 'normal', selected: true},
+                                {display: '37.5 - 38', code: 'lowFever', selected: false},
+                                {display: '> 38', code: 'highFever', selected: false}]}
+              />
+              <SymptomSeverity
+                symptom={{display: 'Husten', code: '123'}}
+                answerOptions={[{display: '0', code: '0', selected: true},
+                                {display: '+', code: '1', selected: false},
+                                {display: '++', code: '2', selected: false},
+                                {display: '+++', code: '3', selected: false}]}
+              />
+              <SymptomSeverity
+                symptom={{display: 'Müdigkeit', code: '123'}}
+                answerOptions={[{display: '0', code: '0', selected: true},
+                                {display: '+', code: '1', selected: false},
+                                {display: '++', code: '2', selected: false},
+                                {display: '+++', code: '3', selected: false}]}
+              />
               <Separator/>
               {this.renderQuestion('Hast du den Verdacht, an COVID-19 zu leiden?')}
               <Separator/>
@@ -176,7 +170,7 @@ class Symptom extends Component<PropsType, State> {
 
 const styles = StyleSheet.create({
   columns: {
-    marginRight: 8
+    marginRight: 5
   },
 
 });
