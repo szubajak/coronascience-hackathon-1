@@ -1,12 +1,10 @@
-//import * as React, { Component } from 'react';
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView, FlatList, Text, View, Image, Linking } from 'react-native';
-//import { StyleSheet, FlatList, Text, View, Image, Linking, NetInfo } from 'react-native';
+import NetInfo from "@react-native-community/netinfo";
 import { localeString } from '../locales';
 import { colors } from '../styles/App.style';
 import Moment from 'moment';
 import Svg, { G, Path } from 'react-native-svg';
-//import Config from 'react-native-config';
 import {Dimensions } from "react-native";
 
 interface PropsType {
@@ -26,29 +24,15 @@ class Twitter extends Component<PropsType, State> {
     state = {
       tweetList: [],
       isConnected : true,
-      viewWidth: 0,
-      tweetWidth: 0
-    }
-
-    initScroll = (width: number) => {
-      // initialise width
-      this.state.tweetWidth = width;
-      // initialise total intervals
-      // const totalItems = items.length;
-      // setIntervals(Math.ceil(totalItems / itemsPerInterval));
+      viewWidth: 0
     }
 
     // componentDidMount() {
-    //   NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
+    //   NetInfo.addEventListener(state => {
+    //     this.setState(state.isConnected);
+    //   });
     // }
-  
-    // componentWillUnmount() {
-    //   NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectivityChange);
-    // }
-  
-    // handleConnectivityChange = isConnected => {
-    //   this.setState({ isConnected });
-    // };
+
 
     getAllyScienceTweets() {
       let TWITTER_BEARER='AAAAAAAAAAAAAAAAAAAAAPha9wAAAAAAnAey0XZGomjlFBsfYsMJ1iYUbfk%3DF1hxES5gZSoxe839Pr22KSsnec3Y4ZTWTQJCvUweOJC9w8BbEJ'
@@ -178,7 +162,6 @@ class Twitter extends Component<PropsType, State> {
                   <ScrollView
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    onContentSizeChange={(w, h) => this.initScroll(w)}
                     scrollEventThrottle={200}
                     //pagingEnabled
                     decelerationRate="fast"
@@ -298,9 +281,6 @@ class Twitter extends Component<PropsType, State> {
                             </View>
                             </View>
                             );
-                        
-                  
-                      
                     })}
                   </ScrollView>
                  </View>
