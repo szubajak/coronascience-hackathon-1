@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
+import Login from './Login';
 import Introduction from './Introduction';
 import Informations from './Informations';
 import Settings from './Settings'
@@ -39,7 +40,7 @@ export default function App() {
       >
         <Tab.Screen
           name="Home"
-          component={HomeScreen}
+          component={Login}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Icon name='home' color={color} size={size} />
