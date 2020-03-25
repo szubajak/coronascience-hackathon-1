@@ -4,7 +4,7 @@ import { View, Text, Icon, Card, CardItem, Body } from 'native-base';
 import AppStyle, { colors, TextSize } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
 
-
+const SMALLSCREEN_CUTOFF = 360;
 /**
  * Component to display a prominent button with color gradient, used to navigate to another tab
  * @param: navigation the Tab.Navigator object
@@ -13,7 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
  * @param: title the text displayed on the button
  **/
 class LargeButton extends Component<{navigation: any, target: string, icon: string, title: string}> {
-  smallScreen = Dimensions.get('window').width < 360;
+  smallScreen = Dimensions.get('window').width < SMALLSCREEN_CUTOFF;
   render() {
     return (
       <>
@@ -39,6 +39,7 @@ class LargeButton extends Component<{navigation: any, target: string, icon: stri
  * Component to display a numerical value with a description text and an icon
  **/
 class InfoCard extends Component<{item: {text: string, icon: string, count: number}}> {
+  smallScreen = Dimensions.get('window').width < SMALLSCREEN_CUTOFF;
   constructor(props: {item: {text: string, icon: string, count: number}}) {
       super(props);
       this.state = { numberText: '...'};
@@ -61,9 +62,7 @@ class InfoCard extends Component<{item: {text: string, icon: string, count: numb
     for(let i = numberString.length - 3; i > 0; i = i - 3){
       let lastpart = numberString.substring(i, numberString.length);
       let firstpart = numberString.substring(0,i);
-      console.log('\ni=' + i + ' first: ' + firstpart + ' last: ' + lastpart);
       numberString = firstpart + '\'' + lastpart;
-      console.log('numberstring: ' + numberString)
     }
     return numberString;
   }
@@ -75,9 +74,11 @@ class InfoCard extends Component<{item: {text: string, icon: string, count: numb
           <CardItem>
             <Body>
               <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <View style={styles.infoCardIconBackground}>
-                  <Icon name={this.props.item.icon} style={styles.infoCardIcon} />
-                </View>
+                {!(this.smallScreen && this.state.numberText.length > 3) &&
+                  <View style={styles.infoCardIconBackground}>
+                    <Icon name={this.props.item.icon} style={styles.infoCardIcon} />
+                  </View>
+                }
                 <Text style={styles.infoCardNumber}>{this.state.numberText}</Text>
               </View>
             </Body>
