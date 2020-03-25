@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Text, View, StatusBar, Platform } from 'react-native';
-import Introduction from './Introduction';
+import Dashboard from './Dashboard';
 import Informations from './Informations';
 import Settings from './Settings'
 import Profil from './Profil'
@@ -10,35 +9,14 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../styles/App.style';
 
+const Tab = createBottomTabNavigator();
+
 function HomeScreen() {
   const navigation = useNavigation();
-  // status bar stuff that only matters on android
-  if (Platform.OS === 'android') {
-    // when we change to homescreen, we have to use the light gray statusbar
-    navigation.addListener('focus', () => {
-      StatusBar.setBackgroundColor(colors.lightGray);
-      StatusBar.setBarStyle('dark-content');
-    });
-    // when we change to another screen, we have to use the dark purple statusbar
-    navigation.addListener('blur', () => {
-      StatusBar.setBackgroundColor(colors.headerGradientEnd);
-      StatusBar.setBarStyle('light-content');
-    });
-  }
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text>Stay @ home!</Text>
-    </View>
+    <Dashboard navigation={navigation}/>
   );
 }
-
-function SettingsScreen() {
-  return (
-    <Introduction/>
-  );
-}
-
-const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
@@ -73,7 +51,7 @@ export default function App() {
         />
 
         <Tab.Screen
-          name="AddSympome"
+          name="AddSymptoms"
           component={Symptom}
           options={{
             tabBarIcon: ({ color, size }) => (
@@ -93,7 +71,7 @@ export default function App() {
         />
 
         <Tab.Screen
-          name="Profil"
+          name="Profile"
           component={Profil}
           options={{
             tabBarIcon: ({ color, size }) => (
