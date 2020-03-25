@@ -104,24 +104,21 @@ class Dashboard extends Component<{navigation: any}> {
     this.dataCard = React.createRef();
     // this.userCard.current.setState(123);
 
-    const navigation = useNavigation();
+
     // status bar stuff that only matters on android
     if (Platform.OS === 'android') {
       // when we change to homescreen, we have to use the light gray statusbar
-      navigation.addListener('focus', () => {
+      this.props.navigation.addListener('focus', () => {
         StatusBar.setBackgroundColor(colors.lightGray);
         StatusBar.setBarStyle('dark-content');
       });
       // when we change to another screen, we have to use the dark purple statusbar
-      navigation.addListener('blur', () => {
+      this.props.navigation.addListener('blur', () => {
         StatusBar.setBackgroundColor(colors.headerGradientEnd);
         StatusBar.setBarStyle('light-content');
       });
     }
-
   }
-
-
 
   render() {
     return (
