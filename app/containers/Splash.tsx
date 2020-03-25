@@ -4,6 +4,8 @@ import {Container, View, Spinner } from 'native-base';
 import {colors} from '../styles/App.style';
 import Svg, { G, Path } from 'react-native-svg';
 
+// TODO: change this screen
+
 const Splash = () => (
     <Container>
         <View style={styles.splashContainer}>

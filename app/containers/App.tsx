@@ -9,6 +9,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../styles/App.style';
 import SplashScreen from 'react-native-splash-screen'
+import { StatusBar } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +21,7 @@ function HomeScreen() {
 }
 
 export default function App() {
+  SplashScreen.hide(); // TODO: move this in componentDidMount
   return (
     <>
     <StatusBar backgroundColor={colors.headerGradientEnd} barStyle="light-content" />
