@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { SafeAreaView, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { SafeAreaView, Image, StyleSheet, TouchableOpacity, Dimensions, Platform, StatusBar } from 'react-native';
 import { View, Text, Icon, Card, CardItem, Body } from 'native-base';
 import AppStyle, { colors, TextSize } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
 const SMALLSCREEN_CUTOFF = 360;
 
@@ -101,10 +102,27 @@ class Dashboard extends Component<{navigation: any}> {
     super(props);
     this.userCard = React.createRef();
     this.dataCard = React.createRef();
+    // this.userCard.current.setState(123);
 
-  //  this.userCard.current.setState(123);
+    const navigation = useNavigation();
+    // status bar stuff that only matters on android
+    if (Platform.OS === 'android') {
+      // when we change to homescreen, we have to use the light gray statusbar
+      navigation.addListener('focus', () => {
+        StatusBar.setBackgroundColor(colors.lightGray);
+        StatusBar.setBarStyle('dark-content');
+      });
+      // when we change to another screen, we have to use the dark purple statusbar
+      navigation.addListener('blur', () => {
+        StatusBar.setBackgroundColor(colors.headerGradientEnd);
+        StatusBar.setBarStyle('light-content');
+      });
+    }
 
   }
+
+
+
   render() {
     return (
       <>
