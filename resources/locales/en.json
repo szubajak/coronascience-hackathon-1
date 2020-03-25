@@ -1,4 +1,11 @@
 {
     "lang" : "English",
-    "login" : "Connect to MIDATA"
+    "login" : "Connect to MIDATA",
+
+    "dashboard": {
+        "twitterCard": {
+          "title": "Twitter",
+          "no_connection_message": "You must be online to see the tweets."
+        }
+      }
 }

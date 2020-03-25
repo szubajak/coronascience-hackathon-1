@@ -3,6 +3,7 @@ import { SafeAreaView, Image, StyleSheet, FlatList, Alert, TouchableOpacity, Dim
 import { View, Text, ListItem, Icon } from 'native-base';
 import AppStyle, { colors, TextSize } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
+import Twitter from './Twitter';
 
 class LargeButton extends Component<{navigation: any, target: string, icon: string, title: string}> {
   smallScreen = Dimensions.get('window').width < 360;
@@ -84,7 +85,7 @@ class Dashboard extends Component<{navigation: any}> {
                        icon="person"
                        navigation={this.props.navigation} />
         </View>
-        <View style={{flex: 3, marginTop: 30}}>
+        {/* <View style={{flex: 3, marginTop: 30}}>
           <FlatList
             data={this.questions}
             renderItem={({ item }) =>
@@ -92,6 +93,9 @@ class Dashboard extends Component<{navigation: any}> {
                 <Text style={styles.listText}>{item.text}</Text>
               </ListItem>}
           />
+        </View> */}
+        <View style={{flex: 3, marginHorizontal: 20}}>
+          <Twitter/>
         </View>
       </SafeAreaView>
       </>
