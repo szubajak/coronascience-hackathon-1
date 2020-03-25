@@ -20,6 +20,8 @@ function HomeScreen() {
 
 export default function App() {
   return (
+    <>
+    <StatusBar backgroundColor={colors.headerGradientEnd} barStyle="light-content" />
     <NavigationContainer>
       <Tab.Navigator
         tabBarOptions={{
@@ -80,5 +82,6 @@ export default function App() {
         />
       </Tab.Navigator>
     </NavigationContainer>
+    </>
   );
 }
