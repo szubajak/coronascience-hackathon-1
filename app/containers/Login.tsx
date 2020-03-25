@@ -41,7 +41,6 @@ class Informations extends Component<PropsType, State> {
   }
 
   async login(){
-    Alert.alert('hey');
     // use the client to make the auth request and receive the authState
     try {
         const newAuthState = await authorize(config);
@@ -58,7 +57,6 @@ class Informations extends Component<PropsType, State> {
 
 
   async logout(){
-    Alert.alert('hey');
     // use the client to make the auth request and receive the authState
     try {
         const newAuthState = await authorize(config);
