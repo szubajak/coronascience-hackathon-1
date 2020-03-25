@@ -1,30 +1,22 @@
 import * as React from 'react';
-import { Text, View, StatusBar } from 'react-native';
-import Introduction from './Introduction';
+import Dashboard from './Dashboard';
 import Informations from './Informations';
 import Settings from './Settings'
 import Profil from './Profil'
 import Symptom from './Symptom'
 import Icon from 'react-native-vector-icons/AntDesign';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../styles/App.style';
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Stay @ home!</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <Introduction/>
-  );
-}
-
 const Tab = createBottomTabNavigator();
+
+function HomeScreen() {
+  const navigation = useNavigation();
+  return (
+    <Dashboard navigation={navigation}/>
+  );
+}
 
 export default function App() {
   return (
@@ -60,7 +52,7 @@ export default function App() {
         />
 
         <Tab.Screen
-          name="AddSympome"
+          name="AddSymptoms"
           component={Symptom}
           options={{
             tabBarIcon: ({ color, size }) => (
@@ -80,7 +72,7 @@ export default function App() {
         />
 
         <Tab.Screen
-          name="Profil"
+          name="Profile"
           component={Profil}
           options={{
             tabBarIcon: ({ color, size }) => (
