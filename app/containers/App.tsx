@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../styles/App.style';
+import SplashScreen from 'react-native-splash-screen'
 
 const Tab = createBottomTabNavigator();
 
