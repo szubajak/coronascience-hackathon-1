@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, StatusBar, Linking, Alert, Image, FlatList } from 'react-native';
+import { SafeAreaView, StyleSheet, ScrollView, StatusBar, Linking, Alert, Image, FlatList, YellowBox } from 'react-native';
 import AppStyle, { colors, AppFonts, TextSize } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
@@ -8,6 +8,9 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import { View, Container, Content, List, ListItem, Text, Body, Right, Picker, Header, Button, Icon } from 'native-base';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
+
+// well, we need the FlatList, and we need vertical scrolling, and we don't care if its not lazy-loading because the list is not that big
+YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
 
 interface PropsType {
 }
@@ -28,24 +31,57 @@ export enum YesNo{
   YES = 'Ja'
 }
 
+const PLUS_ANSWER_OPTIONS = [{display: '0', code: '0', selected: true},
+                {display: '+', code: '1', selected: false},
+                {display: '++', code: '2', selected: false},
+                {display: '+++', code: '3', selected: false}];
+
+const SYMPTOM_DATA = [
+  // { symptom: {display: 'Temperatur (in C)',code: '123'},
+  //   answerOptions: [{display: '< 37.5', code: 'normal', selected: true},
+  //                   {display: '37.5 - 38', code: 'lowFever', selected: false},
+  //                   {display: '> 38', code: 'highFever', selected: false}] },
+  { symptom: {display: 'Husten', code: '234'},
+    answerOptions: PLUS_ANSWER_OPTIONS },
+  { symptom: {display: 'Müdigkeit', code: '345'},
+    answerOptions: PLUS_ANSWER_OPTIONS },
+  { symptom: {display: 'Halsschmerzen', code: '456'},
+    answerOptions: PLUS_ANSWER_OPTIONS },
+  { symptom: {display: 'Atemnot in Ruhe', code: '567'},
+    answerOptions: PLUS_ANSWER_OPTIONS },
+  { symptom: {display: 'Kopfschmerzen', code: '678'},
+    answerOptions: PLUS_ANSWER_OPTIONS },
+  { symptom: {display: 'Durchfall', code: '789'},
+    answerOptions: PLUS_ANSWER_OPTIONS },
+  { symptom: {display: 'Übelkeit', code: '890'},
+    answerOptions: PLUS_ANSWER_OPTIONS },
+  { symptom: {display: 'Geruchsverlust', code: '901'},
+    answerOptions: PLUS_ANSWER_OPTIONS }
+]
+
 
 /**
  * Component to display a selector where the user can input a symptom severity$
  * @param symptom: the symptom, with a display text property and a code (e.g. snomed or loinc)
  **/
 class SymptomSeverity extends Component<{symptom: {display: string, code: string}, answerOptions: [AnswerOption]}> {
+  select(item: any) {
+    console.log('item selected' + item)
+  }
   render() {
     return (
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text style={[AppStyle.textQuestion, {flex: 1, marginTop: 23}]}>{this.props.symptom.display}</Text>
-          <View style={{flex: 3, alignItems: 'flex-end'}}>
+          <View style={{flex: 1, justifyContent: 'center', marginTop: AppStyle.button.marginTop}}>
+            <Text style={[AppStyle.textQuestion]}>{this.props.symptom.display}</Text>
+          </View>
+          <View style={{alignItems: 'flex-end'}}>
             <FlatList
               horizontal
               data={this.props.answerOptions}
               renderItem={({ item }) =>
                 <View style={{flex: 1, marginLeft: 5}}>
-                  <Button style={[AppStyle.button]}>
-                    <Text style={[AppStyle.textButton]}>{item.display}</Text>
+                  <Button style={[AppStyle.button, item.selected ? styles.selectedButton : AppStyle.button]}>
+                    <Text style={[AppStyle.textButton, item.selected ? styles.selectedTextButton : AppStyle.textButton]}>{item.display}</Text>
                   </Button>
                 </View>}
               keyExtractor={item => item.code}
@@ -117,7 +153,7 @@ class Symptom extends Component<PropsType, State> {
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
             <HeaderBanner title='Erfassung'/>
             <ScrollView
-                style={{height: '100%', paddingHorizontal:'10%'}}
+                style={{height: '100%', paddingHorizontal:'5%'}}
                 contentInsetAdjustmentBehavior="automatic">
                 <View>
                   <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -130,26 +166,15 @@ class Symptom extends Component<PropsType, State> {
                 <Separator/>
               </View>
 
-              <SymptomSeverity
-                symptom={{display: 'Temperatur (in C)', code: '123'}}
-                answerOptions={[{display: '< 37.5', code: 'normal', selected: true},
-                                {display: '37.5 - 38', code: 'lowFever', selected: false},
-                                {display: '> 38', code: 'highFever', selected: false}]}
+
+              <FlatList
+                data={SYMPTOM_DATA}
+                renderItem={({ item }) =>
+                  <SymptomSeverity symptom={item.symptom} answerOptions={item.answerOptions} />}
+                keyExtractor={item => item.symptom.code}
               />
-              <SymptomSeverity
-                symptom={{display: 'Husten', code: '123'}}
-                answerOptions={[{display: '0', code: '0', selected: true},
-                                {display: '+', code: '1', selected: false},
-                                {display: '++', code: '2', selected: false},
-                                {display: '+++', code: '3', selected: false}]}
-              />
-              <SymptomSeverity
-                symptom={{display: 'Müdigkeit', code: '123'}}
-                answerOptions={[{display: '0', code: '0', selected: true},
-                                {display: '+', code: '1', selected: false},
-                                {display: '++', code: '2', selected: false},
-                                {display: '+++', code: '3', selected: false}]}
-              />
+
+
               <Separator/>
               {this.renderQuestion('Hast du den Verdacht, an COVID-19 zu leiden?')}
               <Separator/>
@@ -172,7 +197,12 @@ const styles = StyleSheet.create({
   columns: {
     marginRight: 5
   },
-
+  selectedButton: {
+    backgroundColor: colors.secondaryNormal
+  },
+  selectedTextButton: {
+    color: colors.white
+  }
 });
 
 export default Symptom;

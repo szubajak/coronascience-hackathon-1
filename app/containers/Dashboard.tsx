@@ -94,16 +94,8 @@ class InfoCard extends Component<{item: {text: string, icon: string, count: numb
 }
 
 class Dashboard extends Component<{navigation: any}> {
-  userCard: React.RefObject<unknown>;
-  dataCard: React.RefObject<unknown>;
-
   constructor(props: {navigation: any}) {
     super(props);
-    this.userCard = React.createRef();
-    this.dataCard = React.createRef();
-
-  //  this.userCard.current.setState(123);
-
   }
   render() {
     return (
