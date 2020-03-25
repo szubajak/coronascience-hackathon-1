@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator();
 function HomeScreen() {
   const navigation = useNavigation();
   return (
-    <Dashboard navigation={navigation}/>
+    <Dashboard navigation={navigation} />
   );
 }
 
@@ -24,67 +24,67 @@ export default function App() {
   SplashScreen.hide(); // TODO: move this in componentDidMount
   return (
     <>
-    <StatusBar backgroundColor={colors.headerGradientEnd} barStyle="light-content" />
-    <NavigationContainer>
-      <Tab.Navigator
-        tabBarOptions={{
-          activeTintColor: colors.secondaryDark,
-          inactiveTintColor: 'gray',
-          showLabel: false,
-          adaptive: true,
-        }}
-      >
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name='home' color={color} size={size} />
-            )
+      <StatusBar backgroundColor={colors.headerGradientEnd} barStyle="light-content" />
+      <NavigationContainer>
+        <Tab.Navigator
+          tabBarOptions={{
+            activeTintColor: colors.secondaryDark,
+            inactiveTintColor: 'gray',
+            showLabel: false,
+            adaptive: true,
           }}
-        />
+        >
+          <Tab.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Icon name='home' color={color} size={size} />
+              )
+            }}
+          />
 
-        <Tab.Screen
-          name="Informations"
-          component={Informations}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name='info' color={color} size={size} />
-            )
-          }}
-        />
+          <Tab.Screen
+            name="Informations"
+            component={Informations}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Icon name='info' color={color} size={size} />
+              )
+            }}
+          />
 
-        <Tab.Screen
-          name="AddSymptoms"
-          component={Symptom}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name='plussquare' color={color} size={size} />
-            )
-          }}
-        />
+          <Tab.Screen
+            name="AddSymptoms"
+            component={Symptom}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Icon name='plussquare' color={color} size={size} />
+              )
+            }}
+          />
 
-        <Tab.Screen
-          name="Settings"
-          component={Settings}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name='setting' color={color} size={size} />
-            )
-          }}
-        />
+          <Tab.Screen
+            name="Settings"
+            component={Settings}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Icon name='setting' color={color} size={size} />
+              )
+            }}
+          />
 
-        <Tab.Screen
-          name="Profile"
-          component={Profil}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name='user' color={color} size={size} />
-            )
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+          <Tab.Screen
+            name="Profile"
+            component={Profil}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Icon name='user' color={color} size={size} />
+              )
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
     </>
   );
 }
