@@ -8,6 +8,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import { View, Container, Content, List, ListItem, Text, Body, Right, Picker, Header, Button, Icon } from 'native-base';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
+import Slider from '@react-native-community/slider';
 
 // well, we need the FlatList, and we need vertical scrolling, and we don't care if its not lazy-loading because the list is not that big
 YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
@@ -45,17 +46,17 @@ const SYMPTOM_DATA = [
     answerOptions: PLUS_ANSWER_OPTIONS },
   { symptom: {display: 'Müdigkeit', code: '345'},
     answerOptions: PLUS_ANSWER_OPTIONS },
-  { symptom: {display: 'Halsschmerzen', code: '456'},
+  { symptom: {display: 'Hals\u00ADschmerzen', code: '456'},
     answerOptions: PLUS_ANSWER_OPTIONS },
   { symptom: {display: 'Atemnot in Ruhe', code: '567'},
     answerOptions: PLUS_ANSWER_OPTIONS },
-  { symptom: {display: 'Kopfschmerzen', code: '678'},
+  { symptom: {display: 'Kopf\u00ADschmerzen', code: '678'},
     answerOptions: PLUS_ANSWER_OPTIONS },
   { symptom: {display: 'Durchfall', code: '789'},
     answerOptions: PLUS_ANSWER_OPTIONS },
   { symptom: {display: 'Übelkeit', code: '890'},
     answerOptions: PLUS_ANSWER_OPTIONS },
-  { symptom: {display: 'Geruchsverlust', code: '901'},
+  { symptom: {display: 'Geruchs\u00ADverlust', code: '901'},
     answerOptions: PLUS_ANSWER_OPTIONS }
 ]
 
@@ -65,8 +66,9 @@ const SYMPTOM_DATA = [
  * @param symptom: the symptom, with a display text property and a code (e.g. snomed or loinc)
  **/
 class SymptomSeverity extends Component<{symptom: {display: string, code: string}, answerOptions: [AnswerOption]}> {
-  select(item: any) {
-    console.log('item selected' + item)
+  select(option: AnswerOption) {
+    console.log('item selected', option);
+    option.selected = true;
   }
   render() {
     return (
@@ -77,10 +79,11 @@ class SymptomSeverity extends Component<{symptom: {display: string, code: string
           <View style={{alignItems: 'flex-end'}}>
             <FlatList
               horizontal
+              alwaysBounceHorizontal = 'false'
               data={this.props.answerOptions}
               renderItem={({ item }) =>
                 <View style={{flex: 1, marginLeft: 5}}>
-                  <Button style={[AppStyle.button, item.selected ? styles.selectedButton : AppStyle.button]}>
+                  <Button style={[AppStyle.button, item.selected ? styles.selectedButton : AppStyle.button]} onPress={() => this.select(item)}>
                     <Text style={[AppStyle.textButton, item.selected ? styles.selectedTextButton : AppStyle.textButton]}>{item.display}</Text>
                   </Button>
                 </View>}
@@ -132,7 +135,7 @@ class Symptom extends Component<PropsType, State> {
         <Grid>
           <Row>
                 {[YesNo.YES, YesNo.NO].map((value, index) => (
-                  <Col style={[styles.columns]}>
+                  <Col key={index} style={[styles.columns]}>
                     <Button style={[AppStyle.button]}
                       onPress={() => Alert.alert('danke')}>
                       <Text style={[AppStyle.textButton]}>
@@ -153,7 +156,7 @@ class Symptom extends Component<PropsType, State> {
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
             <HeaderBanner title='Erfassung'/>
             <ScrollView
-                style={{height: '100%', paddingHorizontal:'5%'}}
+                style={{height: '100%', paddingHorizontal:'5%', paddingTop: 20}}
                 contentInsetAdjustmentBehavior="automatic">
                 <View>
                   <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -164,6 +167,34 @@ class Symptom extends Component<PropsType, State> {
                     </View>
                   </View>
                 <Separator/>
+              </View>
+
+              <View>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
+                  <Text style={[AppStyle.textQuestion]}>Temperatur (in C)</Text>
+                  <Text style={[AppStyle.textQuestion, {color: colors.secondaryNormal}]}>35.4°</Text>
+                </View>
+                <View>
+                  <Slider
+                    style={{width: '100%', height: 40}}
+                    minimumValue={35}
+                    maximumValue={41}
+                    step={0.1}
+                    value={36.5}
+                    thumbTintColor={colors.secondaryDark}
+                    minimumTrackTintColor={colors.secondaryLight}
+                    maximumTrackTintColor={colors.darGray}
+                  />
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginTop: -8, marginHorizontal: 5}}>
+                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>35</Text>
+                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>36</Text>
+                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>37</Text>
+                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>38</Text>
+                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>39</Text>
+                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>40</Text>
+                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>41</Text>
+                </View>
               </View>
 
 
