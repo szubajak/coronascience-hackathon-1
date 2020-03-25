@@ -10,7 +10,7 @@ interface PropsType {
 }
 
 export const HeaderBanner: React.FunctionComponent<PropsType> = ({ title }) =>
-    <View style={{marginBottom: 20}}>
+    <View>
             <Svg width='100%' height='60'>
                 <Defs>
                 <LinearGradient id="linearMain" x1="0" y1="100%" x2="0" y2="0">
@@ -25,7 +25,7 @@ export const HeaderBanner: React.FunctionComponent<PropsType> = ({ title }) =>
                     fontSize={TextSize.big}
                     textAnchor="middle">
                         {title}
-                </Text>                
-            </Svg>  
-    </View>  
+                </Text>
+            </Svg>
+    </View>
     ;

@@ -35,7 +35,7 @@ class Settings extends Component<PropsType, State> {
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
             <HeaderBanner title='Einstellungen'/>
             <ScrollView
-                style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
+                style={{height: '100%', marginLeft:'10%', marginRight:'10%', paddingTop: 20}}
                 contentInsetAdjustmentBehavior="automatic">
                 <View>
                     <Text style={[AppStyle.sectionTitle]}>
@@ -43,7 +43,7 @@ class Settings extends Component<PropsType, State> {
                     </Text>
                 </View>
                 <Separator/>
-                
+
             </ScrollView>
         </SafeAreaView>
       </>

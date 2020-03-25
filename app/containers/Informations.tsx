@@ -36,7 +36,7 @@ class Informations extends Component<PropsType, State> {
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
             <HeaderBanner title='Informationen'/>
             <ScrollView
-                style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
+                style={{height: '100%', marginLeft:'10%', marginRight:'10%', paddingTop: 20}}
                 contentInsetAdjustmentBehavior="automatic">
                 <View>
                     <Text style={[AppStyle.sectionTitle]}>
@@ -48,7 +48,7 @@ class Informations extends Component<PropsType, State> {
                     <Text style={[AppStyle.textQuestion]}>
                         Infoline (täglich 24h): <Text onPress={() => this.openURL('tel:0041584630000')}>+41 58 463 00 00</Text>
                     </Text>
-                    
+
                     <Button style={[AppStyle.button]}
                         onPress={() => this.openURL('https://i4mi.bfh.ch')}>
                         <Text style={[AppStyle.textButton]}>
@@ -80,7 +80,7 @@ class Informations extends Component<PropsType, State> {
                         </Text>
                     </Button>
                 </View>
-                
+
                 <View style={{marginTop:25}}>
                     <Text style={[AppStyle.sectionTitle]}>
                         Aertefon
