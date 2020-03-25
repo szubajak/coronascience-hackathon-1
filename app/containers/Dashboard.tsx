@@ -6,93 +6,6 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const SMALLSCREEN_CUTOFF = 360;
 
-/**
- * Component to display a prominent button with color gradient, used to navigate to another tab
- * @param: navigation the Tab.Navigator object
- * @param: target the name of the tab the button should navigate to
- * @param: icon the name of the icon to be used in the button (only if screen is big enough) - should be from the ionicons set from https://oblador.github.io/react-native-vector-icons/
- * @param: title the text displayed on the button
- **/
-class LargeButton extends Component<{navigation: any, target: string, icon: string, title: string}> {
-  smallScreen = Dimensions.get('window').width < SMALLSCREEN_CUTOFF;
-  render() {
-    return (
-      <>
-      <TouchableOpacity activeOpacity = { 0.5 } onPress={() => this.props.navigation.navigate(this.props.target)} style={styles.largeButton}>
-        <LinearGradient
-            colors={[colors.headerGradientEnd, colors.headerGradientBegin]}
-            style={[AppStyle.button, styles.linearGradient]}
-            start={{x: 0, y: 1}}
-            end={{x: 1, y: 0.9}}
-            locations={[0, 1]} >
-            <Text style={styles.largeButtonText}>{this.props.title}</Text>
-            {!this.smallScreen &&
-              <Icon name={this.props.icon} style={styles.largeButtonIcon}/>
-            }
-      </LinearGradient>
-      </TouchableOpacity>
-      </>
-    );
-  }
-}
-
-/**
- * Component to display a numerical value with a description text and an icon
- **/
-class InfoCard extends Component<{item: {text: string, icon: string, count: number}}> {
-  smallScreen = Dimensions.get('window').width < SMALLSCREEN_CUTOFF;
-  constructor(props: {item: {text: string, icon: string, count: number}}) {
-      super(props);
-      this.state = { numberText: '...'};
-      let i = props.item.count;
-
-      setInterval(() => {
-      this.setState(() => {
-        i = Math.floor(i + Math.random() * 10)
-        return { numberText: this.numberToString(i)  };
-      });
-    },
-    5000 * (Math.random()));
-  }
-
-  /**
-   * Formats the number to a string with apostroph every three digits
-   **/
-  private numberToString(number: number) {
-    let numberString = number.toString();
-    for(let i = numberString.length - 3; i > 0; i = i - 3){
-      let lastpart = numberString.substring(i, numberString.length);
-      let firstpart = numberString.substring(0,i);
-      numberString = firstpart + '\'' + lastpart;
-    }
-    return numberString;
-  }
-
-  render () {
-    return (
-      <>
-        <Card style={styles.infoCard}>
-          <CardItem>
-            <Body>
-              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                {!(this.smallScreen && this.state.numberText.length > 3) &&
-                  <View style={styles.infoCardIconBackground}>
-                    <Icon name={this.props.item.icon} style={styles.infoCardIcon} />
-                  </View>
-                }
-                <Text style={styles.infoCardNumber}>{this.state.numberText}</Text>
-              </View>
-            </Body>
-          </CardItem>
-          <CardItem footer>
-            <Text style={styles.infoCardText}>{this.props.item.text}</Text>
-          </CardItem>
-        </Card>
-      </>
-    );
-  }
-}
-
 class Dashboard extends Component<{navigation: any}> {
   userCard: React.RefObject<unknown>;
   dataCard: React.RefObject<unknown>;
@@ -136,6 +49,95 @@ class Dashboard extends Component<{navigation: any}> {
       </>
     );
   };
+}
+
+/**
+ * Component to display a prominent button with color gradient, used to navigate to another tab
+ * @param: navigation the Tab.Navigator object
+ * @param: target the name of the tab the button should navigate to
+ * @param: icon the name of the icon to be used in the button (only if screen is big enough) - should be from the ionicons set from https://oblador.github.io/react-native-vector-icons/
+ * @param: title the text displayed on the button
+ **/
+class LargeButton extends Component<{navigation: any, target: string, icon: string, title: string}> {
+  smallScreen = Dimensions.get('window').width < SMALLSCREEN_CUTOFF;
+  render() {
+    return (
+      <>
+      <TouchableOpacity activeOpacity = { 0.5 } onPress={() => this.props.navigation.navigate(this.props.target)} style={styles.largeButton}>
+        <LinearGradient
+            colors={[colors.headerGradientEnd, colors.headerGradientBegin]}
+            style={[AppStyle.button, styles.linearGradient]}
+            start={{x: 0, y: 1}}
+            end={{x: 1, y: 0.9}}
+            locations={[0, 1]} >
+            <Text style={styles.largeButtonText}>{this.props.title}</Text>
+            {!this.smallScreen &&
+              <Icon name={this.props.icon} style={styles.largeButtonIcon}/>
+            }
+      </LinearGradient>
+      </TouchableOpacity>
+      </>
+    );
+  }
+}
+
+/**
+ * Component to display a numerical value with a description text and an icon
+ **/
+class InfoCard extends Component<{item: {text: string, icon: string, count: number}}> {
+
+  smallScreen = Dimensions.get('window').width < SMALLSCREEN_CUTOFF;
+
+  constructor(props: {item: {text: string, icon: string, count: number}}) {
+      super(props);
+      this.state = { numberText: '...'};
+      let i = props.item.count;
+
+      setInterval(() => {
+          this.setState(() => {
+            i = Math.floor(i + Math.random() * 10)
+            return { numberText: this.numberToString(i)  };
+          });
+        },
+      5000 * (Math.random()));
+  }
+
+  /**
+   * Formats the number to a string with apostroph every three digits
+   **/
+  private numberToString(number: number) {
+    let numberString = number.toString();
+    for(let i = numberString.length - 3; i > 0; i = i - 3){
+      let lastpart = numberString.substring(i, numberString.length);
+      let firstpart = numberString.substring(0,i);
+      numberString = firstpart + '\'' + lastpart;
+    }
+    return numberString;
+  }
+
+  render () {
+    return (
+      <>
+        <Card style={styles.infoCard}>
+          <CardItem>
+            <Body>
+              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                {!(this.smallScreen && this.state.numberText.length > 3) &&
+                  <View style={styles.infoCardIconBackground}>
+                    <Icon name={this.props.item.icon} style={styles.infoCardIcon} />
+                  </View>
+                }
+                <Text style={styles.infoCardNumber}>{this.state.numberText}</Text>
+              </View>
+            </Body>
+          </CardItem>
+          <CardItem footer>
+            <Text style={styles.infoCardText}>{this.props.item.text}</Text>
+          </CardItem>
+        </Card>
+      </>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
