@@ -5,6 +5,7 @@ import AppStyle, { colors, TextSize } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
 
 const SMALLSCREEN_CUTOFF = 360;
+
 /**
  * Component to display a prominent button with color gradient, used to navigate to another tab
  * @param: navigation the Tab.Navigator object
@@ -51,7 +52,7 @@ class InfoCard extends Component<{item: {text: string, icon: string, count: numb
         return { numberText: this.numberToString(i)  };
       });
     },
-    1000);
+    5000 * (Math.random()));
   }
 
   /**
@@ -118,7 +119,7 @@ class Dashboard extends Component<{navigation: any}> {
           </View>
         </View>
         <View style={{paddingHorizontal: 20}}>
-          <LargeButton title="Symptome erfassen"
+          <LargeButton title="Gesundheitszustand erfassen"
                        target="AddSymptoms"
                        icon="add-circle"
                        navigation={this.props.navigation} />
