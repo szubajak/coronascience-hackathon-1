@@ -1,16 +1,31 @@
 import * as React from 'react';
-import { Text, View, StatusBar } from 'react-native';
+import { Text, View, StatusBar, Platform } from 'react-native';
 import Introduction from './Introduction';
 import Informations from './Informations';
 import Settings from './Settings'
 import Profil from './Profil'
 import Symptom from './Symptom'
 import Icon from 'react-native-vector-icons/AntDesign';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../styles/App.style';
 
 function HomeScreen() {
+  const navigation = useNavigation();
+  // when we change to homescreen, we have to use the light gray statusbar
+  navigation.addListener('focus', () => {
+    if (Platform.OS === 'android') {
+      StatusBar.setBackgroundColor(colors.lightGray);
+      StatusBar.setBarStyle('dark-content');
+    }
+  });
+  // when we change to another screen, we have to use the dark purple statusbar
+  navigation.addListener('blur', () => {
+    if (Platform.OS === 'android') {
+      StatusBar.setBackgroundColor(colors.headerGradientEnd);
+      StatusBar.setBarStyle('light-content');
+    }
+});
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Stay @ home!</Text>
@@ -29,7 +44,6 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <>
-    <StatusBar backgroundColor={colors.headerGradientEnd} barStyle="light-content" />
     <NavigationContainer>
       <Tab.Navigator
         tabBarOptions={{
