@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StatusBar } from 'react-native';
 import Introduction from './Introduction';
 import Informations from './Informations';
 import Settings from './Settings'
@@ -28,6 +28,8 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
+    <>
+    <StatusBar backgroundColor={colors.headerGradientEnd} barStyle="light-content" />
     <NavigationContainer>
       <Tab.Navigator
         tabBarOptions={{
@@ -88,5 +90,6 @@ export default function App() {
         />
       </Tab.Navigator>
     </NavigationContainer>
+    </>
   );
 }

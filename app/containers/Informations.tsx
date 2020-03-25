@@ -32,11 +32,10 @@ class Informations extends Component<PropsType, State> {
   render() {
     return (
       <>
-        <StatusBar barStyle="dark-content" />
         <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
             <HeaderBanner title='Informationen'/>
-            <ScrollView 
+            <ScrollView
                 style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
                 contentInsetAdjustmentBehavior="automatic">
                 <View>
