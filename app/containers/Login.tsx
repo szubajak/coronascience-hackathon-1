@@ -6,6 +6,8 @@ import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
 import { localeString } from '../locales';
 import { authorize } from 'react-native-app-auth';
+import MiDataServiceManager from '../services/MiDataServiceManager';
+import UserProfileService from '../services/UserProfileService';
 
 interface PropsType {
 }
@@ -43,15 +45,20 @@ class Informations extends Component<PropsType, State> {
   async login(){
     // use the client to make the auth request and receive the authState
     try {
-        const newAuthState = await authorize(config);
+        // TODO : add loading ore disable "Login button"
+        const newAuthState = await authorize(config); // result includes accessToken, accessTokenExpirationDate and refreshToken
         this.setState({
             hasLoggedInOnce: true,
             ...newAuthState
         })
-        console.log(newAuthState);
-        // result includes accessToken, accessTokenExpirationDate and refreshToken
+        // TODO : remove loading or re-enable "Login button"
+        // Update Auth token for our service manager :
+        MiDataServiceManager.setAuthToken(newAuthState.accessToken, newAuthState.accessTokenExpirationDate, newAuthState.refreshToken);
+        // FOR TEST : try to get the userprofile :
+        var user = await new UserProfileService().getUserProfile();
+        console.log(user);
     } catch (error) {
-        console.log(error);
+        console.log("Error while login : " + JSON.stringify(error));
     }
   }
 
