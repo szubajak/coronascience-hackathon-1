@@ -12,23 +12,22 @@ import { colors } from '../styles/App.style';
 
 function HomeScreen() {
   const navigation = useNavigation();
-  // when we change to homescreen, we have to use the light gray statusbar
-  navigation.addListener('focus', () => {
-    if (Platform.OS === 'android') {
+  // status bar stuff that only matters on android
+  if (Platform.OS === 'android') {
+    // when we change to homescreen, we have to use the light gray statusbar
+    navigation.addListener('focus', () => {
       StatusBar.setBackgroundColor(colors.lightGray);
       StatusBar.setBarStyle('dark-content');
-    }
-  });
-  // when we change to another screen, we have to use the dark purple statusbar
-  navigation.addListener('blur', () => {
-    if (Platform.OS === 'android') {
+    });
+    // when we change to another screen, we have to use the dark purple statusbar
+    navigation.addListener('blur', () => {
       StatusBar.setBackgroundColor(colors.headerGradientEnd);
       StatusBar.setBarStyle('light-content');
-    }
-});
+    });
+  }
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Stay @ home!</Text>
+    <Text>Stay @ home!</Text>
     </View>
   );
 }
