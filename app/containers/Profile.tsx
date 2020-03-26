@@ -4,18 +4,30 @@ import { View, Text, ListItem, Left, Right, Icon } from 'native-base';
 import AppStyle, { colors, AppFonts, TextSize } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
+import ModalBaseScene from '../components/ModalBaseScene'
 import { localeString } from '../locales';
+import Login from '../components/Login';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { throwStatement } from '@babel/types';
 
 interface PropsType {
+  navigation: StackNavigationProp<any>
 }
 
 interface State {
+  isLogged?: boolean,
+  isLoginPopupVisible: boolean
 }
 
 class Profile extends Component<PropsType, State> {
 
   constructor(props: PropsType) {
     super(props);
+    this.state = {
+      isLogged: true,
+      isLoginPopupVisible: true
+    };
+    this.props.navigation.addListener('focus', this.onScreenFocus)
   }
 
   openURL( _url : string){
@@ -27,12 +39,27 @@ class Profile extends Component<PropsType, State> {
         }
       });
   }
+  onScreenFocus = () => {
+    // Screen was focused, our on focus logic goes here
+    this.setState({isLoginPopupVisible: true});
+  }
+
+  onLoginCancelled() {
+    this.setState({isLoginPopupVisible: false});
+    this.props.navigation.goBack();
+  }
 
   render() {
     return (
       <>
-        <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
+        {!this.state.isLogged
+        ?
+          (<View>
+            <Login isLoginOpen={this.state.isLoginPopupVisible} onClose={this.onLoginCancelled.bind(this)}/>
+          </View>)
+        : (<>
+          <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
+          <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
             <HeaderBanner title='Lea Meier'/>
             <ScrollView
                 style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
@@ -73,7 +100,9 @@ class Profile extends Component<PropsType, State> {
                 </ListItem>
                 <View style={{height:25}}></View>
             </ScrollView>
-        </SafeAreaView>
+          </SafeAreaView>
+          </>)
+        }
       </>
     );
   };
