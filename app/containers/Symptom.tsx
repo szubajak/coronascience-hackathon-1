@@ -9,6 +9,7 @@ import { View, Container, Content, List, ListItem, Text, Body, Right, Picker, He
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
 import Slider from '@react-native-community/slider';
+import { SYMPTOM_DATA } from '../../resources/static/symptoms'
 
 // well, we need the FlatList, and we need vertical scrolling, and we don't care if its not lazy-loading because the list is not that big
 YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
@@ -32,33 +33,7 @@ export enum YesNo{
   YES = 'Ja'
 }
 
-const PLUS_ANSWER_OPTIONS = [{display: '0', code: '0', selected: true},
-                {display: '+', code: '1', selected: false},
-                {display: '++', code: '2', selected: false},
-                {display: '+++', code: '3', selected: false}];
 
-const SYMPTOM_DATA = [
-  // { symptom: {display: 'Temperatur (in C)',code: '123'},
-  //   answerOptions: [{display: '< 37.5', code: 'normal', selected: true},
-  //                   {display: '37.5 - 38', code: 'lowFever', selected: false},
-  //                   {display: '> 38', code: 'highFever', selected: false}] },
-  { symptom: {display: 'Husten', code: '234'},
-    answerOptions: PLUS_ANSWER_OPTIONS },
-  { symptom: {display: 'Müdigkeit', code: '345'},
-    answerOptions: PLUS_ANSWER_OPTIONS },
-  { symptom: {display: 'Hals\u00ADschmerzen', code: '456'},
-    answerOptions: PLUS_ANSWER_OPTIONS },
-  { symptom: {display: 'Atemnot in Ruhe', code: '567'},
-    answerOptions: PLUS_ANSWER_OPTIONS },
-  { symptom: {display: 'Kopf\u00ADschmerzen', code: '678'},
-    answerOptions: PLUS_ANSWER_OPTIONS },
-  { symptom: {display: 'Durchfall', code: '789'},
-    answerOptions: PLUS_ANSWER_OPTIONS },
-  { symptom: {display: 'Übelkeit', code: '890'},
-    answerOptions: PLUS_ANSWER_OPTIONS },
-  { symptom: {display: 'Geruchs\u00ADverlust', code: '901'},
-    answerOptions: PLUS_ANSWER_OPTIONS }
-]
 
 
 /**
