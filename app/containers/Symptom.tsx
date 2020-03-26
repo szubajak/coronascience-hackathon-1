@@ -6,11 +6,10 @@ import { HeaderBanner } from '../components/HeaderBanner'
 import { View, Text, Button } from 'native-base';
 import Slider from '@react-native-community/slider';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { Observation, CodeableConcept, ObservationStatus} from '@i4mi/fhir_r4'
+import { Observation, CodeableConcept, ObservationStatus, I4MIBundle, BundleType} from '@i4mi/fhir_r4'
 import { localeString } from '../locales';
 import { SYMPTOM_DATA } from '../../resources/static/symptoms'
 import { SYMPTOM_CATEGORY, SYMPTOM_SEVERITY_CODEABLE_CONCEPT } from '../../resources/static/codings'
-import { useNavigation } from '@react-navigation/native';
 
 // well, we need the FlatList, and we need vertical scrolling, and we don't care if its not lazy-loading because the list is not that big
 YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
@@ -55,6 +54,15 @@ class Symptom extends Component<PropsType, State> {
     this.setState({date: date});
   }
 
+  private createFhirBundle() {
+    const bundle = new I4MIBundle(BundleType.TRANSACTION);
+    // TODO: iterate through the subcomponents:
+    // - get their observations
+    // - add effectiveDateTime to every observation
+    // - put observations into bundle
+    // - safe bundle to MIDATA
+  }
+
   render() {
     return (
       <>
@@ -96,7 +104,7 @@ class Symptom extends Component<PropsType, State> {
             </View>
 
             <Button style={[AppStyle.button, {marginBottom: 40}]}>
-                <Text style={AppStyle.textButton}>Weiter</Text>
+                <Text style={AppStyle.textButton} onPress={() => this.createFhirBundle()}>Weiter</Text>
             </Button>
 
           </ScrollView>
