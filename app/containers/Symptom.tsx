@@ -140,10 +140,21 @@ class Symptom extends Component<PropsType, State> {
  * @param symptom: the symptom, with a display text property and a code (e.g. snomed or loinc)
  **/
 class SymptomSeverity extends Component<{symptom: {display: string, code: string}, answerOptions: [AnswerOption]}> {
-  select(option: AnswerOption) {
-    console.log('item selected', option);
-    option.selected = true;
+  state = {
+    answerOptions: this.props.answerOptions
   }
+
+  select(clicked: AnswerOption) {
+    this.state.answerOptions.forEach((option) => {
+      if(clicked.code === option.code) {
+        option.selected = true;
+      } else {
+        option.selected = false;
+      }
+    });
+    this.setState({answerOptions: this.state.answerOptions})
+  }
+
   render() {
     return (
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -154,13 +165,12 @@ class SymptomSeverity extends Component<{symptom: {display: string, code: string
             <FlatList
               horizontal
               alwaysBounceHorizontal = 'false'
-              data={this.props.answerOptions}
+              data={this.state.answerOptions}
               renderItem={({ item }) =>
-                <View style={{flex: 1, marginLeft: 5}}>
-                  <Button style={[AppStyle.button, item.selected ? styles.selectedButton : AppStyle.button]} onPress={() => this.select(item)}>
-                    <Text style={[AppStyle.textButton, item.selected ? styles.selectedTextButton : AppStyle.textButton]}>{item.display}</Text>
-                  </Button>
-                </View>}
+                <Button style={[AppStyle.button, item.selected ? styles.selectedButton : AppStyle.button, {flex: 1, marginLeft: 5}]} onPress={() => this.select(item)}>
+                  <Text style={[AppStyle.textButton, item.selected ? styles.selectedTextButton : AppStyle.textButton]}>{item.display}</Text>
+                </Button>
+              }
               keyExtractor={item => item.code}
             />
           </View>
