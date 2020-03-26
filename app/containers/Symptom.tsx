@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, StatusBar, Linking, Alert, Image, FlatList, YellowBox } from 'react-native';
-import AppStyle, { colors, AppFonts, TextSize } from '../styles/App.style';
+import { SafeAreaView, StyleSheet, ScrollView, Alert, Image, FlatList, YellowBox } from 'react-native';
+import AppStyle, { colors } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
-import { localeString } from '../locales';
 import { Col, Row, Grid } from "react-native-easy-grid";
-import { View, Container, Content, List, ListItem, Text, Body, Right, Picker, Header, Button, Icon } from 'native-base';
+import { View, Container, Content, List, ListItem, Text, Body, Right, Picker, Header, Button,  } from 'native-base';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
 import Slider from '@react-native-community/slider';
@@ -18,8 +17,6 @@ interface PropsType {
 }
 
 interface State {
-  isDateTimePickerVisible: boolean;
-  dateTimeSymptome: Date;
 }
 
 interface AnswerOption {
@@ -33,44 +30,9 @@ export enum YesNo{
   YES = 'Ja'
 }
 
-
-
-
 /**
- * Component to display a selector where the user can input a symptom severity$
- * @param symptom: the symptom, with a display text property and a code (e.g. snomed or loinc)
+ * Main class defining the component.
  **/
-class SymptomSeverity extends Component<{symptom: {display: string, code: string}, answerOptions: [AnswerOption]}> {
-  select(option: AnswerOption) {
-    console.log('item selected', option);
-    option.selected = true;
-  }
-  render() {
-    return (
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <View style={{flex: 1, justifyContent: 'center', marginTop: AppStyle.button.marginTop}}>
-            <Text style={[AppStyle.textQuestion]}>{this.props.symptom.display}</Text>
-          </View>
-          <View style={{alignItems: 'flex-end'}}>
-            <FlatList
-              horizontal
-              alwaysBounceHorizontal = 'false'
-              data={this.props.answerOptions}
-              renderItem={({ item }) =>
-                <View style={{flex: 1, marginLeft: 5}}>
-                  <Button style={[AppStyle.button, item.selected ? styles.selectedButton : AppStyle.button]} onPress={() => this.select(item)}>
-                    <Text style={[AppStyle.textButton, item.selected ? styles.selectedTextButton : AppStyle.textButton]}>{item.display}</Text>
-                  </Button>
-                </View>}
-              keyExtractor={item => item.code}
-            />
-          </View>
-      </View>
-    );
-  }
-}
-
-
 class Symptom extends Component<PropsType, State> {
 
   private dateChanged : boolean = false;
@@ -79,8 +41,6 @@ class Symptom extends Component<PropsType, State> {
     super(props);
 
     this.state ={
-      isDateTimePickerVisible: false,
-      dateTimeSymptome: new Date(),
     }
   }
 
@@ -144,34 +104,7 @@ class Symptom extends Component<PropsType, State> {
                 <Separator/>
               </View>
 
-              <View>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
-                  <Text style={[AppStyle.textQuestion]}>Temperatur (in C)</Text>
-                  <Text style={[AppStyle.textQuestion, {color: colors.secondaryNormal}]}>35.4°</Text>
-                </View>
-                <View>
-                  <Slider
-                    style={{width: '100%', height: 40}}
-                    minimumValue={35}
-                    maximumValue={41}
-                    step={0.1}
-                    value={36.5}
-                    thumbTintColor={colors.secondaryDark}
-                    minimumTrackTintColor={colors.secondaryLight}
-                    maximumTrackTintColor={colors.darGray}
-                  />
-                </View>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginTop: -8, marginHorizontal: 5}}>
-                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>35</Text>
-                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>36</Text>
-                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>37</Text>
-                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>38</Text>
-                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>39</Text>
-                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>40</Text>
-                  <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]}>41</Text>
-                </View>
-              </View>
-
+              <TemperatureSlider display="Temperatur (in C)" minimum={35} maximum={41} default={36.8} coding={{code: '123'}}/>
 
               <FlatList
                 data={SYMPTOM_DATA}
@@ -179,7 +112,6 @@ class Symptom extends Component<PropsType, State> {
                   <SymptomSeverity symptom={item.symptom} answerOptions={item.answerOptions} />}
                 keyExtractor={item => item.symptom.code}
               />
-
 
               <Separator/>
               {this.renderQuestion('Hast du den Verdacht, an COVID-19 zu leiden?')}
@@ -199,16 +131,132 @@ class Symptom extends Component<PropsType, State> {
 
 }
 
-const styles = StyleSheet.create({
-  columns: {
-    marginRight: 5
-  },
-  selectedButton: {
-    backgroundColor: colors.secondaryNormal
-  },
-  selectedTextButton: {
-    color: colors.white
+/**
+ * Subcomponents used in Symptom component
+ **/
+
+/**
+ * Component to display a selector where the user can input a symptom severity
+ * @param symptom: the symptom, with a display text property and a code (e.g. snomed or loinc)
+ **/
+class SymptomSeverity extends Component<{symptom: {display: string, code: string}, answerOptions: [AnswerOption]}> {
+  select(option: AnswerOption) {
+    console.log('item selected', option);
+    option.selected = true;
   }
+  render() {
+    return (
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{flex: 1, justifyContent: 'center', marginTop: AppStyle.button.marginTop}}>
+            <Text style={[AppStyle.textQuestion]}>{this.props.symptom.display}</Text>
+          </View>
+          <View style={{alignItems: 'flex-end'}}>
+            <FlatList
+              horizontal
+              alwaysBounceHorizontal = 'false'
+              data={this.props.answerOptions}
+              renderItem={({ item }) =>
+                <View style={{flex: 1, marginLeft: 5}}>
+                  <Button style={[AppStyle.button, item.selected ? styles.selectedButton : AppStyle.button]} onPress={() => this.select(item)}>
+                    <Text style={[AppStyle.textButton, item.selected ? styles.selectedTextButton : AppStyle.textButton]}>{item.display}</Text>
+                  </Button>
+                </View>}
+              keyExtractor={item => item.code}
+            />
+          </View>
+      </View>
+    );
+  }
+}
+
+/**
+ * Component to display a selector where the user can input a symptom severity$
+ * @param display the label to be shown
+ * @param minimum the minimal value of the slider
+ * @param maximum the maximal value of the slider
+ * @param default the default value the slider has when first rendered
+ * @param coding the coding for how the temperature should be returned when read
+ **/
+class TemperatureSlider extends Component<{display: string, minimum: number, maximum: number, default: number, coding: any}> {
+  state = {
+    temperature: this.props.default
+  };
+  labelNumbers = new Array<number>();
+  constructor(props: {display: string, minimum: number, maximum: number, default: number, coding: any}){
+    super(props);
+    for (let i = props.minimum; i <= props.maximum; i++) {
+      this.labelNumbers.push(i);
+    }
+  }
+
+  private temperatureToString(temperature: number) {
+    return temperature < this.props.minimum ?
+              '<' + this.props.minimum.toString() :
+              temperature > this.props.maximum ?
+                '>' + this.props.maximum.toString() :
+                temperature.toString();
+  }
+
+  /**
+   * Read the current temperature value as a string
+   * @return the temperature value in the format of '36.8', respectively like '<35' or '>41' if temperature is set to the very end of the slider
+   */
+  getTemperatureAsString() {
+    return this.temperatureToString(this.state.temperature);
+  }
+
+  /**
+   * Returns the current temperature as a coding (to be defined)
+   */
+  getTemperatureAsCoding() {
+    return {warning: 'not yet implemented'};
+  }
+
+  render() {
+    const labels = this.labelNumbers.map((number) =>
+      <Text style={[AppStyle.textQuestion, {color: colors.darkGray}]} key={number}>{number}</Text>
+    );
+    return (
+      <View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
+          <Text style={[AppStyle.textQuestion]}>Temperatur (in C)</Text>
+          <Text style={[AppStyle.textQuestion, {color: colors.secondaryNormal}]}>{this.temperatureToString(this.state.temperature)}°</Text>
+        </View>
+        <View>
+          <Slider
+            style={{width: '100%', height: 40}}
+            minimumValue={this.props.minimum - 0.1}
+            maximumValue={this.props.maximum + 0.1}
+            step={0.1}
+            value={this.state.temperature}
+            thumbTintColor={colors.secondaryDark}
+            minimumTrackTintColor={colors.secondaryLight}
+            maximumTrackTintColor={colors.darkGray}
+            onValueChange={temperature => this.setState({temperature: Math.round(temperature * 10)/10})}
+          />
+        </View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginTop: -8, marginHorizontal: 10}}>
+          {labels}
+        </View>
+      </View>
+    );
+  }
+}
+
+/**
+ * Styles
+ **/
+
+const styles = StyleSheet.create({
+ columns: {
+   marginRight: 5
+ },
+ selectedButton: {
+   backgroundColor: colors.secondaryNormal
+ },
+ selectedTextButton: {
+   color: colors.white
+ }
 });
 
 export default Symptom;
