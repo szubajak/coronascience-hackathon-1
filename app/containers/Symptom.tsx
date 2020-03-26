@@ -1,13 +1,15 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { SafeAreaView, StyleSheet, ScrollView, Alert, Image, FlatList, YellowBox } from 'react-native';
 import AppStyle, { colors } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
 import { View, Text, Button } from 'native-base';
 import Slider from '@react-native-community/slider';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { Observation, CodeableConcept, ObservationStatus} from '@i4mi/fhir_r4'
 import { localeString } from '../locales';
 import { SYMPTOM_DATA } from '../../resources/static/symptoms'
+import { SYMPTOM_CATEGORY, SYMPTOM_SEVERITY_CODEABLE_CONCEPT } from '../../resources/static/codings'
 
 // well, we need the FlatList, and we need vertical scrolling, and we don't care if its not lazy-loading because the list is not that big
 YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
@@ -15,13 +17,38 @@ YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
 interface PropsType {
 }
 
+interface SymptomSeverityPropsType {
+  symptom: {
+    display: string;
+    code: CodeableConcept;
+    key: string;
+  },
+  answerOptions: [AnswerOption];
+}
+
+interface TemperatureSliderPropsType {
+  display: string;
+  minimum: number;
+  maximum: number;
+  default: number;
+  coding: any; // TODO, probably CodeableConcept
+}
+
 interface State {
+  showDatePicker: boolean;
+  date: Date;
+}
+
+interface TemperatureSliderState {
+    temperature: number;
+    enabled: boolean;
 }
 
 interface AnswerOption {
   display: string;
-  code: string;
-  selected: boolean
+  key: string;
+  code: CodeableConcept;
+  selected: boolean;
 }
 
 
@@ -31,7 +58,6 @@ interface AnswerOption {
 class Symptom extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
-
     this.state = {
       showDatePicker: false,
       date: new Date()
@@ -81,17 +107,17 @@ class Symptom extends Component<PropsType, State> {
               data={SYMPTOM_DATA}
               renderItem={({ item }) =>
                 <SymptomSeverity symptom={item.symptom} answerOptions={item.answerOptions} clickCallback={this.handleSymptomInput} />}
-              keyExtractor={item => item.symptom.code}
+              keyExtractor={item => item.symptom.key}
             />
 
             <View style={{flexDirection: 'row', marginTop: 25, marginBottom: 10, alignSelf: 'center'}}>
               <View style={{marginRight: '10%'}}>
-              <Text style={[AppStyle.textQuestion]}>0 = keine</Text>
-              <Text style={[AppStyle.textQuestion]}>+ = leichte</Text>
+              <Text style={[AppStyle.textQuestion]}>0 = {localeString('severity.none')}</Text>
+              <Text style={[AppStyle.textQuestion]}>+ = {localeString('severity.mild')}</Text>
               </View>
               <View>
-              <Text style={[AppStyle.textQuestion]}>++ = mittel</Text>
-              <Text style={[AppStyle.textQuestion]}>+++ = stark</Text>
+              <Text style={[AppStyle.textQuestion]}>++ = {localeString('severity.moderate')}</Text>
+              <Text style={[AppStyle.textQuestion]}>+++ = {localeString('severity.severe')}</Text>
               </View>
             </View>
 
@@ -128,27 +154,43 @@ class Symptom extends Component<PropsType, State> {
  * Component to display a selector where the user can input a symptom severity
  * @param symptom: the symptom, with a display text property and a code (e.g. snomed or loinc)
  **/
-class SymptomSeverity extends Component<{symptom: {display: string, code: string}, answerOptions: [AnswerOption], (clickCallback: any): void}> {
+class SymptomSeverity extends Component<SymptomSeverityPropsType> {
+  fhirSymptom: Observation;
   state = {
     answerOptions: this.props.answerOptions
   }
 
-  select(clicked: AnswerOption) {
+  constructor(props: SymptomSeverityPropsType) {
+    super(props);
+    // build the basic FHIR resource
+    this.fhirSymptom = {
+      resourceType: 'Observation',
+      status: ObservationStatus.PRELIMINARY,
+      code: props.symptom.code,
+      category: SYMPTOM_CATEGORY.survey,
+      valueCodeableConcept: SYMPTOM_SEVERITY_CODEABLE_CONCEPT.none // default is none
+    }
+  }
+
+  private select(clicked: AnswerOption) {
     this.state.answerOptions.forEach((option) => {
       if(clicked.code === option.code) {
         option.selected = true;
+        // this safes the selected option to the fhir object
+        this.fhirSymptom.valueCodeableConcept = clicked.code;
       } else {
         option.selected = false;
       }
     });
-
-    // TODOD: define correct coding
-    this.props.clickCallback({
-      code: this.props.symptom.code,
-      display: this.props.symptom.display,
-      value: clicked.code
-    })
     this.setState({answerOptions: this.state.answerOptions});
+  }
+
+  /**
+   * Returns the current symptom and its selected severity encoded as a fhir Observation.
+   * Just add effectiveDateTime and you're good to go.
+   **/
+  getSymptomAsFhir(): Observation {
+    return this.fhirSymptom;
   }
 
   render() {
@@ -160,9 +202,9 @@ class SymptomSeverity extends Component<{symptom: {display: string, code: string
         <View style={{alignItems: 'flex-end'}}>
           <FlatList
             horizontal
-            alwaysBounceHorizontal = 'false'
+            alwaysBounceHorizontal = {false}
             data={this.state.answerOptions}
-            keyExtractor={item => item.code}
+            keyExtractor={item => item.key}
             renderItem={({ item }) =>
               <Button style={[AppStyle.button, item.selected ? styles.selectedButton : AppStyle.button, {flex: 1, marginLeft: 5}]} onPress={() => this.select(item)}>
                 <Text style={[AppStyle.textButton, item.selected ? styles.selectedTextButton : AppStyle.textButton]}>{item.display}</Text>
@@ -186,16 +228,24 @@ class SymptomSeverity extends Component<{symptom: {display: string, code: string
  * @param default the default value the slider has when first rendered
  * @param coding the coding for how the temperature should be returned when read
  **/
-class TemperatureSlider extends Component<{display: string, minimum: number, maximum: number, default: number, coding: any}> {
+class TemperatureSlider extends Component<TemperatureSliderPropsType, TemperatureSliderState> {
+  temperatureFhir: Observation;
   state = {
     temperature: this.props.default,
     enabled: true
   };
   labelNumbers = new Array<number>();
-  constructor(props: {display: string, minimum: number, maximum: number, default: number, coding: any}){
+
+  constructor(props: TemperatureSliderPropsType){
     super(props);
     for (let i = props.minimum; i <= props.maximum; i++) {
       this.labelNumbers.push(i);
+    }
+    this.temperatureFhir = {
+      resourceType: 'Observation',
+      status: ObservationStatus.PRELIMINARY,
+      code: {}
+      // TODO more to come
     }
   }
 
@@ -219,10 +269,12 @@ class TemperatureSlider extends Component<{display: string, minimum: number, max
   }
 
   /**
-   * Returns the current temperature as a coding (to be defined)
+   * Returns the current temperature as a fhir observation.
+   * Just add effectiveDateTime and you're good to go.
    */
-  getTemperatureAsCoding() {
-    return {warning: 'not yet implemented'};
+  getTemperatureAsFhir(): Observation {
+    // TODO: correctly add temperature
+    return this.temperatureFhir;
   }
 
   render() {
