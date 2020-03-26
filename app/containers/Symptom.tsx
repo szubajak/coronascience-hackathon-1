@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, Alert, Image, FlatList, YellowBox } from 'react-native';
+import { SafeAreaView, StyleSheet, ScrollView, Image, FlatList, YellowBox } from 'react-native';
 import AppStyle, { colors } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
@@ -10,47 +10,19 @@ import { Observation, CodeableConcept, ObservationStatus} from '@i4mi/fhir_r4'
 import { localeString } from '../locales';
 import { SYMPTOM_DATA } from '../../resources/static/symptoms'
 import { SYMPTOM_CATEGORY, SYMPTOM_SEVERITY_CODEABLE_CONCEPT } from '../../resources/static/codings'
+import { useNavigation } from '@react-navigation/native';
 
 // well, we need the FlatList, and we need vertical scrolling, and we don't care if its not lazy-loading because the list is not that big
 YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
 
 interface PropsType {
-}
-
-interface SymptomSeverityPropsType {
-  symptom: {
-    display: string;
-    code: CodeableConcept;
-    key: string;
-  },
-  answerOptions: [AnswerOption];
-}
-
-interface TemperatureSliderPropsType {
-  display: string;
-  minimum: number;
-  maximum: number;
-  default: number;
-  coding: any; // TODO, probably CodeableConcept
+  navigation: any;
 }
 
 interface State {
   showDatePicker: boolean;
   date: Date;
 }
-
-interface TemperatureSliderState {
-    temperature: number;
-    enabled: boolean;
-}
-
-interface AnswerOption {
-  display: string;
-  key: string;
-  code: CodeableConcept;
-  selected: boolean;
-}
-
 
 /**
  * Main class defining the component.
@@ -61,12 +33,14 @@ class Symptom extends Component<PropsType, State> {
     this.state = {
       showDatePicker: false,
       date: new Date()
-    }
+    };
   }
 
-  // TODO: correct handling
-  private handleSymptomInput(input: any) {
-    Alert.alert(input.display + '\n has value: ' + input.value);
+  componentDidMount() {
+    // refresh date and time every time the component is shown
+    this.props.navigation.addListener('focus', () => {
+      this.setState({date: new Date()})
+    });
   }
 
   private formattedDateTime(date: Date): string {
@@ -106,7 +80,7 @@ class Symptom extends Component<PropsType, State> {
             <FlatList
               data={SYMPTOM_DATA}
               renderItem={({ item }) =>
-                <SymptomSeverity symptom={item.symptom} answerOptions={item.answerOptions} clickCallback={this.handleSymptomInput} />}
+                <SymptomSeverity symptom={item.symptom} answerOptions={item.answerOptions}/>}
               keyExtractor={item => item.symptom.key}
             />
 
@@ -149,6 +123,22 @@ class Symptom extends Component<PropsType, State> {
 /**
  * Subcomponents used in Symptom component
  **/
+
+interface SymptomSeverityPropsType {
+  symptom: {
+    display: string;
+    code: CodeableConcept;
+    key: string;
+  },
+  answerOptions: AnswerOption[];
+}
+
+interface AnswerOption {
+  display: string;
+  key: string;
+  code: CodeableConcept;
+  selected: boolean;
+}
 
 /**
  * Component to display a selector where the user can input a symptom severity
@@ -215,6 +205,20 @@ class SymptomSeverity extends Component<SymptomSeverityPropsType> {
       </View>
     );
   }
+}
+
+
+interface TemperatureSliderPropsType {
+  display: string;
+  minimum: number;
+  maximum: number;
+  default: number;
+  coding: any; // TODO, probably CodeableConcept
+}
+
+interface TemperatureSliderState {
+  temperature: number;
+  enabled: boolean;
 }
 
 /**
