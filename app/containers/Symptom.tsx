@@ -4,7 +4,7 @@ import AppStyle, { colors } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
 import { Col, Row, Grid } from "react-native-easy-grid";
-import { View, Container, Content, List, ListItem, Text, Body, Right, Picker, Header, Button,  } from 'native-base';
+import { View, Container, Content, List, ListItem, Text, Body, Right, Picker, Header, Button, Switch, CheckBox,  } from 'native-base';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
 import Slider from '@react-native-community/slider';
@@ -91,39 +91,39 @@ class Symptom extends Component<PropsType, State> {
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
             <HeaderBanner title='Erfassung'/>
             <ScrollView
-                style={{height: '100%', paddingHorizontal:'5%', paddingTop: 20}}
-                contentInsetAdjustmentBehavior="automatic">
-                <View>
-                  <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <Text style={[AppStyle.sectionTitle]}>Symptome</Text>
-                    <View style={{flexDirection: 'row', marginTop: 5}}>
-                      <Text style={[AppStyle.textQuestion]}>{new Date().toString().slice(4,21)}</Text>
-                      <Image source={require('../../resources/images/icon_add.png')} style={{width: 15, height: 15}} />
-                    </View>
+              style={{height: '100%', paddingHorizontal:'5%', paddingTop: 20}}
+              contentInsetAdjustmentBehavior="automatic">
+              <View>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                  <Text style={[AppStyle.sectionTitle]}>Symptome</Text>
+                  <View style={{flexDirection: 'row', marginTop: 5}}>
+                    <Text style={[AppStyle.textQuestion]}>{new Date().toString().slice(4,21)}</Text>
+                    <Image source={require('../../resources/images/icon_add.png')} style={{width: 15, height: 15}} />
                   </View>
-                <Separator/>
-              </View>
+                </View>
+              <Separator/>
+            </View>
 
-              <TemperatureSlider display="Temperatur (in C)" minimum={35} maximum={41} default={36.8} coding={{code: '123'}}/>
+            <TemperatureSlider display="Körpertemperatur (in °C)" minimum={36} maximum={42} default={36.8} coding={{code: '123'}}/>
 
-              <FlatList
-                data={SYMPTOM_DATA}
-                renderItem={({ item }) =>
-                  <SymptomSeverity symptom={item.symptom} answerOptions={item.answerOptions} />}
-                keyExtractor={item => item.symptom.code}
-              />
+            <FlatList
+              data={SYMPTOM_DATA}
+              renderItem={({ item }) =>
+                <SymptomSeverity symptom={item.symptom} answerOptions={item.answerOptions} />}
+              keyExtractor={item => item.symptom.code}
+            />
 
-              <Separator/>
-              {this.renderQuestion('Hast du den Verdacht, an COVID-19 zu leiden?')}
-              <Separator/>
-              {this.renderQuestion('Ist jemand aus deinem nahen Umfeld infiziert?')}
-              <Separator/>
-              {this.renderQuestion('Befindest du dich mehrheutlicht zu Hause?')}
-              <Separator/>
-              {this.renderQuestion('Hast du eine Arztpraxis oder eine Notfallaufnahme kontaktiert?')}
-              <Separator/>
-              {this.renderQuestion('Wurdest du auf COVID-19 getestet?')}
-            </ScrollView>
+            <Separator/>
+            {this.renderQuestion('Hast du den Verdacht, an COVID-19 zu leiden?')}
+            <Separator/>
+            {this.renderQuestion('Ist jemand aus deinem nahen Umfeld infiziert?')}
+            <Separator/>
+            {this.renderQuestion('Befindest du dich mehrheutlicht zu Hause?')}
+            <Separator/>
+            {this.renderQuestion('Hast du eine Arztpraxis oder eine Notfallaufnahme kontaktiert?')}
+            <Separator/>
+            {this.renderQuestion('Wurdest du auf COVID-19 getestet?')}
+          </ScrollView>
         </SafeAreaView>
       </>
     );
@@ -179,7 +179,8 @@ class SymptomSeverity extends Component<{symptom: {display: string, code: string
  **/
 class TemperatureSlider extends Component<{display: string, minimum: number, maximum: number, default: number, coding: any}> {
   state = {
-    temperature: this.props.default
+    temperature: this.props.default,
+    enabled: true
   };
   labelNumbers = new Array<number>();
   constructor(props: {display: string, minimum: number, maximum: number, default: number, coding: any}){
@@ -190,11 +191,13 @@ class TemperatureSlider extends Component<{display: string, minimum: number, max
   }
 
   private temperatureToString(temperature: number) {
-    return temperature < this.props.minimum ?
-              '<' + this.props.minimum.toString() :
-              temperature > this.props.maximum ?
-                '>' + this.props.maximum.toString() :
-                temperature.toString();
+
+    return !this.state.enabled ?
+          ' ' : temperature < this.props.minimum ?
+            '<' + this.props.minimum.toString() + ' °C':
+            temperature > this.props.maximum ?
+              '>' + this.props.maximum.toString() + ' °C' :
+              temperature.toString() + ' °C';
   }
 
   /**
@@ -218,26 +221,36 @@ class TemperatureSlider extends Component<{display: string, minimum: number, max
     );
     return (
       <View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
-          <Text style={[AppStyle.textQuestion]}>Temperatur (in C)</Text>
-          <Text style={[AppStyle.textQuestion, {color: colors.secondaryNormal}]}>{this.temperatureToString(this.state.temperature)}°</Text>
-        </View>
         <View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
+          <View style={{flexDirection: 'row'}}><Text style={[AppStyle.textQuestion]}>Temperatur gemessen</Text></View>
+          <View style={{flexDirection: 'row'}}>
+            <Button style={[AppStyle.button, this.state.enabled ? styles.selectedButton : AppStyle.button, {width: 68, marginTop: -7, borderTopRightRadius: 0, borderBottomRightRadius: 0}]} onPress={() => {this.setState({enabled: !this.state.enabled})}}>
+                <Text style={[AppStyle.textButton, this.state.enabled ? styles.selectedTextButton : AppStyle.textButton]}>Ja</Text>
+            </Button>
+            <Button style={[AppStyle.button, !this.state.enabled ? styles.selectedButton : AppStyle.button, {width: 68, marginTop: -7, borderTopLeftRadius: 0, borderBottomLeftRadius: 0}]} onPress={() => {this.setState({enabled: !this.state.enabled})}}>
+                <Text style={[AppStyle.textButton, !this.state.enabled ? styles.selectedTextButton : AppStyle.textButton]}>Nein</Text>
+            </Button>
+          </View>
+        </View>
+        <Text style={[AppStyle.textQuestion, {color: colors.secondaryNormal, alignSelf: 'center', marginTop: 10}]}>{this.temperatureToString(this.state.temperature)}</Text>
           <Slider
             style={{width: '100%', height: 40}}
             minimumValue={this.props.minimum - 0.1}
             maximumValue={this.props.maximum + 0.1}
             step={0.1}
+            disabled={!this.state.enabled}
             value={this.state.temperature}
             thumbTintColor={colors.secondaryDark}
             minimumTrackTintColor={colors.secondaryLight}
             maximumTrackTintColor={colors.darkGray}
             onValueChange={temperature => this.setState({temperature: Math.round(temperature * 10)/10})}
           />
-        </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginTop: -8, marginHorizontal: 10}}>
           {labels}
         </View>
+        </View>
+
       </View>
     );
   }

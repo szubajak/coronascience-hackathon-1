@@ -18,6 +18,6 @@ export const SYMPTOM_DATA = [
     answerOptions: SYMPTOM_ANSWER_OPTIONS },
   { symptom: {display: 'Übelkeit', code: '890'},
     answerOptions: SYMPTOM_ANSWER_OPTIONS },
-  { symptom: {display: 'Geruchs\u00ADverlust', code: '901'},
+  { symptom: {display: 'Geruchs- / Geschmacks\u00ADverlust', code: '901'},
     answerOptions: SYMPTOM_ANSWER_OPTIONS }
 ]
