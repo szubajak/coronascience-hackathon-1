@@ -24,7 +24,7 @@ class Profile extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
     this.state = {
-      isLogged: false,
+      isLogged: true,
       isLoginPopupVisible: true
     };
     this.props.navigation.addListener('focus', this.onScreenFocus)

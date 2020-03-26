@@ -23,6 +23,8 @@ class ModalBaseScene extends Component<PropType, State> {
 
   open = () => this.setState({visible: true} as any);
   close = () => this.setState({visible: false} as any);
+  onSwipeComplete = () => this.props.onClose;
+
   isVisible = () => this.state.visible;
   
   render() {
@@ -34,7 +36,7 @@ class ModalBaseScene extends Component<PropType, State> {
           testID={'modal'}
           isVisible={this.state.visible}
           onSwipeComplete={this.close.bind(this)}
-          swipeDirection={['up', 'left', 'right', 'down']}
+          swipeDirection={['down']}
           // custom props :
           { ...this.props}
           // merged styles :
