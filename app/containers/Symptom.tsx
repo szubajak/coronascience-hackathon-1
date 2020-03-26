@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { SafeAreaView, StyleSheet, ScrollView, Alert, Image, FlatList, YellowBox } from 'react-native';
 import AppStyle, { colors } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
 import { View, Text, Button } from 'native-base';
 import Slider from '@react-native-community/slider';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { localeString } from '../locales';
 import { SYMPTOM_DATA } from '../../resources/static/symptoms'
 
 // well, we need the FlatList, and we need vertical scrolling, and we don't care if its not lazy-loading because the list is not that big
@@ -27,18 +29,30 @@ interface AnswerOption {
  * Main class defining the component.
  **/
 class Symptom extends Component<PropsType, State> {
-  private dateChanged : boolean = false;
-
   constructor(props: PropsType) {
     super(props);
 
-    this.state ={
+    this.state = {
+      showDatePicker: false,
+      date: new Date()
     }
   }
 
   // TODO: correct handling
   private handleSymptomInput(input: any) {
     Alert.alert(input.display + '\n has value: ' + input.value);
+  }
+
+  private formattedDateTime(date: Date): string {
+    const month = localeString('month')[date.getMonth()];
+    const hours = date.getHours();
+    let minutes = date.getMinutes();
+    return date.getDate() + '. ' + month + ' ' + date.getFullYear() + ', ' + hours + ':' + (minutes > 9 ? minutes.toString() : '0' + minutes.toString());
+  }
+
+  private processDatePickerInput(date: Date) {
+    this.setState({showDatePicker: false});
+    this.setState({date: date});
   }
 
   render() {
@@ -54,7 +68,7 @@ class Symptom extends Component<PropsType, State> {
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                   <Text style={[AppStyle.sectionTitle]}>Symptome</Text>
                   <View style={{flexDirection: 'row', marginTop: 5}}>
-                    <Text style={[AppStyle.textQuestion]}>{new Date().toString().slice(4,21)}</Text>
+                    <Text style={[AppStyle.textQuestion]} onPress={() => this.setState({showDatePicker: true})}>vom {this.formattedDateTime(this.state.date)}</Text>
                     <Image source={require('../../resources/images/icon_add.png')} style={{width: 15, height: 15}} />
                   </View>
                 </View>
@@ -86,6 +100,20 @@ class Symptom extends Component<PropsType, State> {
             </Button>
 
           </ScrollView>
+
+          <DateTimePickerModal
+            isVisible={this.state.showDatePicker}
+            headerTextIOS="Für welchen Zeitpunkt möchtest du die Symptome erfassen?"
+            cancelTextIOS="Abbrechen"
+            confirmTextIOS="OK"
+            locale="de"
+            maximumDate={new Date()}
+            mode="datetime"
+            minuteInterval={15}
+            onConfirm={date => this.processDatePickerInput(date)}
+            onCancel={() => this.setState({showDatePicker: false})}
+          />
+
         </SafeAreaView>
       </>
     );
