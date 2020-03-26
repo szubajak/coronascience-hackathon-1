@@ -1,6 +1,5 @@
-import React from 'react';
-import Modal from 'react-native-modal';
-import LoginBaseScene from './LoginBaseScene';
+import React, { Component, RefObject } from 'react';
+import ModalBaseScene from './ModalBaseScene';
 import AppStyle, {colors, TextSize} from '../styles/App.style';
 import {StyleSheet, View} from 'react-native';
 import {Button, Text} from 'native-base'
@@ -8,16 +7,18 @@ import Svg, {Defs, LinearGradient, Rect, Stop} from 'react-native-svg';
 import {TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-class Login extends LoginBaseScene {
+type PropType = {
+  isLoginOpen: boolean;
+  onClose: ()=>void;
+}
 
-  renderModal(): React.ReactElement<any> {
+class Login extends Component<PropType> {
+
+  render() {
     return (
-      <Modal
-        testID={'modal'}
-        isVisible={this.isVisible()}
-        onSwipeComplete={this.close}
-        swipeDirection={['up', 'left', 'right', 'down']}
-        style={styles.view}>
+      <ModalBaseScene
+        style={styles.view}
+        isVisible={this.props.isLoginOpen}>
         <View>
           <Svg width='100%' height='250'>
             <Defs>
@@ -29,7 +30,7 @@ class Login extends LoginBaseScene {
             <Rect x='0' y='0' width='100%' height='100%' fill='url(#linearMain)'/>
           </Svg>
           <View style={styles.viewContainer}>
-            <TouchableHighlight onPress={this.close} style={{left:10, position: "absolute"}}>
+            <TouchableHighlight onPress={this.props.onClose} style={{left:10, position: "absolute"}}>
                 <Icon name='close' color={colors.white} size={25} />
             </TouchableHighlight>
             <Text style={styles.titleText}>
@@ -45,7 +46,7 @@ class Login extends LoginBaseScene {
             </Button>
           </View>
         </View>
-      </Modal>
+      </ModalBaseScene>
     );
   }
 }
