@@ -13,7 +13,6 @@ interface PropsType {
 interface State {
 }
 
-
 class Twitter extends Component<PropsType, State> {
 
   constructor(props: PropsType) {
@@ -21,128 +20,127 @@ class Twitter extends Component<PropsType, State> {
     this.getAllyScienceTweets();
   }
 
-    state = {
-      tweetList: [],
-      isConnected : true,
-      viewWidth: 0
-    }
+  state = {
+    tweetList: [],
+    isConnected : true,
+    viewWidth: 0
+  }
 
-    // componentDidMount() {
-    //   NetInfo.addEventListener(state => {
-    //     this.setState(state.isConnected);
-    //   });
-    // }
+  // componentDidMount() {
+  //   NetInfo.addEventListener(state => {
+  //     this.setState(state.isConnected);
+  //   });
+  // }
 
+  getAllyScienceTweets() {
+    let TWITTER_BEARER='AAAAAAAAAAAAAAAAAAAAAPha9wAAAAAAnAey0XZGomjlFBsfYsMJ1iYUbfk%3DF1hxES5gZSoxe839Pr22KSsnec3Y4ZTWTQJCvUweOJC9w8BbEJ'
+    let bearer = 'Bearer ' + TWITTER_BEARER;
+    return fetch('https://api.twitter.com/1.1/statuses/user_timeline.json?count=50&screen_name=BAG_OFSP_UFSP&tweet_mode=extended',{
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+              'Authorization': bearer,
+              'Content-Type': 'application/json'
+            }})
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log("responseJson is :", responseJson )
+        this.setState({tweetList : responseJson});
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
-    getAllyScienceTweets() {
-      let TWITTER_BEARER='AAAAAAAAAAAAAAAAAAAAAPha9wAAAAAAnAey0XZGomjlFBsfYsMJ1iYUbfk%3DF1hxES5gZSoxe839Pr22KSsnec3Y4ZTWTQJCvUweOJC9w8BbEJ'
-      let bearer = 'Bearer ' + TWITTER_BEARER;
-      return fetch('https://api.twitter.com/1.1/statuses/user_timeline.json?count=50&screen_name=BAG_OFSP_UFSP&tweet_mode=extended',{
-              method: 'GET',
-              credentials: 'include',
-              headers: {
-                'Authorization': bearer,
-                'Content-Type': 'application/json'
-              }})
-        .then((response) => response.json())
-        .then((responseJson) => {
-          console.log("responseJson is :", responseJson )
-          this.setState({tweetList : responseJson});
-        })
-        .catch((error) => {
-          console.error(error);
+  getAllIndiceEntitiesWithLink(entities){
+
+    var arrayOfDict:any = []; // create an empty array
+    
+    entities.urls.map(url => {
+      arrayOfDict.push({
+        url:   url.url,
+        description: url.display_url,
+        indices : url.indices
         });
-    }
+    });
 
-    getAllIndiceEntitiesWithLink(entities){
+    entities.hashtags.map(hashTag => {
+      arrayOfDict.push({
+        url:  'https://twitter.com/hashtag/'+ hashTag.text,
+        description: '#' + hashTag.text,
+        indices : hashTag.indices
+        });
+    });
 
-      var arrayOfDict:any = []; // create an empty array
-      
-      entities.urls.map(url => {
+    entities.user_mentions.map(user => {
+      arrayOfDict.push({
+        url:  'https://twitter.com/'+ user.screen_name,
+        description: '@' + user.screen_name,
+        indices : user.indices
+        });
+    });
+
+    if(entities.media != undefined){
+      entities.media.map(media => {
         arrayOfDict.push({
-          url:   url.url,
-          description: url.display_url,
-          indices : url.indices
+          url:  '',
+          description: '',
+          indices : media.indices
           });
       });
-
-      entities.hashtags.map(hashTag => {
-        arrayOfDict.push({
-          url:  'https://twitter.com/hashtag/'+ hashTag.text,
-          description: '#' + hashTag.text,
-          indices : hashTag.indices
-          });
-      });
-
-      entities.user_mentions.map(user => {
-        arrayOfDict.push({
-          url:  'https://twitter.com/'+ user.screen_name,
-          description: '@' + user.screen_name,
-          indices : user.indices
-          });
-      });
-
-      if(entities.media != undefined){
-        entities.media.map(media => {
-          arrayOfDict.push({
-            url:  '',
-            description: '',
-            indices : media.indices
-            });
-        });
-      }
-      
-      return arrayOfDict.sort(this.compare);
     }
+    
+    return arrayOfDict.sort(this.compare);
+  }
 
-    compare( a: any, b: any ) {
-      if ( a.indices[0] < b.indices[0] ){
-        return -1;
-      }
-      if ( a.indices[0] > b.indices[0] ){
-        return 1;
-      }
-      return 0;
+  compare( a: any, b: any ) {
+    if ( a.indices[0] < b.indices[0] ){
+      return -1;
     }
+    if ( a.indices[0] > b.indices[0] ){
+      return 1;
+    }
+    return 0;
+  }
 
-    renderSeparator = () => {
-        return (
-          <View
-            style={{
-              height: 1,
-              width: "90%",
-              backgroundColor: "#CED0CE",
-              marginLeft: "10%"
-            }}
-          />
-        );
-      };
+  renderSeparator = () => {
+      return (
+        <View
+          style={{
+            height: 1,
+            width: "90%",
+            backgroundColor: "#CED0CE",
+            marginLeft: "10%"
+          }}
+        />
+      );
+    };
 
-      goToURL(myUrl: string) {
-        Linking.canOpenURL(myUrl).then(supported => {
-          if (supported) {
-            Linking.openURL(myUrl);
-          } else {
-            console.log('Don\'t know how to open URI: ' + myUrl);
-          }
-        });
-      }
+    goToURL(myUrl: string) {
+      Linking.canOpenURL(myUrl).then(supported => {
+        if (supported) {
+          Linking.openURL(myUrl);
+        } else {
+          console.log('Don\'t know how to open URI: ' + myUrl);
+        }
+      });
+    }
 
     render() {
       if (!this.state.isConnected) {
         return  <View>
-                <View style={{flex: 1, flexDirection: 'row', paddingHorizontal: 50, paddingVertical: 40.}}>
-                  <Image
-                    style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
-                    source={require('../../resources/images/twitter/twitter-logo.png')}
-                  />
-                <View style={{flex: 3, flexDirection: 'row', width: '60%', alignItems: 'center'}}>
-                  <Text>{localeString('dashboard.twitterCard.title')}</Text>
-                </View>
-              </View>
-                <View>
-                  <Text style={styles.tweetText}> {localeString('dashboard.twitterCard.no_connection_message')} </Text>  
-                </View>
+                  <View style={{flex: 1, flexDirection: 'row', paddingHorizontal: 50, paddingVertical: 40.}}>
+                    <Image
+                      style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
+                      source={require('../../resources/images/twitter/twitter-logo.png')}
+                    />
+                    <View style={{flex: 3, flexDirection: 'row', width: '60%', alignItems: 'center'}}>
+                      <Text>{localeString('dashboard.twitterCard.title')}</Text>
+                    </View>
+                  </View>
+                  <View>
+                    <Text style={styles.tweetText}> {localeString('dashboard.twitterCard.no_connection_message')} </Text>  
+                  </View>
               </View>
       }else{
         return  <View>
@@ -151,23 +149,20 @@ class Twitter extends Component<PropsType, State> {
                       style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
                       source={require('../../resources/images/twitter/twitter-logo.png')}
                     />
-                  <View style={{flex: 3, flexDirection: 'row', width: '60%', alignItems: 'center'}}>
-                    <Text>{localeString('dashboard.twitterCard.title')}</Text>
+                    <View style={{flex: 3, flexDirection: 'row', width: '60%', alignItems: 'center'}}>
+                      <Text>{localeString('dashboard.twitterCard.title')}</Text>
+                    </View>
                   </View>
-                </View>
-                  <View>
+                <View>
 
-
-
-                  <ScrollView
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    scrollEventThrottle={200}
-                    //pagingEnabled
-                    decelerationRate="fast"
-                  >
+                <ScrollView
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  scrollEventThrottle={200}
+                  //pagingEnabled
+                  decelerationRate="fast"
+                >
                     {this.state.tweetList.map((item: any, index: number) => {
-                          
                             let i = 0;
                             let urlNextIndice = 0;
                             let isRetweeted = false;
@@ -187,7 +182,7 @@ class Twitter extends Component<PropsType, State> {
     
                             return(
                               //width: Math.round(Dimensions.get('window').width - 40)
-                              <View style={{width: 250, marginRight: 25, paddingHorizontal: 5, height: 150, borderWidth: 1, borderColor: 'lightgray'}}>
+                              <View style={{width: 275, marginRight: 25, paddingHorizontal: 5, height: 150, borderWidth: 1, borderColor: 'lightgray', backgroundColor:colors.white}}>
                               
                                 {isRetweeted ?
                                 (
