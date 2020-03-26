@@ -61,28 +61,10 @@ class Symptom extends Component<PropsType, State> {
     this.dateChanged = true;
   }
 
-  renderQuestion(_question : String){
-    return (
-      <View>
-        <Text style={[AppStyle.textQuestion]}>
-            {_question}
-        </Text>
-        <Grid>
-          <Row>
-                {[YesNo.YES, YesNo.NO].map((value, index) => (
-                  <Col key={index} style={[styles.columns]}>
-                    <Button style={[AppStyle.button]}
-                      onPress={() => Alert.alert('danke')}>
-                      <Text style={[AppStyle.textButton]}>
-                        {value}
-                      </Text>
-                    </Button>
-                  </Col>
-                ))}
-          </Row>
-        </Grid>
-    </View>
-  )};
+  // TODO: correct handling
+  private handleSymptomInput(input: any) {
+    Alert.alert(input.display + '\n has value: ' + input.value);
+  }
 
   render() {
     return (
@@ -109,20 +91,23 @@ class Symptom extends Component<PropsType, State> {
             <FlatList
               data={SYMPTOM_DATA}
               renderItem={({ item }) =>
-                <SymptomSeverity symptom={item.symptom} answerOptions={item.answerOptions} />}
+                <SymptomSeverity symptom={item.symptom} answerOptions={item.answerOptions} clickCallback={this.handleSymptomInput} />}
               keyExtractor={item => item.symptom.code}
             />
 
-            <Separator/>
-            {this.renderQuestion('Hast du den Verdacht, an COVID-19 zu leiden?')}
-            <Separator/>
-            {this.renderQuestion('Ist jemand aus deinem nahen Umfeld infiziert?')}
-            <Separator/>
-            {this.renderQuestion('Befindest du dich mehrheutlicht zu Hause?')}
-            <Separator/>
-            {this.renderQuestion('Hast du eine Arztpraxis oder eine Notfallaufnahme kontaktiert?')}
-            <Separator/>
-            {this.renderQuestion('Wurdest du auf COVID-19 getestet?')}
+            <View style={{flexDirection: 'row', marginTop: 25, marginBottom: 10, alignSelf: 'center'}}>
+              <View style={{marginRight: '10%'}}>
+              <Text style={[AppStyle.textQuestion]}>0 = keine</Text>
+              <Text style={[AppStyle.textQuestion]}>+ = leichte</Text>
+              </View>
+              <View>
+              <Text style={[AppStyle.textQuestion]}>++ = mittel</Text>
+              <Text style={[AppStyle.textQuestion]}>+++ = stark</Text>
+              </View>
+            </View>
+            <Button style={[AppStyle.button, {marginBottom: 40}]}>
+                <Text style={AppStyle.textButton}>Weiter</Text>
+            </Button>
           </ScrollView>
         </SafeAreaView>
       </>
@@ -139,7 +124,7 @@ class Symptom extends Component<PropsType, State> {
  * Component to display a selector where the user can input a symptom severity
  * @param symptom: the symptom, with a display text property and a code (e.g. snomed or loinc)
  **/
-class SymptomSeverity extends Component<{symptom: {display: string, code: string}, answerOptions: [AnswerOption]}> {
+class SymptomSeverity extends Component<{symptom: {display: string, code: string}, answerOptions: [AnswerOption], (clickCallback: any): void}> {
   state = {
     answerOptions: this.props.answerOptions
   }
@@ -152,7 +137,14 @@ class SymptomSeverity extends Component<{symptom: {display: string, code: string
         option.selected = false;
       }
     });
-    this.setState({answerOptions: this.state.answerOptions})
+
+    // TODOD: define correct coding
+    this.props.clickCallback({
+      code: this.props.symptom.code,
+      display: this.props.symptom.display,
+      value: clicked.code
+    })
+    this.setState({answerOptions: this.state.answerOptions});
   }
 
   render() {
@@ -180,7 +172,10 @@ class SymptomSeverity extends Component<{symptom: {display: string, code: string
 }
 
 /**
- * Component to display a selector where the user can input a symptom severity$
+ * Component to display a selector where the user can input his body temperature.
+ * You can read the current temperature by calling the getTemperatureAsCoding() respectively
+ * getTemperatureAsString() methods.
+ *
  * @param display the label to be shown
  * @param minimum the minimal value of the slider
  * @param maximum the maximal value of the slider
