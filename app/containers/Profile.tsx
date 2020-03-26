@@ -4,18 +4,25 @@ import { View, Text, ListItem, Left, Right, Icon } from 'native-base';
 import AppStyle, { colors, AppFonts, TextSize } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
+import LoginBaseScene from '../components/LoginBaseScene'
 import { localeString } from '../locales';
 
 interface PropsType {
 }
 
 interface State {
+  isLogged?: boolean
 }
 
 class Profile extends Component<PropsType, State> {
 
   constructor(props: PropsType) {
     super(props);
+
+    this.setState({
+      isLogged: false,
+    });
+
   }
 
   openURL( _url : string){
@@ -31,8 +38,14 @@ class Profile extends Component<PropsType, State> {
   render() {
     return (
       <>
-        <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
+        {!false
+        ?
+          <View>
+            <LoginBaseScene />
+          </View>
+        : <>
+          <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
+          <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
             <HeaderBanner title='Lea Meier'/>
             <ScrollView
                 style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
@@ -73,7 +86,9 @@ class Profile extends Component<PropsType, State> {
                 </ListItem>
                 <View style={{height:25}}></View>
             </ScrollView>
-        </SafeAreaView>
+          </SafeAreaView>
+          </>
+        }
       </>
     );
   };

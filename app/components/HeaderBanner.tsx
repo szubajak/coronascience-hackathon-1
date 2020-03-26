@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {View, Button} from "native-base";
-import {StyleSheet, Alert, TouchableHighlight} from 'react-native';
+import {View} from "native-base";
+import {TouchableHighlight} from 'react-native';
 import Svg, {Defs, LinearGradient, Rect, Stop, Text} from 'react-native-svg';
-import {colors, AppFonts, TextSize} from '../styles/App.style';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import {colors, TextSize} from '../styles/App.style';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 interface PropsType {
     title: string;
@@ -24,7 +24,7 @@ export const HeaderBanner: React.FunctionComponent<PropsType> = ({ title, btnClo
                 <Rect x='0' y='0' width='100%' height='100%' fill='url(#linearMain)'/>
                 <Text z-index="10"
                     x="50%" y="60%"
-                    fill="white"
+                    fill={colors.white}
                     fontSize={TextSize.big}
                     textAnchor="middle">
                         {title}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Dashboard from './Dashboard';
+import Introduction from './Introduction';
 import Informations from './Informations';
 import Settings from './Settings'
 import Impressum from './Impressum'
@@ -26,8 +26,8 @@ function mainStack(){
         }}
       >
         <Tab.Screen
-          name="Dashboard"
-          component={Dashboard}
+          name="Introduction"
+          component={Introduction}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Icon name='home' color={color} size={size} />
