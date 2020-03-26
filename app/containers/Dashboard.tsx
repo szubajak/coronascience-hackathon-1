@@ -51,11 +51,11 @@ class Dashboard extends Component<{navigation: any}> {
               style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
               source={require('../../resources/images/virus.png')}
             />
-          <View style={{flex: 3, flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={styles.logoText}>Gemeinsam bekämpfen wir COVID-19!</Text>
-          </View>
+            <View style={{flex: 3, flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={styles.logoText}>Gemeinsam bekämpfen wir COVID-19!</Text>
+            </View>
         </View>
-        <View style={{paddingHorizontal: 20}}>
+        <View style={{flex: 2, paddingHorizontal: 20}}>
           <LargeButton title="Gesundheitszustand erfassen"
                        target="AddSymptoms"
                        icon="add-circle"
@@ -78,7 +78,7 @@ class Dashboard extends Component<{navigation: any}> {
               </ListItem>}
           />
         </View> */}
-        <View style={{flex: 3, marginHorizontal: 20}}>
+        <View style={{flex: 3}}>
           <Twitter/>
         </View>
       </SafeAreaView>

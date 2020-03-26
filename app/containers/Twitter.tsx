@@ -167,19 +167,26 @@ class Twitter extends Component<PropsType, State> {
         (<View></View>)
         }
       
-        <View style={{ flexDirection: 'row', paddingBottom: 10, paddingTop: 10}}>
+        <View style={{ flexDirection: 'row', paddingBottom: 10, paddingTop: 10, paddingLeft: 10}}>
         <Image
             style={{width: 30, height: 30, borderRadius: 30/ 2}}
             source={{uri: myItem.user.profile_image_url_https}}
         />
         <ScrollView style={{ paddingLeft: 5}}>
-            <Text style={styles.tweetScreenName}>{myItem.user.name}</Text> 
+          <View style={{flexDirection:'row'}}>
+            <Text style={styles.tweetScreenName}>{myItem.user.name}</Text>
+            <Image
+              style={{resizeMode: 'contain', position: 'absolute', right: 0 , height: '100%', marginRight: 5}}
+              source={require('../../resources/images/twitter/twitter-logo.png')}
+            />
+          </View>
+             
             <View style={{flexDirection: 'row', paddingBottom: 5}}>
                 <Text style={styles.tweetUserName}>@{myItem.user.screen_name}</Text>
                 <Text style={styles.tweetUserName}>.</Text>
                 <Text style={styles.tweetDate}>{Moment(myItem.created_at).format('DD.MM.YYYY')}</Text>
             </View>
-            <View style={{width: 200}}>
+            <View>
               <Text>
                   {hasLinks ? 
                   (links.map(link => {
@@ -260,8 +267,8 @@ class Twitter extends Component<PropsType, State> {
                   </View>
               </View>
       }else{
-        return  <View>
-                  <View style={{flex: 1, flexDirection: 'row', paddingHorizontal: 50, paddingVertical: 40.}}>
+        return  <View style={{paddingVertical: 15}}>
+                  {/* <View style={{flexDirection: 'row', paddingVertical: 10}}>
                     <Image
                       style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
                       source={require('../../resources/images/twitter/twitter-logo.png')}
@@ -269,27 +276,15 @@ class Twitter extends Component<PropsType, State> {
                     <View style={{flex: 3, flexDirection: 'row', width: '60%', alignItems: 'center'}}>
                       <Text>{localeString('dashboard.twitterCard.title')}</Text>
                     </View>
+                  </View> */}
+                  <View>
+                    <Carousel
+                      data={this.state.tweetList}
+                      renderItem={this._renderItem}
+                      sliderWidth={400}
+                      itemWidth={300}
+                    />
                   </View>
-                <View>
-
-                <ScrollView
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                  scrollEventThrottle={200}
-                  //pagingEnabled
-                  decelerationRate="fast"
-                >
-                    {this.state.tweetList.map((item: any, index: number) => {
-                            
-                    })}
-                  </ScrollView>
-                  <Carousel
-                    data={this.state.tweetList}
-                    renderItem={this._renderItem}
-                    sliderWidth={400}
-                    itemWidth={300}
-                  />
-                 </View>
                 </View>;
       }
         
