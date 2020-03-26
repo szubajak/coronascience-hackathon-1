@@ -1,10 +1,72 @@
 import React, { Component } from 'react';
-import { SafeAreaView, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { SafeAreaView, Image, StyleSheet, TouchableOpacity, Dimensions, Platform, StatusBar } from 'react-native';
 import { View, Text, Icon, Card, CardItem, Body } from 'native-base';
 import AppStyle, { colors, TextSize } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const SMALLSCREEN_CUTOFF = 360;
+
+interface PropsType {
+  navigation: StackNavigationProp<any>
+}
+
+interface State {
+}
+
+class Dashboard extends Component<PropsType, State> {
+  navigation = this.props.navigation;
+
+  constructor(props: {navigation: any}) {
+    super(props);
+
+    // status bar stuff that only matters on android
+    if (Platform.OS === 'android') {
+      // when we change to homescreen, we have to use the light gray statusbar
+      this.props.navigation.addListener('focus', () => {
+        StatusBar.setBackgroundColor(colors.lightGray);
+        StatusBar.setBarStyle('dark-content');
+      });
+      // when we change to another screen, we have to use the dark purple statusbar
+      this.props.navigation.addListener('blur', () => {
+        StatusBar.setBackgroundColor(colors.headerGradientEnd);
+        StatusBar.setBarStyle('light-content');
+      });
+    }
+  }
+
+  render() {
+    return (
+      <>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.lightGray}}>
+        <View style={{flex: 0.8, flexDirection: 'row', paddingHorizontal: 50, paddingVertical: 15}}>
+            <Image
+              style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
+              source={require('../../resources/images/virus.png')}
+            />
+          <View style={{flex: 3, flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={styles.logoText}>Gemeinsam bekämpfen wir COVID-19!</Text>
+          </View>
+        </View>
+        <View style={{paddingHorizontal: 20}}>
+          <LargeButton title="Gesundheitszustand erfassen"
+                       target="AddSymptoms"
+                       icon="add-circle"
+                       navigation={this.props.navigation} />
+          <LargeButton title="Profilangaben vervollständigen"
+                       target="Profile"
+                       icon="person"
+                       navigation={this.props.navigation} />
+        </View>
+        <View style={{flex: 2, marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', margin: 5}}>
+          <InfoCard item={{text: 'Nutzerinnen und Nutzer', icon: 'people', count: 174}}/>
+          <InfoCard item={{text: 'gespendete Datensätze', icon: 'gift', count: 1901}} />
+        </View>
+      </SafeAreaView>
+      </>
+    );
+  };
+}
 
 /**
  * Component to display a prominent button with color gradient, used to navigate to another tab
@@ -39,7 +101,7 @@ class LargeButton extends Component<{navigation: any, target: string, icon: stri
 /**
  * Component to display a numerical value with a description text and an icon
  **/
-class InfoCard extends Component<{item: {text: string, icon: string, count: number}}> {
+class InfoCard extends Component<{item: {text: string, icon: string, count: number}},{numberText: string} > {
   smallScreen = Dimensions.get('window').width < SMALLSCREEN_CUTOFF;
   constructor(props: {item: {text: string, icon: string, count: number}}) {
       super(props);
@@ -91,43 +153,6 @@ class InfoCard extends Component<{item: {text: string, icon: string, count: numb
       </>
     );
   }
-}
-
-class Dashboard extends Component<{navigation: any}> {
-  constructor(props: {navigation: any}) {
-    super(props);
-  }
-  render() {
-    return (
-      <>
-      <SafeAreaView style={{ flex: 1, backgroundColor: colors.lightGray}}>
-        <View style={{flex: 0.8, flexDirection: 'row', paddingHorizontal: 50, paddingVertical: 15}}>
-            <Image
-              style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
-              source={require('../../resources/images/virus.png')}
-            />
-          <View style={{flex: 3, flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={styles.logoText}>Gemeinsam bekämpfen wir COVID-19!</Text>
-          </View>
-        </View>
-        <View style={{paddingHorizontal: 20}}>
-          <LargeButton title="Gesundheitszustand erfassen"
-                       target="AddSymptoms"
-                       icon="add-circle"
-                       navigation={this.props.navigation} />
-          <LargeButton title="Profilangaben vervollständigen"
-                       target="Profile"
-                       icon="person"
-                       navigation={this.props.navigation} />
-        </View>
-        <View style={{flex: 2, marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', margin: 5}}>
-          <InfoCard item={{text: 'Nutzerinnen und Nutzer', icon: 'people', count: 174}}/>
-          <InfoCard item={{text: 'gespendete Datensätze', icon: 'gift', count: 1901}} />
-        </View>
-      </SafeAreaView>
-      </>
-    );
-  };
 }
 
 const styles = StyleSheet.create({
