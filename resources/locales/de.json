@@ -1,5 +1,11 @@
 {
-    "lang" : "Deutsch",
-    "login" : "Mit MIDATA verbinden",
-    "month": ["Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.","Sept.","Okt.","Nov.","Dez."]
+  "lang" : "Deutsch",
+  "login" : "Mit MIDATA verbinden",
+  "month": ["Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.","Sept.","Okt.","Nov.","Dez."],
+  "severity": {
+    "none": "keine",
+    "mild": "leicht",
+    "moderate": "mittel",
+    "severe": "stark"
+  }
 }
