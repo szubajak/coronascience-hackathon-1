@@ -18,7 +18,8 @@ class Login extends Component<PropType> {
     return (
       <ModalBaseScene
         style={styles.view}
-        isVisible={this.props.isLoginOpen}>
+        isVisible={this.props.isLoginOpen}
+        onSwipeComplete={this.props.onClose}>
         <View>
           <Svg width='100%' height='250'>
             <Defs>
