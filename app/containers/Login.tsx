@@ -8,6 +8,8 @@ import { localeString } from '../locales';
 import { authorize } from 'react-native-app-auth';
 import MiDataServiceManager from '../services/MiDataServiceManager';
 import UserProfileService from '../services/UserProfileService';
+import SymptomData from '../model/SymptomData';
+import SymptomService from '../services/SymptomService';
 
 interface PropsType {
 }
@@ -56,7 +58,10 @@ class Informations extends Component<PropsType, State> {
         MiDataServiceManager.setAuthToken(newAuthState.accessToken, newAuthState.accessTokenExpirationDate, newAuthState.refreshToken);
         // FOR TEST : try to get the userprofile :
         var user = await new UserProfileService().getUserProfile();
-        console.log(user);
+        var symptom = new SymptomData();
+        symptom.setEffectiveDate(new Date());
+        var result = new SymptomService().uploadSymptom(symptom);
+        console.log(result);
     } catch (error) {
         console.log("Error while login : " + JSON.stringify(error));
     }

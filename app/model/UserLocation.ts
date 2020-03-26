@@ -41,7 +41,7 @@ export default class UserLocation {
         this.nipCode = '';
     }
 
-    isLocationSet() {
+    isLocationReset() {
         return (!this.name || !this.nipCode || (this.name === '' && this.nipCode === ''));
     }
 

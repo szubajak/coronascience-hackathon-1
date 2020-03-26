@@ -14,7 +14,7 @@ class MiDataServiceManager {
         this.refreshToken = refreshToken;
     }
 
-    public async fetch(endpoint: string, method = 'GET', body = undefined) {
+    public async fetch(endpoint: string, method = 'GET', body: string|undefined = undefined) {
 
         if (this.accessToken === undefined) {
             return Promise.reject(new Error('Can\'t fetch when no user logged in first.'));

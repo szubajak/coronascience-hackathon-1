@@ -1,5 +1,5 @@
 import Moment from 'moment';
-import Symptom from './Symptom';
+import SymptomData from './SymptomData';
 import IClonable from './IClonable';
 
 export default class BodyComponentSymptom implements IClonable<BodyComponentSymptom> {

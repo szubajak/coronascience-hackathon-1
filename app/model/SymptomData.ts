@@ -3,7 +3,7 @@ import UserLocation from "./UserLocation";
 import ComponentMedication from "./ComponentMedication";
 import { SYMPTOM_COMPONENTS } from "./SymptomComponent";
 
-export default class Symptom {
+export default class SymptomData {
 
     effectiveDate: Date | undefined;
     bodyComponentSymptom: Array<BodyComponentSymptom>;
@@ -46,7 +46,9 @@ export default class Symptom {
     setComponentMedication (medications: Array<ComponentMedication>) {
         this.medications = medications;
     }
-
+    setEffectiveDate(date: Date) {
+        this.effectiveDate = new Date(date);
+    }
     resetAllComponentSymptoms() {
         let bodyComponents: BodyComponentSymptom[] = [];
         this.bodyComponentSymptom.forEach(component => {

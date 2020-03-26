@@ -1,8 +1,10 @@
 import MiDataServiceManager, { MiDataBundle } from "./MiDataServiceManager";
 import AbstractObservationService from "./ObservationService";
-import moment = require("moment");
+import moment from "moment";
 import BodyComponentSymptom from "../model/BodyComponentSymptom";
 import { SYMPTOM_COMPONENTS } from "../model/SymptomComponent";
+import SymptomData from "../model/SymptomData";
+import * as BodyHelper from "./BodyHelper";
 
 interface SymptomEntry {
     bodySite: any;
@@ -26,6 +28,36 @@ class SymptomService extends AbstractObservationService {
         ]);
         const observationBundle = await this.getObservation(params);
         return this.parseSymptomsBundle(observationBundle);
+    }
+
+    async uploadSymptom(symptom: SymptomData) {
+        let bodyEntries = new Array();
+        for (let index = 0; index < SYMPTOM_COMPONENTS.length; index++) {
+            const element = SYMPTOM_COMPONENTS[index];
+            var effectiveDate = symptom.effectiveDate ? symptom.effectiveDate  : new Date();
+            var nipCode = symptom.location.nipCode ? symptom.location.nipCode : "";
+            var name = symptom.location.name ? symptom.location.name : "";
+            bodyEntries.push(BodyHelper.buildSymptomEntry(effectiveDate,
+                nipCode,
+                name,
+                element.code,
+                element.id,
+                (symptom.bodyComponentSymptom[index].intensity).toString(),
+                (symptom.medications[index].didMedication).toString()));
+        }
+        let body = BodyHelper.buildUserSymptoms(bodyEntries);
+        const responseJSON = await this.updateObservation(body);
+        let success = false;
+        console.log(responseJSON);
+        responseJSON.entry.forEach((element: any) => {
+            if ((element.response.status as String).includes('201')) {
+                success = true;
+            }
+        });
+        if(!success) {
+            throw new Error("SymptomService : Upload failed. Response received :  " + JSON.stringify(responseJSON));
+        } else 
+            return true;
     }
 
     private parseSymptomsBundle(midaBundle: MiDataBundle) {
