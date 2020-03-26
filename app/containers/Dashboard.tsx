@@ -65,7 +65,7 @@ class Dashboard extends Component<{navigation: any}> {
                        icon="person"
                        navigation={this.props.navigation} />
         </View>
-        <View style={{flex: 2, marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', margin: 5}}>
+        <View style={{flex: 2, marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20}}>
           <InfoCard item={{text: 'Nutzerinnen und Nutzer', icon: 'people', count: 174}}/>
           <InfoCard item={{text: 'gespendete Datensätze', icon: 'gift', count: 1901}} />
         </View>
