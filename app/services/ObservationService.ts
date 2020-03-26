@@ -1,4 +1,4 @@
-import MiDataServiceManager, { MiDataBundle } from "./MiDataServiceManager";
+import MIDATAServiceManager, { MIDATABundle } from "./MIDATAServiceManager";
 import UrlHelper from "../helpers/UrlHelpers";
 
 abstract class AbstractObservationService {
@@ -15,8 +15,8 @@ abstract class AbstractObservationService {
             }
             const paramsUrl = UrlHelper.encodeData(allParams);
             const url = this.OBSERVATION_ENDPOINT + '?' + paramsUrl;
-            const response = await MiDataServiceManager.fetch(url, 'GET');
-            let bundle = JSON.parse(response) as MiDataBundle;
+            const response = await MIDATAServiceManager.fetch(url, 'GET');
+            let bundle = JSON.parse(response) as MIDATABundle;
             return bundle;
         } catch (error) {
             const message = "ObservationService : error while getting observations. " + error;
@@ -26,7 +26,7 @@ abstract class AbstractObservationService {
 
     protected async updateObservation(observationBody: string) {
         try {
-            const response = await MiDataServiceManager.fetch(this.OBSERVATION_UPDATE_ENDPOINT, 'POST', observationBody);
+            const response = await MIDATAServiceManager.fetch(this.OBSERVATION_UPDATE_ENDPOINT, 'POST', observationBody);
             let responseJSON = JSON.parse(response);
             return responseJSON;
         } catch(error) {

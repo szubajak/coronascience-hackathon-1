@@ -22,8 +22,8 @@ export default class SymptomData {
         });
         // Default userLocation :
         this.location = new UserLocation();
-        // Default effective date :
-        this.effectiveDate = undefined;
+        // Default effective date : now
+        this.effectiveDate = new Date();
     }
 
     setComponentSymptomIntensity(updatedComponentId: string, intensity: number) {

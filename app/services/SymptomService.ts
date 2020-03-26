@@ -1,4 +1,4 @@
-import MiDataServiceManager, { MiDataBundle } from "./MiDataServiceManager";
+import MIDATAServiceManager, { MIDATABundle } from "./MIDATAServiceManager";
 import AbstractObservationService from "./ObservationService";
 import moment from "moment";
 import BodyComponentSymptom from "../model/BodyComponentSymptom";
@@ -60,7 +60,7 @@ class SymptomService extends AbstractObservationService {
             return true;
     }
 
-    private parseSymptomsBundle(midaBundle: MiDataBundle) {
+    private parseSymptomsBundle(midaBundle: MIDATABundle) {
         let allSymptoms:BodyComponentSymptom[] = [];
         if (midaBundle.total > 0) {
             midaBundle.entry.forEach(entry => {

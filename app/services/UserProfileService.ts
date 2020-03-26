@@ -1,4 +1,4 @@
-import MiDataServiceManager, { MiDataBundle } from "./MiDataServiceManager";
+import MIDATAServiceManager, { MIDATABundle } from "./MIDATAServiceManager";
 import AbstractObservationService from "./ObservationService";
 import moment from 'moment';
 import UserProfile from "../model/UserProfile";
@@ -10,8 +10,8 @@ class UserProfileService {
 
     async getUserProfile(): Promise<UserProfile> {
         try {
-            const response = await MiDataServiceManager.fetch(this.USERPROFILE_ENDPOINT, 'GET');
-            let bundle = JSON.parse(response) as MiDataBundle;
+            const response = await MIDATAServiceManager.fetch(this.USERPROFILE_ENDPOINT, 'GET');
+            let bundle = JSON.parse(response) as MIDATABundle;
             var userProfile = this.parseUserProfileBundle(bundle);
             if(userProfile !== undefined) {
                 return userProfile;
@@ -24,7 +24,7 @@ class UserProfileService {
         }
     }
 
-    private parseUserProfileBundle(bundle: MiDataBundle) {
+    private parseUserProfileBundle(bundle: MIDATABundle) {
         var user = undefined;
         if (bundle.total > 0) {
             let resource = bundle.entry[0].resource;

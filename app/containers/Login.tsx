@@ -6,10 +6,13 @@ import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
 import { localeString } from '../locales';
 import { authorize } from 'react-native-app-auth';
-import MiDataServiceManager from '../services/MiDataServiceManager';
+import MIDATAServiceManager from '../services/MIDATAServiceManager';
 import UserProfileService from '../services/UserProfileService';
 import SymptomData from '../model/SymptomData';
 import SymptomService from '../services/SymptomService';
+import Config from 'react-native-config';
+import Oberservation, { CodeableConcept, status } from '../model/resource/Observation';
+import Observation from '../model/resource/Observation';
 
 interface PropsType {
 }
@@ -22,15 +25,14 @@ interface State {
 }
 
 const config = {
-    issuer: 'https://test.midata.coop/fhir',
-    clientId: 'corona-science',
-    redirectUrl: 'corona.science:/oauthredirect',
-    scopes: ['A'],
+    issuer: Config.HOST + '/fhir',
+    clientId: Config.CLIENT_ID,
+    redirectUrl: Config.REDIRECT_URL,
+    scopes: ['user/*.*'],
 
     serviceConfiguration: {
-        authorizationEndpoint: 'https://test.midata.coop/authservice',
-        tokenEndpoint: 'https://test.midata.coop/v1/token',
-    //   revocationEndpoint: 'https://demo.identityserver.io/connect/revoke'
+        authorizationEndpoint: Config.HOST + Config.AUTHORIZATION_ENDPOINT,
+        tokenEndpoint: Config.HOST + Config.TOKEN_ENDPOINT
     }
 
   };
@@ -49,19 +51,30 @@ class Informations extends Component<PropsType, State> {
     try {
         // TODO : add loading ore disable "Login button"
         const newAuthState = await authorize(config); // result includes accessToken, accessTokenExpirationDate and refreshToken
+        // TODO : Check is no error happend (valid access token, so on)
         this.setState({
             hasLoggedInOnce: true,
             ...newAuthState
         })
         // TODO : remove loading or re-enable "Login button"
         // Update Auth token for our service manager :
-        MiDataServiceManager.setAuthToken(newAuthState.accessToken, newAuthState.accessTokenExpirationDate, newAuthState.refreshToken);
+        MIDATAServiceManager.setAuthToken(newAuthState.accessToken, newAuthState.accessTokenExpirationDate, newAuthState.refreshToken);
         // FOR TEST : try to get the userprofile :
+        const user = await MIDATAServiceManager.fetch('/fhir/Patient', 'GET');
+        const observations = await MIDATAServiceManager.fetch('/fhir/Observation', 'GET');
+
+        let cc = new CodeableConcept();
+
+        let symptom : Observation = new Observation("myId", status.preliminary, cc);
+        
+
+        /*
         var user = await new UserProfileService().getUserProfile();
         var symptom = new SymptomData();
-        symptom.setEffectiveDate(new Date());
         var result = new SymptomService().uploadSymptom(symptom);
-        console.log(result);
+        */
+        console.log(user);
+        console.log(observations);
     } catch (error) {
         console.log("Error while login : " + JSON.stringify(error));
     }
@@ -71,12 +84,12 @@ class Informations extends Component<PropsType, State> {
   async logout(){
     // use the client to make the auth request and receive the authState
     try {
-        const newAuthState = await authorize(config);
         this.setState({
             hasLoggedInOnce: false,
-            ...newAuthState
+            accessToken: '',
+            accessTokenExpirationDate: '',
+            refreshToken: '',
         })
-        console.log(newAuthState);
         // result includes accessToken, accessTokenExpirationDate and refreshToken
     } catch (error) {
         console.log(error);
