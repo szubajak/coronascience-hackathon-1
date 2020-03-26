@@ -3,10 +3,7 @@ import { SafeAreaView, StyleSheet, ScrollView, Alert, Image, FlatList, YellowBox
 import AppStyle, { colors } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
-import { Col, Row, Grid } from "react-native-easy-grid";
-import { View, Container, Content, List, ListItem, Text, Body, Right, Picker, Header, Button, Switch, CheckBox,  } from 'native-base';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import Moment from 'moment';
+import { View, Text, Button } from 'native-base';
 import Slider from '@react-native-community/slider';
 import { SYMPTOM_DATA } from '../../resources/static/symptoms'
 
@@ -25,16 +22,11 @@ interface AnswerOption {
   selected: boolean
 }
 
-export enum YesNo{
-  NO = 'Nein',
-  YES = 'Ja'
-}
 
 /**
  * Main class defining the component.
  **/
 class Symptom extends Component<PropsType, State> {
-
   private dateChanged : boolean = false;
 
   constructor(props: PropsType) {
@@ -42,23 +34,6 @@ class Symptom extends Component<PropsType, State> {
 
     this.state ={
     }
-  }
-
-
-  showDateTimePicker(){
-    this.setState({ isDateTimePickerVisible: true });
-  }
-
-  hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
-
-  onDatePickerClose = (time : Date) => {
-    this.hideDateTimePicker();
-    if(!this.dateChanged)
-        return;
-  };
-
-  onDatePickerChangeValue(){
-    this.dateChanged = true;
   }
 
   // TODO: correct handling
@@ -105,15 +80,16 @@ class Symptom extends Component<PropsType, State> {
               <Text style={[AppStyle.textQuestion]}>+++ = stark</Text>
               </View>
             </View>
+
             <Button style={[AppStyle.button, {marginBottom: 40}]}>
                 <Text style={AppStyle.textButton}>Weiter</Text>
             </Button>
+
           </ScrollView>
         </SafeAreaView>
       </>
     );
   };
-
 }
 
 /**
@@ -150,22 +126,22 @@ class SymptomSeverity extends Component<{symptom: {display: string, code: string
   render() {
     return (
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <View style={{flex: 1, justifyContent: 'center', marginTop: AppStyle.button.marginTop}}>
-            <Text style={[AppStyle.textQuestion]}>{this.props.symptom.display}</Text>
-          </View>
-          <View style={{alignItems: 'flex-end'}}>
-            <FlatList
-              horizontal
-              alwaysBounceHorizontal = 'false'
-              data={this.state.answerOptions}
-              renderItem={({ item }) =>
-                <Button style={[AppStyle.button, item.selected ? styles.selectedButton : AppStyle.button, {flex: 1, marginLeft: 5}]} onPress={() => this.select(item)}>
-                  <Text style={[AppStyle.textButton, item.selected ? styles.selectedTextButton : AppStyle.textButton]}>{item.display}</Text>
-                </Button>
-              }
-              keyExtractor={item => item.code}
-            />
-          </View>
+        <View style={{flex: 1, justifyContent: 'center', marginTop: AppStyle.button.marginTop}}>
+          <Text style={[AppStyle.textQuestion]}>{this.props.symptom.display}</Text>
+        </View>
+        <View style={{alignItems: 'flex-end'}}>
+          <FlatList
+            horizontal
+            alwaysBounceHorizontal = 'false'
+            data={this.state.answerOptions}
+            keyExtractor={item => item.code}
+            renderItem={({ item }) =>
+              <Button style={[AppStyle.button, item.selected ? styles.selectedButton : AppStyle.button, {flex: 1, marginLeft: 5}]} onPress={() => this.select(item)}>
+                <Text style={[AppStyle.textButton, item.selected ? styles.selectedTextButton : AppStyle.textButton]}>{item.display}</Text>
+              </Button>
+            }
+          />
+        </View>
       </View>
     );
   }
@@ -197,12 +173,13 @@ class TemperatureSlider extends Component<{display: string, minimum: number, max
 
   private temperatureToString(temperature: number) {
 
-    return !this.state.enabled ?
-          ' ' : temperature < this.props.minimum ?
-            '<' + this.props.minimum.toString() + ' °C':
-            temperature > this.props.maximum ?
-              '>' + this.props.maximum.toString() + ' °C' :
-              temperature.toString() + ' °C';
+    return this.state.enabled ?
+            temperature < this.props.minimum ?
+              '<' + this.props.minimum.toString() + ' °C':
+              temperature > this.props.maximum ?
+                '>' + this.props.maximum.toString() + ' °C' :
+                temperature.toString() + ' °C' :
+            ' ';
   }
 
   /**
@@ -227,18 +204,18 @@ class TemperatureSlider extends Component<{display: string, minimum: number, max
     return (
       <View>
         <View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
-          <View style={{flexDirection: 'row'}}><Text style={[AppStyle.textQuestion]}>Temperatur gemessen</Text></View>
-          <View style={{flexDirection: 'row'}}>
-            <Button style={[AppStyle.button, this.state.enabled ? styles.selectedButton : AppStyle.button, {width: 68, marginTop: -7, borderTopRightRadius: 0, borderBottomRightRadius: 0}]} onPress={() => {this.setState({enabled: !this.state.enabled})}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
+            <View style={{flexDirection: 'row'}}><Text style={[AppStyle.textQuestion]}>Temperatur gemessen</Text></View>
+            <View style={{flexDirection: 'row'}}>
+              <Button style={[AppStyle.button, this.state.enabled ? styles.selectedButton : AppStyle.button, {width: 68, marginTop: -7, borderTopRightRadius: 0, borderBottomRightRadius: 0}]} onPress={() => {this.setState({enabled: !this.state.enabled})}}>
                 <Text style={[AppStyle.textButton, this.state.enabled ? styles.selectedTextButton : AppStyle.textButton]}>Ja</Text>
-            </Button>
-            <Button style={[AppStyle.button, !this.state.enabled ? styles.selectedButton : AppStyle.button, {width: 68, marginTop: -7, borderTopLeftRadius: 0, borderBottomLeftRadius: 0}]} onPress={() => {this.setState({enabled: !this.state.enabled})}}>
+              </Button>
+              <Button style={[AppStyle.button, !this.state.enabled ? styles.selectedButton : AppStyle.button, {width: 68, marginTop: -7, borderTopLeftRadius: 0, borderBottomLeftRadius: 0}]} onPress={() => {this.setState({enabled: !this.state.enabled})}}>
                 <Text style={[AppStyle.textButton, !this.state.enabled ? styles.selectedTextButton : AppStyle.textButton]}>Nein</Text>
-            </Button>
+              </Button>
+            </View>
           </View>
-        </View>
-        <Text style={[AppStyle.textQuestion, {color: colors.secondaryNormal, alignSelf: 'center', marginTop: 10}]}>{this.temperatureToString(this.state.temperature)}</Text>
+          <Text style={[AppStyle.textQuestion, {color: colors.secondaryNormal, alignSelf: 'center', marginTop: 10}]}>{this.temperatureToString(this.state.temperature)}</Text>
           <Slider
             style={{width: '100%', height: 40}}
             minimumValue={this.props.minimum - 0.1}
@@ -251,11 +228,10 @@ class TemperatureSlider extends Component<{display: string, minimum: number, max
             maximumTrackTintColor={colors.darkGray}
             onValueChange={temperature => this.setState({temperature: Math.round(temperature * 10)/10})}
           />
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginTop: -8, marginHorizontal: 10}}>
-          {labels}
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginTop: -8, marginHorizontal: 10}}>
+            {labels}
+          </View>
         </View>
-        </View>
-
       </View>
     );
   }
