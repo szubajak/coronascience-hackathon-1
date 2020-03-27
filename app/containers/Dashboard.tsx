@@ -45,31 +45,29 @@ class Dashboard extends Component<{navigation: any}> {
   render() {
     return (
       <>
-      <SafeAreaView style={{ flex: 1, backgroundColor: colors.lightGray}}>
-        <View style={{flex: 0.8, flexDirection: 'row', paddingHorizontal: 50, paddingVertical: 15}}>
-            <Image
-              style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
-              source={require('../../resources/images/virus.png')}
-            />
-          <View style={{flex: 3, flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={styles.logoText}>{localeString('dashboard.slogan')}</Text>
-          </View>
+      <View style={{flex: 0.8, flexDirection: 'row', paddingHorizontal: 50, paddingVertical: 15}}>
+          <Image
+            style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
+            source={require('../../resources/images/virus.png')}
+          />
+        <View style={{flex: 3, flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={styles.logoText}>{localeString('dashboard.slogan')}</Text>
         </View>
-        <View style={{paddingHorizontal: 20}}>
-          <LargeButton title="Gesundheitszustand erfassen"
-                       target="AddSymptoms"
-                       icon="add-circle"
-                       navigation={this.props.navigation} />
-          <LargeButton title="Profilangaben vervollständigen"
-                       target="Profile"
-                       icon="person"
-                       navigation={this.props.navigation} />
-        </View>
-        <View style={{flex: 2, marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', margin: 5}}>
-          <InfoCard item={{text: 'Nutzerinnen und Nutzer', icon: 'people', count: 174}}/>
-          <InfoCard item={{text: 'gespendete Datensätze', icon: 'gift', count: 1901}} />
-        </View>
-      </SafeAreaView>
+      </View>
+      <View style={{paddingHorizontal: 20}}>
+        <LargeButton title="Gesundheitszustand erfassen"
+                      target="AddSymptoms"
+                      icon="add-circle"
+                      navigation={this.props.navigation} />
+        <LargeButton title="Profilangaben vervollständigen"
+                      target="Profile"
+                      icon="person"
+                      navigation={this.props.navigation} />
+      </View>
+      <View style={{flex: 2, marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', margin: 5}}>
+        <InfoCard item={{text: 'Nutzerinnen und Nutzer', icon: 'people', count: 174}}/>
+        <InfoCard item={{text: 'gespendete Datensätze', icon: 'gift', count: 1901}} />
+      </View>
       </>
     );
   };

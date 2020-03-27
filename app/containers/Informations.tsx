@@ -32,74 +32,71 @@ class Informations extends Component<PropsType, State> {
   render() {
     return (
       <>
-        <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
-            <HeaderBanner title={localeString('informations.title')}/>
-            <ScrollView
-                style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
-                contentInsetAdjustmentBehavior="automatic">
-                <View>
-                    <Text style={[AppStyle.sectionTitle]}>
-                        {localeString('informations.authorityName')}
-                    </Text>
-                </View>
-                <Separator/>
-                <View>
-                    <Text style={[AppStyle.textQuestion]}>
-                        {localeString('informations.infoLine')}: <Text onPress={() => this.openURL('tel:' + localeString('informations.authorityInfolineNumber').replace(/\s/g, ""))}>{localeString('informations.authorityInfolineNumber')}</Text>
-                    </Text>
-                    
-                    <Button style={[AppStyle.button]}
-                        onPress={() => this.openURL('https://i4mi.bfh.ch')}>
-                        <Text style={[AppStyle.textButton]}>
-                            Website BAG: Neues Coronavirus
-                        </Text>
-                    </Button>
-                    <Button style={[AppStyle.button]}
-                        onPress={() => this.openURL('https://ti.bfh.ch')}>
-                        <Text style={[AppStyle.textButton]}>
-                            Website BAG: Massnahmen des Bundes
-                        </Text>
-                    </Button>
-                    <Button style={[AppStyle.button]}
-                        onPress={() => this.openURL('https://bfh.ch')}>
-                        <Text style={[AppStyle.textButton]}>
-                            Website BAG: Kontakinforamtionen
-                        </Text>
-                    </Button>
-                    <Button style={[AppStyle.button]}
-                        onPress={() => this.openURL('https://ti.bfh.ch')}>
-                        <Text style={[AppStyle.textButton]}>
-                            Informationen und Kontakte in den Kantonen
-                        </Text>
-                    </Button>
-                    <Button style={[AppStyle.button]}
-                        onPress={() => this.openURL('https://bfh.ch')}>
-                        <Text style={[AppStyle.textButton]}>
-                            Coronavirus-Check des BAG
-                        </Text>
-                    </Button>
-                </View>
+        <HeaderBanner title={localeString('informations.title')}/>
+        <ScrollView
+            style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
+            contentInsetAdjustmentBehavior="automatic">
+            <View>
+                <Text style={[AppStyle.sectionTitle]}>
+                    {localeString('informations.authorityName')}
+                </Text>
+            </View>
+            <Separator/>
+            <View>
+                <Text style={[AppStyle.textQuestion]}>
+                    {localeString('informations.infoLine')}: <Text onPress={() => this.openURL('tel:' + localeString('informations.authorityInfolineNumber').replace(/\s/g, ""))}>{localeString('informations.authorityInfolineNumber')}</Text>
+                </Text>
                 
-                <View style={{marginTop:25}}>
-                    <Text style={[AppStyle.sectionTitle]}>
-                        {localeString('informations.serviceName')}
+                <Button style={[AppStyle.button]}
+                    onPress={() => this.openURL('https://i4mi.bfh.ch')}>
+                    <Text style={[AppStyle.textButton]}>
+                        Website BAG: Neues Coronavirus
                     </Text>
-                </View>
-                <Separator/>
-                <View>
-                    <Text style={[AppStyle.textQuestion]}>
-                    {localeString('informations.infoLine')}: <Text onPress={() => this.openURL('tel:' + localeString('informations.serviceInfoLineNumber').replace(/\s/g, ""))}>{localeString('informations.serviceInfoLineNumber')}</Text>
+                </Button>
+                <Button style={[AppStyle.button]}
+                    onPress={() => this.openURL('https://ti.bfh.ch')}>
+                    <Text style={[AppStyle.textButton]}>
+                        Website BAG: Massnahmen des Bundes
                     </Text>
-                    <Button style={[AppStyle.button]}
-                        onPress={() => this.openURL(localeString('informations.serviceInternetSiteURL'))}>
-                        <Text style={[AppStyle.textButton]}>
-                            {localeString('informations.serviceInternetSiteName')}
-                        </Text>
-                    </Button>
-                </View>
-            </ScrollView>
-        </SafeAreaView>
+                </Button>
+                <Button style={[AppStyle.button]}
+                    onPress={() => this.openURL('https://bfh.ch')}>
+                    <Text style={[AppStyle.textButton]}>
+                        Website BAG: Kontakinforamtionen
+                    </Text>
+                </Button>
+                <Button style={[AppStyle.button]}
+                    onPress={() => this.openURL('https://ti.bfh.ch')}>
+                    <Text style={[AppStyle.textButton]}>
+                        Informationen und Kontakte in den Kantonen
+                    </Text>
+                </Button>
+                <Button style={[AppStyle.button]}
+                    onPress={() => this.openURL('https://bfh.ch')}>
+                    <Text style={[AppStyle.textButton]}>
+                        Coronavirus-Check des BAG
+                    </Text>
+                </Button>
+            </View>
+            
+            <View style={{marginTop:25}}>
+                <Text style={[AppStyle.sectionTitle]}>
+                    {localeString('informations.serviceName')}
+                </Text>
+            </View>
+            <Separator/>
+            <View>
+                <Text style={[AppStyle.textQuestion]}>
+                {localeString('informations.infoLine')}: <Text onPress={() => this.openURL('tel:' + localeString('informations.serviceInfoLineNumber').replace(/\s/g, ""))}>{localeString('informations.serviceInfoLineNumber')}</Text>
+                </Text>
+                <Button style={[AppStyle.button]}
+                    onPress={() => this.openURL(localeString('informations.serviceInternetSiteURL'))}>
+                    <Text style={[AppStyle.textButton]}>
+                        {localeString('informations.serviceInternetSiteName')}
+                    </Text>
+                </Button>
+            </View>
+        </ScrollView>
       </>
     );
   };
