@@ -5,7 +5,6 @@ import { localeString } from '../locales';
 import { colors } from '../styles/App.style';
 import Moment from 'moment';
 import Svg, { G, Path } from 'react-native-svg';
-import {Dimensions } from "react-native";
 import Carousel from 'react-native-snap-carousel';
 
 interface PropsType {
@@ -146,7 +145,6 @@ class Twitter extends Component<PropsType, State> {
     let hasLinks = links.length > 0;
 
     return(
-      //width: Math.round(Dimensions.get('window').width - 40)
       <View style={{backgroundColor:colors.white}}>
       
         {isRetweeted ?
@@ -173,14 +171,7 @@ class Twitter extends Component<PropsType, State> {
             source={{uri: myItem.user.profile_image_url_https}}
         />
         <ScrollView style={{ paddingLeft: 5}}>
-          <View style={{flexDirection:'row'}}>
             <Text style={styles.tweetScreenName}>{myItem.user.name}</Text>
-            <Image
-              style={{resizeMode: 'contain', position: 'absolute', right: 0 , height: '100%', marginRight: 5}}
-              source={require('../../resources/images/twitter/twitter-logo.png')}
-            />
-          </View>
-             
             <View style={{flexDirection: 'row', paddingBottom: 5}}>
                 <Text style={styles.tweetUserName}>@{myItem.user.screen_name}</Text>
                 <Text style={styles.tweetUserName}>.</Text>
@@ -228,8 +219,7 @@ class Twitter extends Component<PropsType, State> {
             <View style={{paddingTop: 5}}
             onLayout={event => {
                 this.setState({
-                  viewWidth: 200
-                  //viewWidth: event.nativeEvent.layout.width
+                  viewWidth: event.nativeEvent.layout.width
                 })
             }}>
                 {hasMedia ? (
@@ -245,7 +235,13 @@ class Twitter extends Component<PropsType, State> {
                 )}
             </View>
         </ScrollView> 
-    </View>
+      </View>
+      <View style={{justifyContent:'flex-end',alignItems:'flex-end',alignSelf:'flex-end', position:'absolute'}}>
+        <Image
+          style={{height: 15, width: 15, marginTop: 5, marginRight: 5}}
+          source={require('../../resources/images/twitter/twitter-logo.png')}
+        />
+       </View>
     </View>
     );
   }
@@ -268,15 +264,6 @@ class Twitter extends Component<PropsType, State> {
               </View>
       }else{
         return  <View style={{paddingVertical: 15}}>
-                  {/* <View style={{flexDirection: 'row', paddingVertical: 10}}>
-                    <Image
-                      style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
-                      source={require('../../resources/images/twitter/twitter-logo.png')}
-                    />
-                    <View style={{flex: 3, flexDirection: 'row', width: '60%', alignItems: 'center'}}>
-                      <Text>{localeString('dashboard.twitterCard.title')}</Text>
-                    </View>
-                  </View> */}
                   <View>
                     <Carousel
                       data={this.state.tweetList}
