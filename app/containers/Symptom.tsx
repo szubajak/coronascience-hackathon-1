@@ -6,7 +6,7 @@ import { HeaderBanner } from '../components/HeaderBanner'
 import { View, Text, Button } from 'native-base';
 import Slider from '@react-native-community/slider';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { Observation, CodeableConcept, ObservationStatus, I4MIBundle, BundleType, BundleHTTPVerb} from '@i4mi/fhir_r4'
+import { Observation, CodeableConcept, ObservationStatus, I4MIBundle, BundleType, BundleHTTPVerb, QuantityComparator} from '@i4mi/fhir_r4'
 import { localeString } from '../locales';
 import { SYMPTOM_DATA } from '../../resources/static/symptoms'
 import { SYMPTOM_CATEGORY, SYMPTOM_SEVERITY_CODEABLE_CONCEPT, SYMPTOM_CODE, TEMPERATURE_VALUE_QUANTITY } from '../../resources/static/codings'
@@ -342,9 +342,19 @@ class TemperatureSlider extends Component<TemperatureSliderPropsType, Temperatur
    * @return a fhir observation object, or undefined if the user did not measure an observation
    */
   getTemperatureAsFhir(): Observation | undefined {
-    Alert.alert('Temperature is ' + this.state.enabled);
     if (this.temperatureFhir.valueQuantity) {
-      this.temperatureFhir.valueQuantity.value = this.state.temperature;
+
+      // add comparator for the edge cases of the slider
+      if (this.state.temperature < this.props.minimum) {
+        this.temperatureFhir.valueQuantity.value = this.props.minimum;
+        this.temperatureFhir.valueQuantity.comparator = QuantityComparator.LT;
+      } else if (this.state.temperature > this.props.maximum) {
+        this.temperatureFhir.valueQuantity.value = this.props.maximum;
+        this.temperatureFhir.valueQuantity.comparator = QuantityComparator.GT;
+      } else {
+      // and this is the normal case, just save temperature w/o comparator
+        this.temperatureFhir.valueQuantity.value = this.state.temperature;
+      }
     }
     return this.state.enabled ? this.temperatureFhir : undefined;
   }
