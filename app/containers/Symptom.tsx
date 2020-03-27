@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, Image, FlatList, YellowBox } from 'react-native';
+import { SafeAreaView, StyleSheet, ScrollView, Image, FlatList, YellowBox, Alert } from 'react-native';
 import AppStyle, { colors } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
@@ -27,12 +27,23 @@ interface State {
  * Main class defining the component.
  **/
 class Symptom extends Component<PropsType, State> {
+  symptomObservationGetters: {(): Observation}[] // TODO correct typisation
+  temperatureObservationGetter: any; // TODO correct typisation
+
   constructor(props: PropsType) {
     super(props);
     this.state = {
       showDatePicker: false,
       date: new Date()
     };
+
+    // initialize the array of observationGetter functions with the number of symptoms we have got
+    this.symptomObservationGetters = new Array<{(): Observation}>(SYMPTOM_DATA.length);
+
+    // bind the registering and handling functions to this, they can access the ObservationGetters
+    this.registerSymptomHandleFunction = this.registerSymptomHandleFunction.bind(this);
+    this.registerTemperatureHandleFunction = this.registerTemperatureHandleFunction.bind(this);
+    this.createFhirBundle = this.createFhirBundle.bind(this);
   }
 
   componentDidMount() {
@@ -54,14 +65,31 @@ class Symptom extends Component<PropsType, State> {
     this.setState({date: date});
   }
 
+  private registerSymptomHandleFunction(func: () => Observation, key: number){
+    this.symptomObservationGetters[key] = func;
+  }
+
+  private registerTemperatureHandleFunction(func: () => Observation) {
+    this.temperatureObservationGetter = func;
+    console.log('registered temperature observation getter');
+  }
+
   private createFhirBundle() {
+    console.log('called createFhirBundle')
     const bundle = new I4MIBundle(BundleType.TRANSACTION);
     // TODO: iterate through the subcomponents:
     // - get their observations
     // - add effectiveDateTime to every observation
     // - put observations into bundle
-    // - safe bundle to MIDATA
+    // - save bundle to MIDATA
+
+    this.symptomObservationGetters.forEach((getter) => {
+      console.log(getter)
+      const observation = getter();
+      console.log(observation)
+    })
   }
+
 
   render() {
     return (
@@ -83,12 +111,13 @@ class Symptom extends Component<PropsType, State> {
               <Separator/>
             </View>
 
-            <TemperatureSlider display="Körpertemperatur (in °C)" minimum={36} maximum={42} default={36.8} coding={{code: '123'}}/>
+            <TemperatureSlider display="Körpertemperatur (in °C)" minimum={36} maximum={42} default={36.8} coding={{code: '123'}} setHandleFunction={this.registerTemperatureHandleFunction}/>
 
             <FlatList
               data={SYMPTOM_DATA}
-              renderItem={({ item }) =>
-                <SymptomSeverity symptom={item.symptom} answerOptions={item.answerOptions}/>}
+              renderItem={({ item, index }) =>
+                <SymptomSeverity symptom={item.symptom} index={index} answerOptions={item.answerOptions} setHandleFunction={this.registerSymptomHandleFunction}/>
+              }
               keyExtractor={item => item.symptom.key}
             />
 
@@ -136,9 +165,10 @@ interface SymptomSeverityPropsType {
   symptom: {
     display: string;
     code: CodeableConcept;
-    key: string;
   },
+  index: number;
   answerOptions: AnswerOption[];
+  setHandleFunction(func: () => Observation, key: number): void;
 }
 
 interface AnswerOption {
@@ -168,6 +198,13 @@ class SymptomSeverity extends Component<SymptomSeverityPropsType> {
       category: SYMPTOM_CATEGORY.survey,
       valueCodeableConcept: SYMPTOM_SEVERITY_CODEABLE_CONCEPT.none // default is none
     }
+
+    this.getSymptomAsFhir = this.getSymptomAsFhir.bind(this);
+
+  }
+
+  componentDidMount() {
+    this.props.setHandleFunction(this.getSymptomAsFhir, this.props.index);
   }
 
   private select(clicked: AnswerOption) {
@@ -222,6 +259,7 @@ interface TemperatureSliderPropsType {
   maximum: number;
   default: number;
   coding: any; // TODO, probably CodeableConcept
+  setHandleFunction(func: () => Observation): void;
 }
 
 interface TemperatureSliderState {
@@ -259,6 +297,8 @@ class TemperatureSlider extends Component<TemperatureSliderPropsType, Temperatur
       code: {}
       // TODO more to come
     }
+
+    this.getTemperatureAsFhir = this.getTemperatureAsFhir.bind(this);
   }
 
   private temperatureToString(temperature: number) {
@@ -270,14 +310,6 @@ class TemperatureSlider extends Component<TemperatureSliderPropsType, Temperatur
                 '>' + this.props.maximum.toString() + ' °C' :
                 temperature.toString() + ' °C' :
             ' ';
-  }
-
-  /**
-   * Read the current temperature value as a string
-   * @return the temperature value in the format of '36.8', respectively like '<35' or '>41' if temperature is set to the very end of the slider
-   */
-  getTemperatureAsString() {
-    return this.temperatureToString(this.state.temperature);
   }
 
   /**
