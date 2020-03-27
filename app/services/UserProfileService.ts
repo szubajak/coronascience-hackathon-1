@@ -36,8 +36,8 @@ class UserProfileService {
         var user = undefined;
             let family = bundle.name[0].family;
             let given = bundle.name[0].given;
-            let id = bundle.identifier.value;
-            let address = this.parseAdress(bundle.address);
+            let id = 'toBeChanged';//bundle.identifier[0].value;
+            //let address = this.parseAdress(bundle.address);
             let name = new UserName(family, given);
             user = new UserProfile({id, name});
         return user;

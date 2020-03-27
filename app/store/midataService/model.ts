@@ -44,7 +44,7 @@ class MiDataServiceStore {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.currentSession.getAccessToken
+                'Authorization': 'Bearer ' + this.currentSession.getAccessToken()
             },
             body: body
         }).then(response => {
