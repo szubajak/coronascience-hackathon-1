@@ -20,8 +20,10 @@
     "settings":{
         "title" : "Einstellungen",
         "userInterface":{
-            "title" : "Benutzeroberfläche",
-            "notifications" : "Erinnerungen",
+            "title" : "Benutzeroberfläche"
+        },
+         "notifications" :{
+            "title" : "Erinnerungen",
             "notificationsInformation" : "Erinnerungen werden nur aktiviert, wenn im gewählten Intervall keine Symptome erfasst wurde.",
             "notificationActivation" : "Erinnerungen aktivieren",
         },
@@ -30,9 +32,10 @@
             "impressum" : "Impressum",
             "termsOfUse" : "Nutzungsbedingungen",
             "privacyPolicy" : "Datenschutzerklärung",
-            "feedback" : "App Feedback",
+            "feedback" : "App Feedback"
         },
         "donate" : "Ich möchte spenden!"
+    },
+    "Profile":{
     }
-
 }
