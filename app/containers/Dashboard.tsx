@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, Image, StyleSheet, TouchableOpacity, Dimensions, Platform, StatusBar } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, Dimensions, Platform, StatusBar } from 'react-native';
 import { View, Text, Icon, Card, CardItem, Body } from 'native-base';
 import AppStyle, { colors, TextSize } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
@@ -168,7 +168,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     flexWrap: 'wrap'
   },
-
   linearGradient: {
     flexDirection: 'row',
     justifyContent: 'space-between',

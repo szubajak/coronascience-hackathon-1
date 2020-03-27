@@ -1,18 +1,22 @@
 import * as React from 'react';
 import { SafeAreaView, Image, StyleSheet } from 'react-native'
 import { Provider } from 'react-redux';
-import {store, persistor} from '../store';
+import { store, persistor } from '../store';
 import Impressum from './Impressum';
 import Dashboard from './Dashboard';
 import Informations from './Informations';
 import Settings from './Settings'
 import Profile from './Profile'
 import Symptom from './Symptom'
+import { Button, Text} from 'native-base'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { colors } from '../styles/App.style';
+import AppStyle, { colors } from '../styles/App.style';
 import { PersistGate } from 'redux-persist/integration/react';
 import { createStackNavigator } from '@react-navigation/stack';
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -81,7 +85,15 @@ function Root() {
         component={Symptom}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            generateTabImage('symptom', focused)
+            //generateTabImage('symptom', focused)
+            <LinearGradient
+                colors={[colors.headerGradientEnd, colors.headerGradientBegin]}
+                style={[AppStyle.button, styles.linearGradient]}
+                start={{x: 0, y: 1}}
+                end={{x: 1, y: 0.9}}
+                locations={[0, 1]} >
+                <Icon name='plus' color={colors.white} size={25}/>
+            </LinearGradient>
           )
         }}
       />
@@ -115,10 +127,19 @@ function Root() {
 const styles = StyleSheet.create({
   menuItemImage: {
     marginTop: '4%',
-    width: 29,
-    height: 29,
+    width: 20,
+    height: 20,
     overflow: 'visible'
-  }
+  },
+  linearGradient: {
+    width: 70,
+    height: 40,
+    borderRadius: 50,
+    borderWidth: 0,
+    top: -7,
+    paddingTop: 7,
+    paddingLeft: 21
+  },
 });
 
 
