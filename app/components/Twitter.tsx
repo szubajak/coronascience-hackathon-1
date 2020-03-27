@@ -166,21 +166,27 @@ class Twitter extends Component<PropsType, State> {
         }
       
         <View style={{ flexDirection: 'row', paddingBottom: 10, paddingTop: 5, paddingLeft: 10}}>
-        <Image
-            style={{width: 30, height: 30, borderRadius: 30/ 2}}
-            source={{uri: myItem.user.profile_image_url_https}}
-        />
-        <ScrollView style={{ paddingLeft: 5, height:180, paddingRight: 10}}
+        <ScrollView style={{ paddingLeft: 5, paddingRight: 10, height:180}}
           contentContainerStyle={{
             flexGrow: 1,
             justifyContent: 'space-between'
         }}>
-            <Text style={styles.tweetScreenName}>{myItem.user.name}</Text>
+            <View style={{flexDirection:"row"}}>
+              <Image
+                style={{width: 30, height: 30, borderRadius: 30/ 2}}
+                source={{uri: myItem.user.profile_image_url_https}}
+              />
+              <Text style={styles.tweetScreenName}>{myItem.user.name}</Text>
+            </View>
+
             <View style={{flexDirection: 'row', paddingBottom: 5}}>
                 <Text style={styles.tweetUserName}>@{myItem.user.screen_name}</Text>
                 <Text style={styles.tweetUserName}>.</Text>
                 <Text style={styles.tweetDate}>{Moment(myItem.created_at).format('DD.MM.YYYY HH:mm')}</Text>
             </View>
+
+
+
             <View>
               <Text>
                   {hasLinks ? 
@@ -294,8 +300,9 @@ const styles = StyleSheet.create({
     tweetScreenName: {
         fontSize: 14,
         fontWeight: 'bold',
-        paddingRight: 5
-        
+        paddingRight: 5,
+        left: 5,
+        top: 6
     },
     tweetDate: {
         fontSize: 12,
