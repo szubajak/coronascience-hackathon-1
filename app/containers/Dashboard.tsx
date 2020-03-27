@@ -4,6 +4,7 @@ import { View, Text, Icon, Card, CardItem, Body } from 'native-base';
 import AppStyle, { colors, TextSize } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { localeString } from '../locales';
 
 const SMALLSCREEN_CUTOFF = 360;
 
@@ -51,7 +52,7 @@ class Dashboard extends Component<{navigation: any}> {
               source={require('../../resources/images/virus.png')}
             />
           <View style={{flex: 3, flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={styles.logoText}>Gemeinsam bekämpfen wir COVID-19!</Text>
+            <Text style={styles.logoText}>{localeString('dashboard.slogan')}</Text>
           </View>
         </View>
         <View style={{paddingHorizontal: 20}}>
