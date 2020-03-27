@@ -179,7 +179,7 @@ class Twitter extends Component<PropsType, State> {
             <View style={{flexDirection: 'row', paddingBottom: 5}}>
                 <Text style={styles.tweetUserName}>@{myItem.user.screen_name}</Text>
                 <Text style={styles.tweetUserName}>.</Text>
-                <Text style={styles.tweetDate}>{Moment(myItem.created_at).format('DD.MM.YYYY')}</Text>
+                <Text style={styles.tweetDate}>{Moment(myItem.created_at).format('DD.MM.YYYY HH:mm')}</Text>
             </View>
             <View>
               <Text>
