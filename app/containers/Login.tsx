@@ -37,7 +37,7 @@ const config = {
         tokenEndpoint: Config.HOST + Config.TOKEN_ENDPOINT
     }
 
-  };
+};
 
 class Login extends Component<PropsType, State> {
 
