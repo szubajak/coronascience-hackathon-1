@@ -15,13 +15,6 @@ export const SYMPTOM_DATA = [
   },
   {
     symptom: {
-      display: 'Müdigkeit',
-      code: SYMPTOM_CODE.fatigue
-    },
-    answerOptions: SYMPTOM_ANSWER_OPTIONS
-  },
-  {
-    symptom: {
       display: 'Hals\u00ADschmerzen',
       code: SYMPTOM_CODE.throatPain
     },
@@ -36,6 +29,20 @@ export const SYMPTOM_DATA = [
   },
   {
     symptom: {
+      display: 'Müdigkeit',
+      code: SYMPTOM_CODE.fatigue
+    },
+    answerOptions: SYMPTOM_ANSWER_OPTIONS
+  },
+  {
+    symptom: {
+      display: 'Übelkeit',
+      code: SYMPTOM_CODE.nausea
+    },
+    answerOptions: SYMPTOM_ANSWER_OPTIONS
+  },
+  {
+    symptom: {
       display: 'Kopf\u00ADschmerzen',
       code: SYMPTOM_CODE.headache
     },
@@ -45,13 +52,6 @@ export const SYMPTOM_DATA = [
     symptom: {
       display: 'Durchfall',
       code: SYMPTOM_CODE.diarrhea
-    },
-    answerOptions: SYMPTOM_ANSWER_OPTIONS
-  },
-  {
-    symptom: {
-      display: 'Übelkeit',
-      code: SYMPTOM_CODE.nausea
     },
     answerOptions: SYMPTOM_ANSWER_OPTIONS
   },

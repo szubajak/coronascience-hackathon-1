@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, Image, FlatList, YellowBox, Alert, TextInput } from 'react-native';
+import { SafeAreaView, ScrollView, Image, FlatList, YellowBox, TextInput } from 'react-native';
 import AppStyle, { colors } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
@@ -36,7 +36,7 @@ class Symptom extends Component<PropsType, State> {
     this.state = {
       showDatePicker: false,
       date: new Date(),
-      debugText: '...'
+      debugText: 'debug...'
     };
 
     // initialize the array of observationGetter functions with the number of symptoms we have got
@@ -74,11 +74,9 @@ class Symptom extends Component<PropsType, State> {
 
   private registerTemperatureHandleFunction(func: () => Observation) {
     this.temperatureObservationGetter = func;
-    console.log('registered temperature observation getter');
   }
 
   private createFhirBundle() {
-    console.log('called createFhirBundle')
     const bundle = new I4MIBundle(BundleType.TRANSACTION);
     // TODO: iterate through the subcomponents:
     // - get their observations DONE
@@ -149,8 +147,8 @@ class Symptom extends Component<PropsType, State> {
               </View>
             </View>
 
-            <Button style={[AppStyle.button, {marginBottom: 40}]}>
-                <Text style={AppStyle.textButton} onPress={() => this.createFhirBundle()}>Weiter</Text>
+            <Button style={[AppStyle.buttonFilled, {marginBottom: 40}]}>
+                <Text style={AppStyle.textButtonFilled} onPress={() => this.createFhirBundle()}>Weiter</Text>
             </Button>
 
               <TextInput style={{marginBottom: 300,fontSize: 12, borderWidth: 1}} value={this.state.debugText}></TextInput>
@@ -260,8 +258,8 @@ class SymptomSeverity extends Component<SymptomSeverityPropsType> {
             data={this.state.answerOptions}
             keyExtractor={item => item.key}
             renderItem={({ item }) =>
-              <Button style={[AppStyle.button, item.selected ? styles.selectedButton : AppStyle.button, {flex: 1, marginLeft: 5}]} onPress={() => this.select(item)}>
-                <Text style={[AppStyle.textButton, item.selected ? styles.selectedTextButton : AppStyle.textButton]}>{item.display}</Text>
+              <Button style={[item.selected ? AppStyle.buttonFilled : AppStyle.button, {flex: 1, marginLeft: 5}]} onPress={() => this.select(item)}>
+                <Text style={[item.selected ? AppStyle.textButtonFilled : AppStyle.textButton]}>{item.display}</Text>
               </Button>
             }
           />
@@ -369,11 +367,11 @@ class TemperatureSlider extends Component<TemperatureSliderPropsType, Temperatur
           <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
             <View style={{flexDirection: 'row'}}><Text style={[AppStyle.textQuestion]}>Temperatur gemessen</Text></View>
             <View style={{flexDirection: 'row'}}>
-              <Button style={[AppStyle.button, this.state.enabled ? styles.selectedButton : AppStyle.button, {width: 68, marginTop: -7, borderTopRightRadius: 0, borderBottomRightRadius: 0}]} onPress={() => {this.setState({enabled: !this.state.enabled})}}>
-                <Text style={[AppStyle.textButton, this.state.enabled ? styles.selectedTextButton : AppStyle.textButton]}>Ja</Text>
+              <Button style={[this.state.enabled ? AppStyle.buttonFilled : AppStyle.button, {width: 68, marginTop: -7, borderTopRightRadius: 0, borderBottomRightRadius: 0}]} onPress={() => {this.setState({enabled: !this.state.enabled})}}>
+                <Text style={[this.state.enabled ? AppStyle.textButtonFilled : AppStyle.textButton]}>Ja</Text>
               </Button>
-              <Button style={[AppStyle.button, !this.state.enabled ? styles.selectedButton : AppStyle.button, {width: 68, marginTop: -7, borderTopLeftRadius: 0, borderBottomLeftRadius: 0}]} onPress={() => {this.setState({enabled: !this.state.enabled})}}>
-                <Text style={[AppStyle.textButton, !this.state.enabled ? styles.selectedTextButton : AppStyle.textButton]}>Nein</Text>
+              <Button style={[!this.state.enabled ? AppStyle.buttonFilled : AppStyle.button, {width: 68, marginTop: -7, borderTopLeftRadius: 0, borderBottomLeftRadius: 0}]} onPress={() => {this.setState({enabled: !this.state.enabled})}}>
+                <Text style={[!this.state.enabled ? AppStyle.textButtonFilled : AppStyle.textButton]}>Nein</Text>
               </Button>
             </View>
           </View>
@@ -399,20 +397,5 @@ class TemperatureSlider extends Component<TemperatureSliderPropsType, Temperatur
   }
 }
 
-/**
- * Styles
- **/
-
-const styles = StyleSheet.create({
- columns: {
-   marginRight: 5
- },
- selectedButton: {
-   backgroundColor: colors.secondaryNormal
- },
- selectedTextButton: {
-   color: colors.white
- }
-});
 
 export default Symptom;
