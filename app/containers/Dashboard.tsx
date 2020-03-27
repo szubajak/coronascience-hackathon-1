@@ -46,11 +46,11 @@ class Dashboard extends Component<{navigation: any}> {
   render() {
     return (
       <>
-      <View style={{flex: 0.8, flexDirection: 'row', paddingHorizontal: 50, paddingVertical: 15}}>
-          <Image
-            style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
-            source={require('../../resources/images/logo.png')}
-          />
+      <View style={{flex: 0.8, flexDirection: 'row', paddingHorizontal: 50, paddingTop: 65, paddingBottom: 35}}>
+        <Image
+          style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
+          source={require('../../resources/images/logo.png')}
+        />
         <View style={{flex: 3, flexDirection: 'row', alignItems: 'center'}}>
           <Text style={styles.logoText}>{localeString('dashboard.slogan')}</Text>
         </View>
@@ -65,7 +65,7 @@ class Dashboard extends Component<{navigation: any}> {
                       icon="person"
                       navigation={this.props.navigation} />
       </View>
-      <View style={{flex: 2, marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', margin: 5}}>
+      <View style={{flex: 2, marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, maxHeight:160}}>
         <InfoCard item={{text: 'Nutzerinnen und Nutzer', icon: 'people', count: 174}}/>
         <InfoCard item={{text: 'gespendete Datensätze', icon: 'gift', count: 1901}} />
       </View>

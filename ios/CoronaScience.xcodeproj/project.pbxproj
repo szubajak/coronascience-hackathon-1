@@ -65,7 +65,7 @@
 		0A0294FACD2E4679800F7AF9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		0BCEE1F718B90F5E9B4940F7 /* Pods-CoronaScience-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoronaScience-tvOS.release.xcconfig"; path = "Target Support Files/Pods-CoronaScience-tvOS/Pods-CoronaScience-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		0F66E07C11B8454D9E5DA9DD /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* CoronaScience.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoronaScience.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Corona Science.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Corona Science.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = CoronaScience/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = CoronaScience/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -245,7 +245,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* CoronaScience.app */,
+				13B07F961A680F5B00A75B9A /* Corona Science.app */,
 				00E356EE1AD99517003FC87E /* CoronaScienceTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* CoronaScience-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* CoronaScience-tvOSTests.xctest */,
@@ -293,7 +293,7 @@
 			);
 			name = CoronaScience;
 			productName = CoronaScience;
-			productReference = 13B07F961A680F5B00A75B9A /* CoronaScience.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Corona Science.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* CoronaScience-tvOS */ = {
@@ -342,7 +342,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 940;
-				ORGANIZATIONNAME = Facebook;
+				ORGANIZATIONNAME = MIDATA;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
@@ -779,14 +779,14 @@
 				);
 				INFOPLIST_FILE = CoronaScience/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ch.bfh.ti.i4mi.coronaScience;
-				PRODUCT_NAME = CoronaScience;
+				PRODUCT_NAME = "Corona Science";
 				PROVISIONING_PROFILE_SPECIFIER = "Corona Science Development";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -806,14 +806,14 @@
 				);
 				INFOPLIST_FILE = CoronaScience/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ch.bfh.ti.i4mi.coronaScience;
-				PRODUCT_NAME = CoronaScience;
+				PRODUCT_NAME = "Corona Science";
 				PROVISIONING_PROFILE_SPECIFIER = "Corona Science Development";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
