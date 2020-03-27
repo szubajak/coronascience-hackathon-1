@@ -1,4 +1,8 @@
 import * as React from 'react';
+import { Text, View } from 'react-native';
+import { Provider } from 'react-redux';
+import {store, persistor} from '../store';
+import Login from './Login';
 import Dashboard from './Dashboard';
 import Informations from './Informations';
 import Settings from './Settings'
@@ -15,6 +19,11 @@ const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function mainStack(){
+import { PersistGate } from 'redux-persist/integration/react';
+
+const Tab = createBottomTabNavigator();
+
+function Root() {
   return (
     <>
     <Tab.Navigator
@@ -100,5 +109,16 @@ export default function App() {
       </RootStack.Navigator>
     </NavigationContainer>
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <Provider store={store}>
+      <PersistGate
+        persistor={persistor}>
+        <Root/>
+      </PersistGate>
+    </Provider>
   );
 }
