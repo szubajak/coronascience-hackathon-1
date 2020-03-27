@@ -17,7 +17,7 @@ class Twitter extends Component<PropsType, State> {
 
   constructor(props: PropsType) {
     super(props);
-    this.getAllyScienceTweets();
+    this.getCoronaScienceTweets();
   }
 
   state = {
@@ -32,7 +32,7 @@ class Twitter extends Component<PropsType, State> {
   //   });
   // }
 
-  getAllyScienceTweets() {
+  getCoronaScienceTweets() {
     let TWITTER_BEARER='AAAAAAAAAAAAAAAAAAAAAPha9wAAAAAAnAey0XZGomjlFBsfYsMJ1iYUbfk%3DF1hxES5gZSoxe839Pr22KSsnec3Y4ZTWTQJCvUweOJC9w8BbEJ'
     let bearer = 'Bearer ' + TWITTER_BEARER;
     return fetch('https://api.twitter.com/1.1/statuses/user_timeline.json?count=50&screen_name=BAG_OFSP_UFSP&tweet_mode=extended',{
@@ -44,7 +44,7 @@ class Twitter extends Component<PropsType, State> {
             }})
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log("responseJson is :", responseJson )
+        //console.log("responseJson is :", responseJson )
         this.setState({tweetList : responseJson});
       })
       .catch((error) => {
