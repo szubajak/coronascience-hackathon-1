@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { Provider } from 'react-redux';
 import {store, persistor} from '../store';
 import Login from './Login';
-import Introduction from './Introduction';
+import Dashboard from './Dashboard';
 import Informations from './Informations';
 import Settings from './Settings'
 import Profil from './Profil'
@@ -13,20 +13,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../styles/App.style';
 import { PersistGate } from 'redux-persist/integration/react';
-
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Stay @ home!</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <Introduction/>
-  );
-}
 
 const Tab = createBottomTabNavigator();
 
@@ -42,8 +28,8 @@ function Root() {
         }}
       >
         <Tab.Screen
-          name="Home"
-          component={Login}
+          name="Dashboard"
+          component={Dashboard}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Icon name='home' color={color} size={size} />
@@ -62,7 +48,7 @@ function Root() {
         />
 
         <Tab.Screen
-          name="AddSympome"
+          name="AddSymptoms"
           component={Symptom}
           options={{
             tabBarIcon: ({ color, size }) => (
@@ -73,16 +59,18 @@ function Root() {
 
         <Tab.Screen
           name="Settings"
-          component={Settings}
+          
           options={{
             tabBarIcon: ({ color, size }) => (
               <Icon name='setting' color={color} size={size} />
             )
           }}
-        />
+        >
+           {props => <Settings {...props} />}
+        </Tab.Screen>
 
         <Tab.Screen
-          name="Profil"
+          name="Profile"
           component={Profil}
           options={{
             tabBarIcon: ({ color, size }) => (
