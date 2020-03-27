@@ -145,7 +145,7 @@ class Twitter extends Component<PropsType, State> {
     let hasLinks = links.length > 0;
 
     return(
-      <View style={{backgroundColor:colors.white}}>
+      <View style={{backgroundColor:colors.white, height: 220}}>
         <View style={{ paddingTop: 30}}>
         {isRetweeted ?
         (
@@ -170,7 +170,7 @@ class Twitter extends Component<PropsType, State> {
             style={{width: 30, height: 30, borderRadius: 30/ 2}}
             source={{uri: myItem.user.profile_image_url_https}}
         />
-        <ScrollView style={{ paddingLeft: 5}}
+        <ScrollView style={{ paddingLeft: 5, height:180, paddingRight: 10}}
           contentContainerStyle={{
             flexGrow: 1,
             justifyContent: 'space-between'
