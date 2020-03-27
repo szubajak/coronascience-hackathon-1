@@ -99,20 +99,20 @@ class Settings extends Component<PropsType, State> {
                 </Button>
               </Col>
               <Col style={[styles.columns]}>
-                <Button style={[AppStyle.button]}>
-                  <Text style={[AppStyle.textButton]}>{localeString('settings.other.termsOfUse')}</Text>
+                <Button style={[AppStyle.button]} onPress={() => this.openURL(localeString('settings.other.termsOfUse.url'))}>
+                  <Text style={[AppStyle.textButton]}>{localeString('settings.other.termsOfUse.title')}</Text>
                 </Button>
               </Col>
             </Row>
             <Row>
               <Col style={[styles.columns]}>
-                <Button style={[AppStyle.button]}>
-                  <Text style={[AppStyle.textButton]}>{localeString('settings.other.privacyPolicy')}</Text>
+                <Button style={[AppStyle.button]} onPress={() => this.openURL(localeString('settings.other.privacyPolicy.url'))}>
+                  <Text style={[AppStyle.textButton]}>{localeString('settings.other.privacyPolicy.title')}</Text>
                 </Button>
               </Col>
               <Col style={[styles.columns]}>
-                <Button style={[AppStyle.button]}>
-                  <Text style={[AppStyle.textButton]}>{localeString('settings.other.feedback')}</Text>
+                <Button style={[AppStyle.button]} onPress={() => this.openURL(localeString('settings.other.feedback.url'))}>
+                  <Text style={[AppStyle.textButton]}>{localeString('settings.other.feedback.title')}</Text>
                 </Button>
               </Col>
             </Row>
@@ -120,7 +120,7 @@ class Settings extends Component<PropsType, State> {
           </View>
           <Separator />
           <View>
-              <Button style={[AppStyle.button, {backgroundColor:colors.secondaryNormal}]}>
+              <Button style={[AppStyle.button, {backgroundColor:colors.secondaryNormal}]} onPress={() => this.openURL('https://www.twint.ch/')}>
                 <Text style={[AppStyle.textButton,{color:colors.white}]}>
                   {localeString('settings.donate')}
                 </Text>

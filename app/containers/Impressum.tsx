@@ -7,6 +7,7 @@ import AppStyle, { colors, ButtonDimensions } from '../styles/App.style';
 import Config from "react-native-config";
 import { HeaderBanner } from '../components/HeaderBanner'
 import { StackNavigationProp } from '@react-navigation/stack';
+import { Separator } from '../components/Separator';
 
 interface PropsType {
     navigation: StackNavigationProp<any>
@@ -14,7 +15,7 @@ interface PropsType {
 
 class Impressum extends Component<PropsType> {
     CoronaImage = require('../../resources/images/partners/corona-science.png');
-    CoronaUrl = localeString('impressum.partners.ally.hyperlink');
+    CoronaUrl = localeString('impressum.partners.corona.hyperlink');
 
     renderPartners(partnersList: any[]) {
         return partnersList.map((partner, index) => {
@@ -26,44 +27,45 @@ class Impressum extends Component<PropsType> {
                             <Image style={styles.partnerImage} resizeMode='contain' source={partner.image}/>
                         </View>
                     </TouchableHighlight>
-                    {(index < partnersList.length - 1) && <View style={AppStyle.divider}/>}
+                    {(index < partnersList.length - 1) && <Separator />}
                 </View>
             );
         });
     }
+
     render() {
         return (
         <>
             <StatusBar barStyle="dark-content" />
             <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
             <SafeAreaView style={{ flex: 1, backgroundColor: colors.headerGradientBegin }}>
-            <HeaderBanner title='Impressum' btnClose={true} onClose={() => this.props.navigation.goBack()}/>
-            <ScrollView style={[styles.container,{backgroundColor:colors.headerGradientBegin }]}>
-                <View style={styles.cardsContainer}>
-                    <View style={styles.card}>
-                        <View style={styles.partnerContainer}>
-                            <TouchableHighlight onPress={() => Linking.openURL(this.CoronaUrl)}  style={styles.allyImageContainer} underlayColor={colors.white}>
-                                <View>
-                                    <Image style={styles.allyImage} resizeMode='contain' source={this.CoronaImage}/>
-                                    <Text style={styles.partnerLabel}>{VersionNumber.appVersion + ' (Build ' + VersionNumber.buildVersion + ') on ' + Config.HOST}</Text>
-                                </View>
-                            </TouchableHighlight>
-                        </View>
-                    </View>
-                    {PARTNERS.map((partnerCategory, index) => {
-                    return (
-                        <View key={index} style={styles.card}>
-                            <View style={styles.partnerContainer} key={partnerCategory.categoryId}>
-                                <View style={styles.subtitleContainer}>
-                                    <Text style={styles.subtitle}>{localeString('impressum.categories.' + partnerCategory.categoryId)}</Text>
-                                </View>
-                                <View style={styles.partnerList}>
-                                    {this.renderPartners(partnerCategory.partners)}
-                                </View>
+                <HeaderBanner title='Impressum' btnClose={true} onClose={() => this.props.navigation.goBack()}/>
+                <ScrollView style={[styles.container,{backgroundColor:colors.headerGradientBegin }]}>
+                    <View style={styles.cardsContainer}>
+                        <View style={styles.card}>
+                            <View style={styles.partnerContainer}>
+                                <TouchableHighlight onPress={() => Linking.openURL(this.CoronaUrl)}  style={styles.coronaImageContainer} underlayColor={colors.white}>
+                                    <View>
+                                        <Image style={styles.coronaImage} resizeMode='contain' source={this.CoronaImage}/>
+                                        <Text style={styles.partnerLabel}>{VersionNumber.appVersion + ' (Build ' + VersionNumber.buildVersion + ') on ' + Config.HOST}</Text>
+                                    </View>
+                                </TouchableHighlight>
                             </View>
                         </View>
-                    );})}
-                </View>
+                        {PARTNERS.map((partnerCategory, index) => {
+                        return (
+                            <View key={index} style={styles.card}>
+                                <View style={styles.partnerContainer} key={partnerCategory.categoryId}>
+                                    <View style={styles.subtitleContainer}>
+                                        <Text style={styles.subtitle}>{localeString('impressum.categories.' + partnerCategory.categoryId)}</Text>
+                                    </View>
+                                    <View style={styles.partnerList}>
+                                        {this.renderPartners(partnerCategory.partners)}
+                                    </View>
+                                </View>
+                            </View>
+                        );})}
+                    </View>
             </ScrollView>
         </SafeAreaView>
         </>
@@ -111,21 +113,22 @@ const styles = StyleSheet.create({
     partnerImage: {
         height: 100,
         marginHorizontal: 10,
-        marginVertical: 10
+        marginVertical: 10,
+        maxWidth: 250
     },
     imageContainer: {
         width: '100%',
         alignItems: 'center',
         justifyContent: 'space-around'
     },
-    allyImageContainer: {
+    coronaImageContainer: {
         width: '100%'
     },
-    allyImage: {
-        height: 150,
+    coronaImage: {
+        height: 180,
         width: undefined,
-        marginHorizontal: 20,
-        marginVertical: 0
+        marginHorizontal: 30,
+        marginVertical: 10,
     },
     partnerLabel: {
         margin: 5,

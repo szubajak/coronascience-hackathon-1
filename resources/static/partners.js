@@ -17,59 +17,16 @@ export const PARTNERS = [
         ]
     },
     {
-        categoryId: 'measurements',
+        categoryId: 'sponsors',
         partners: [
             {
-                id: 'swisens',
-                image: require('../../resources/images/partners/Swisens.png')
+                id: 'roche',
+                image: require('../../resources/images/partners/Roche.png')
+            },{
+                id: 'galenica',
+                image: require('../../resources/images/partners/Galenica.png')
             } 
         ]
-    },
-    {
-        categoryId: 'allergy',
-        partners: [
-            {
-                id: 'aha',
-                image: require('../../resources/images/partners/aha.png')
-                
-            }
-        ]
-    },
-    {
-        categoryId: 'scientist',
-        partners: [
-            {
-                id: 'usz',
-                image: require('../../resources/images/partners/USZ.png')
-                
-            },
-            {
-                id: 'ethz',
-                image: require('../../resources/images/partners/ETHZ.png')
-            }
-        ]
-    },
-    {
-        categoryId: 'industry',
-        partners: [
-            {
-                id: 'dyson',
-                image: require('../../resources/images/partners/Dyson.png')
-                
-            },
-            {
-                id: 'swisslung',
-                image: require('../../resources/images/partners/SwissLung.png')
-            }
-        ]
-    },
-    {
-        categoryId: 'pollenInfo',
-        partners: [{
-            id: 'meteosuisse',
-            image: require('../../resources/images/partners/MeteoSchweiz.png')
-            
-        }]
     },
     {
         categoryId: 'technonlogy',
@@ -79,16 +36,24 @@ export const PARTNERS = [
                 image: require('../../resources/images/partners/ELCA.png')
             },
             {
-                id: 'superhuit',
-                image: require('../../resources/images/partners/SUPERHUIT.png')
+                id: 'ahdis',
+                image: require('../../resources/images/partners/ahdis.png')
             },
         ]
     },
     {
-        categoryId: 'maps',
+        categoryId: 'communication',
         partners: [{
-            id: 'mapbox',
-            image: require('../../resources/images/partners/mapbox.png')
+            id: 'koberg',
+            image: require('../../resources/images/partners/BFH.png')
+            
+        }]
+    },
+    {
+        categoryId: 'logo',
+        partners: [{
+            id: 'richner',
+            image: require('../../resources/images/partners/Richner.png')
             
         }]
     }
