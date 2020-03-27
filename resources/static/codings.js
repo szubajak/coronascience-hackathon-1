@@ -176,3 +176,44 @@ export const TEMPERATURE_VALUE_QUANTITY = {
     system: 'http://unitsofmeasure.org',
     code: 'Cel'
   }
+
+ /**
+  * Codings for using in questionnaire response (test results)
+  * just push to the items answer property
+  **/
+export const QUESTIONS_TESTRESULT_VALUECODING = {
+    positive: {
+        valueCoding: {
+            "system": "http://snomed.info/sct",
+            "code": "TODO!",
+            "display": "TODO!"
+        }
+    },
+    negative: {
+        valueCoding: {
+            "system": "http://snomed.info/sct",
+            "code": "TODO!",
+            "display": "TODO!"
+        }
+    },
+    pending: {
+        valueCoding: {
+            "system": "http://snomed.info/sct",
+            "code": "TODO!",
+            "display": "TODO!"
+        }
+    }
+}
+
+/**
+ * Codings for using in questionnaire response (yes / no questions)
+ * just push to the items answer property
+ **/
+export const QUESTIONS_YESNO = {
+    yes: {
+        valueBoolean: true
+    },
+    no: {
+        valueBoolean: false
+    }
+}
