@@ -1,4 +1,41 @@
 {
-    "lang" : "English",
-    "login" : "Connect to MIDATA"
+    "dashboard":{ 
+        "slogan" : "Gemeinsam bekämpfen wir COVID-19!",
+        "enterSymptom" : "Gesundheitszustand erfassen",
+        "completeProfileDetails" : "Profilangaben vervollständigen",
+        "totalUser" : "Nutzerinnen und Nutzer",
+        "totalCollectedData" : "gespendete Datensätze"
+    },
+    "informations":{
+        "title" : "Informationen",
+        "authorityName" : "Bundesamt für Gesunheit",
+        "infoLine" : "Infoline (täglich 24h)",
+        "authorityInfolineNumber" : "+41 58 463 00 00",
+        "serviceName" : "Aertefon",
+        "serviceInfoLineNumber" : "0800 33 66 55",
+        "serviceInternetSiteName" : "Website Aertefon",
+        "serviceInternetSiteURL" : "https://i4mi.bfh.ch"
+    },
+    "symptom":{},
+    "settings":{
+        "title" : "Einstellungen",
+        "userInterface":{
+            "title" : "Benutzeroberfläche"
+        },
+         "notifications" :{
+            "title" : "Erinnerungen",
+            "notificationsInformation" : "Erinnerungen werden nur aktiviert, wenn im gewählten Intervall keine Symptome erfasst wurde.",
+            "notificationActivation" : "Erinnerungen aktivieren",
+        },
+        "other":{
+            "title" : "Weiteres",
+            "impressum" : "Impressum",
+            "termsOfUse" : "Nutzungsbedingungen",
+            "privacyPolicy" : "Datenschutzerklärung",
+            "feedback" : "App Feedback"
+        },
+        "donate" : "Ich möchte spenden!"
+    },
+    "Profile":{
+    }
 }

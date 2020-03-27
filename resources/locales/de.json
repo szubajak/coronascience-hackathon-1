@@ -1,0 +1,9 @@
+{
+    "dashboard":{ 
+        "slogan" : "Gemeinsam bekämpfen wir COVID-19!",
+        "enterSymptom" : "Gesundheitszustand erfassen",
+        "completeProfileDetails" : "Profilangaben vervollständigen",
+        "totalUser" : "Nutzerinnen und Nutzer",
+        "totalCollectedData" : "gespendete Datensätze"
+    }
+}

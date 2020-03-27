@@ -32,19 +32,19 @@ class Informations extends Component<PropsType, State> {
   render() {
     return (
       <>
-        <HeaderBanner title='Informationen'/>
+        <HeaderBanner title={localeString('informations.title')}/>
         <ScrollView
             style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
             contentInsetAdjustmentBehavior="automatic">
             <View>
                 <Text style={[AppStyle.sectionTitle]}>
-                    Bundesamt für Gesundheit
+                    {localeString('informations.authorityName')}
                 </Text>
             </View>
             <Separator/>
             <View>
                 <Text style={[AppStyle.textQuestion]}>
-                    Infoline (täglich 24h): <Text onPress={() => this.openURL('tel:0041584630000')}>+41 58 463 00 00</Text>
+                    {localeString('informations.infoLine')}: <Text onPress={() => this.openURL('tel:' + localeString('informations.authorityInfolineNumber').replace(/\s/g, ""))}>{localeString('informations.authorityInfolineNumber')}</Text>
                 </Text>
                 
                 <Button style={[AppStyle.button]}
@@ -81,18 +81,18 @@ class Informations extends Component<PropsType, State> {
             
             <View style={{marginTop:25}}>
                 <Text style={[AppStyle.sectionTitle]}>
-                    Aertefon
+                    {localeString('informations.serviceName')}
                 </Text>
             </View>
             <Separator/>
             <View>
                 <Text style={[AppStyle.textQuestion]}>
-                    Infoline (täglich 24h): 0800 33 66 55
+                {localeString('informations.infoLine')}: <Text onPress={() => this.openURL('tel:' + localeString('informations.serviceInfoLineNumber').replace(/\s/g, ""))}>{localeString('informations.serviceInfoLineNumber')}</Text>
                 </Text>
                 <Button style={[AppStyle.button]}
-                    onPress={() => this.openURL('https://i4mi.bfh.ch')}>
+                    onPress={() => this.openURL(localeString('informations.serviceInternetSiteURL'))}>
                     <Text style={[AppStyle.textButton]}>
-                        Website Aerztefon
+                        {localeString('informations.serviceInternetSiteName')}
                     </Text>
                 </Button>
             </View>

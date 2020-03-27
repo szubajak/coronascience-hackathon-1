@@ -40,13 +40,13 @@ class Settings extends Component<PropsType, State> {
   render() {
     return (
       <>
-        <HeaderBanner title='Einstellungen'/>
+        <HeaderBanner title={localeString('settings.title')}/>
         <ScrollView 
             style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
             contentInsetAdjustmentBehavior="automatic">
             <View>
                 <Text style={[AppStyle.sectionTitle]}>
-                    Benutzeroberfläche
+                    {localeString('settings.userInterface.title')}
                 </Text>
             </View>
             <Separator/>
@@ -59,20 +59,22 @@ class Settings extends Component<PropsType, State> {
               </Right>
             </ListItem>
             <View style={{height:25}}>
-
+    
             </View>
             <View>
                 <Text style={[AppStyle.sectionTitle,{marginBottom: 5}]}>
-                    Erinnerungen
+                    {localeString('settings.notifications.title')}
                 </Text>
                 <Text style={[AppStyle.textQuestion]}>
-                    Erinnerungen werden nur aktiviert, wenn im gewählten Intervall keine Symptome erfasst wurde.
+                  {localeString('settings.notifications.notificationsInformation')}
                 </Text>
             </View>
-
+    
             <ListItem noIndent>
               <Left>
-                <Text>Erinnerungen aktivieren</Text>
+                <Text>
+                  {localeString('settings.notifications.notificationActivation')}
+                </Text>
               </Left>
               <Right>
                 <Switch/>
@@ -80,38 +82,49 @@ class Settings extends Component<PropsType, State> {
             </ListItem>
             
             <View style={{height:'40%'}}>
-
+    
             </View>
             
             <View>
                 <Text style={[AppStyle.sectionTitle,{marginBottom: 5}]}>
-                    Weiteres
+                  {localeString('settings.other.title')}
                 </Text>
                 <Separator />
-
+    
             <Grid>
               <Row>
                 <Col style={[styles.columns]}>
                   <Button style={[AppStyle.button]}
                     onPress={() => this.goToImpressum()} >
-                    <Text style={[AppStyle.textButton]}>Impressum</Text>
+                    <Text style={[AppStyle.textButton]}>{localeString('settings.other.impressum')}</Text>
                   </Button>
                 </Col>
                 <Col style={[styles.columns]}>
                   <Button style={[AppStyle.button]}>
-                    <Text style={[AppStyle.textButton]}>Nutzungsbedingungen</Text>
+                    <Text style={[AppStyle.textButton]}>{localeString('settings.other.termsOfUse')}</Text>
                   </Button>
                 </Col>
               </Row>
               <Row>
                 <Col style={[styles.columns]}>
                   <Button style={[AppStyle.button]}>
-                    <Text style={[AppStyle.textButton]}>Datenschutzerklärung</Text>
+                    <Text style={[AppStyle.textButton]}>{localeString('settings.other.privacyPolicy')}</Text>
                   </Button>
                 </Col>
                 <Col style={[styles.columns]}>
                   <Button style={[AppStyle.button]}>
-                    <Text style={[AppStyle.textButton]}>App Feedback</Text>
+                    <Text style={[AppStyle.textButton]}>{localeString('settings.other.feedback')}</Text>
+                  </Button>
+                </Col>
+              </Row>
+            </Grid>
+            </View>
+            <Separator />
+            <View>
+              <Button style={[AppStyle.button, {backgroundColor:colors.secondaryNormal}]}>
+                <Text style={[AppStyle.textButton,{color:colors.white}]}>
+                  {localeString('settings.donate')}
+                </Text>
                   </Button>
                 </Col>
               </Row>
