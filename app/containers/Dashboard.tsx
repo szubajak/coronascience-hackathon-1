@@ -5,6 +5,7 @@ import AppStyle, { colors, TextSize } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { localeString } from '../locales';
+import Twitter from '../components/Twitter'
 
 const SMALLSCREEN_CUTOFF = 360;
 
@@ -67,6 +68,9 @@ class Dashboard extends Component<{navigation: any}> {
       <View style={{flex: 2, marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', margin: 5}}>
         <InfoCard item={{text: 'Nutzerinnen und Nutzer', icon: 'people', count: 174}}/>
         <InfoCard item={{text: 'gespendete Datensätze', icon: 'gift', count: 1901}} />
+      </View>
+      <View style={{flex: 3}}>
+        <Twitter/>
       </View>
       </>
     );
