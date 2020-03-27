@@ -2,11 +2,11 @@ import Resource, {ValueCoding, CodeableConcept, Reference} from "./Resource";
 
 
 class Observation extends Resource{
-    private status : statusObservation;
-    private category : CodeableConcept[];
-    private code : CodeableConcept;
-    private subject : Reference;
-    private valueCodeableConcept = '';
+    status : statusObservation;
+    category : CodeableConcept[];
+    code : CodeableConcept;
+    subject : Reference;
+    valueCodeableConcept = '';
     
     constructor(_id : string, _status : statusObservation, _code : CodeableConcept){
         super(_id, 'Observation');

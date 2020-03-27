@@ -1,7 +1,8 @@
 export class Resource{
-    private resourceType : string;
-    private id : string;
-    private meta : Meta;
+    resourceType : string;
+    id : string;
+    meta ?: Meta;
+    extension? : Extension[];
 
     constructor(_resourceType : string, _id : string){
         this.resourceType = _resourceType;
@@ -20,6 +21,7 @@ export class Extension {
     url : string = '';
     valueCoding : ValueCoding = new ValueCoding();
     valueReference : ValueReference = new ValueReference();
+    valueString : string = '';
     extension : Extension[] = [];
 }
 
@@ -32,6 +34,13 @@ export class ValueCoding {
 export class ValueReference {
     reference : string = '';
     display : string = '';
+}
+
+export class ValueQuantity {
+    value : string = '';
+    unit : string = '';
+    system : string = '';
+    code : string = '';
 }
 
 export class CodeableConcept {
