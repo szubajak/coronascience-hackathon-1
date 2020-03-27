@@ -34,4 +34,18 @@ export class ValueReference {
     display : string = '';
 }
 
+export class CodeableConcept {
+    coding : Coding[] = [];
+    text : string = '';
+}
+
+export class Coding {
+    coding : ValueCoding[] = [];
+}
+
+export class Reference {
+    reference : string = '';
+    display : string = '';
+}
+
 export default Resource;

@@ -1,5 +1,5 @@
 import Resource from "./Resource";
-import { CodeableConcept } from "./Observation";
+import { CodeableConcept } from "./Resource";
 
 class Patient extends Resource{
     identifier : Identifier;
