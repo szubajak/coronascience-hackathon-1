@@ -4,7 +4,7 @@ import { View, Text, Icon, Card, CardItem, Body } from 'native-base';
 import AppStyle, { colors, TextSize } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
 import { StackNavigationProp } from '@react-navigation/stack';
-import Twitter from './Twitter';
+import Twitter from '../components/Twitter';
 
 const SMALLSCREEN_CUTOFF = 360;
 
