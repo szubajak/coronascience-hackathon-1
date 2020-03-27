@@ -40,96 +40,92 @@ class Settings extends Component<PropsType, State> {
   render() {
     return (
       <>
-        <StatusBar barStyle="dark-content" />
-        <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
-            <HeaderBanner title='Einstellungen'/>
-            <ScrollView 
-                style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
-                contentInsetAdjustmentBehavior="automatic">
-                <View>
-                    <Text style={[AppStyle.sectionTitle]}>
-                        Benutzeroberfläche
-                    </Text>
-                </View>
-                <Separator/>
-                <ListItem noIndent noBorder>
-                <Left>
-                    <Text>Deutch</Text>
-                  </Left>
-                  <Right>
-                    <Icon name="arrow-forward" />
-                  </Right>
-                </ListItem>
-                <View style={{height:25}}>
+        <HeaderBanner title='Einstellungen'/>
+        <ScrollView 
+            style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
+            contentInsetAdjustmentBehavior="automatic">
+            <View>
+                <Text style={[AppStyle.sectionTitle]}>
+                    Benutzeroberfläche
+                </Text>
+            </View>
+            <Separator/>
+            <ListItem noIndent noBorder>
+            <Left>
+                <Text>Deutch</Text>
+              </Left>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+            </ListItem>
+            <View style={{height:25}}>
 
-                </View>
-                <View>
-                    <Text style={[AppStyle.sectionTitle,{marginBottom: 5}]}>
-                        Erinnerungen
-                    </Text>
-                    <Text style={[AppStyle.textQuestion]}>
-                        Erinnerungen werden nur aktiviert, wenn im gewählten Intervall keine Symptome erfasst wurde.
-                    </Text>
-                </View>
+            </View>
+            <View>
+                <Text style={[AppStyle.sectionTitle,{marginBottom: 5}]}>
+                    Erinnerungen
+                </Text>
+                <Text style={[AppStyle.textQuestion]}>
+                    Erinnerungen werden nur aktiviert, wenn im gewählten Intervall keine Symptome erfasst wurde.
+                </Text>
+            </View>
 
-                <ListItem noIndent>
-                  <Left>
-                    <Text>Erinnerungen aktivieren</Text>
-                  </Left>
-                  <Right>
-                    <Switch/>
-                  </Right>
-                </ListItem>
-                
-                <View style={{height:'40%'}}>
+            <ListItem noIndent>
+              <Left>
+                <Text>Erinnerungen aktivieren</Text>
+              </Left>
+              <Right>
+                <Switch/>
+              </Right>
+            </ListItem>
+            
+            <View style={{height:'40%'}}>
 
-                </View>
-                
-                <View>
-                    <Text style={[AppStyle.sectionTitle,{marginBottom: 5}]}>
-                        Weiteres
-                    </Text>
-                    <Separator />
-
-                <Grid>
-                  <Row>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}
-                        onPress={() => this.goToImpressum()} >
-                        <Text style={[AppStyle.textButton]}>Impressum</Text>
-                      </Button>
-                    </Col>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Nutzungsbedingungen</Text>
-                      </Button>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Datenschutzerklärung</Text>
-                      </Button>
-                    </Col>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>App Feedback</Text>
-                      </Button>
-                    </Col>
-                  </Row>
-                </Grid>
-                </View>
+            </View>
+            
+            <View>
+                <Text style={[AppStyle.sectionTitle,{marginBottom: 5}]}>
+                    Weiteres
+                </Text>
                 <Separator />
-                <View>
-                  <Button style={[AppStyle.button, {backgroundColor:colors.secondaryNormal}]}>
-                    <Text style={[AppStyle.textButton,{color:colors.white}]}>
-                      Ich möchte spenden!
-                    </Text>
+
+            <Grid>
+              <Row>
+                <Col style={[styles.columns]}>
+                  <Button style={[AppStyle.button]}
+                    onPress={() => this.goToImpressum()} >
+                    <Text style={[AppStyle.textButton]}>Impressum</Text>
                   </Button>
-                </View>
-            </ScrollView>
-        </SafeAreaView>
+                </Col>
+                <Col style={[styles.columns]}>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>Nutzungsbedingungen</Text>
+                  </Button>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={[styles.columns]}>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>Datenschutzerklärung</Text>
+                  </Button>
+                </Col>
+                <Col style={[styles.columns]}>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>App Feedback</Text>
+                  </Button>
+                </Col>
+              </Row>
+            </Grid>
+            </View>
+            <Separator />
+            <View>
+              <Button style={[AppStyle.button, {backgroundColor:colors.secondaryNormal}]}>
+                <Text style={[AppStyle.textButton,{color:colors.white}]}>
+                  Ich möchte spenden!
+                </Text>
+              </Button>
+            </View>
+        </ScrollView>
       </>
     );
   };

@@ -58,8 +58,6 @@ class Profile extends Component<PropsType, State> {
             <Login isLoginOpen={this.state.isLoginPopupVisible} onClose={this.onLoginCancelled.bind(this)}/>
           </View>)
         : (<>
-          <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
-          <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
             <HeaderBanner title='Lea Meier'/>
             <ScrollView
                 style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
@@ -100,7 +98,6 @@ class Profile extends Component<PropsType, State> {
                 </ListItem>
                 <View style={{height:25}}></View>
             </ScrollView>
-          </SafeAreaView>
           </>)
         }
       </>

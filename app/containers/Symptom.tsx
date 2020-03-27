@@ -87,87 +87,84 @@ class Symptom extends Component<PropsType, State> {
   render() {
     return (
       <>
-        <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
-            <HeaderBanner title='Symptome erfassen'/>
-            <ScrollView
-                style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
-                contentInsetAdjustmentBehavior="automatic">
-                <View>
-                    <Text style={[AppStyle.textQuestion]}>
-                        Bitte wähle die zutreffenden Symptome aus:
-                    </Text>
-                </View>
-                <Grid>
-                  <Row>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Fieber</Text>
-                      </Button>
-                    </Col>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Husten</Text>
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Müdigkeit</Text>
-                      </Button>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Halsschmerzen</Text>
-                      </Button>
-                    </Col>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Atemnot</Text>
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Kopfschmerzen</Text>
-                      </Button>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Durchfall</Text>
-                      </Button>
-                    </Col>
-                    <Col style={[styles.columns]}>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Übelkeit</Text>
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Andere</Text>
-                      </Button>
-                    </Col>
-                  </Row>
-                  <Row>
-                      <Button style={[AppStyle.button]}>
-                        <Text style={[AppStyle.textButton]}>Ich habe keine Symptome</Text>
-                      </Button>
-                  </Row>
-              </Grid>
-              <Separator/>
-              {this.renderQuestion('Hast du den Verdacht, an COVID-19 zu leiden?')}
-              <Separator/>
-              {this.renderQuestion('Ist jemand aus deinem nahen Umfeld infiziert?')}
-              <Separator/>
-              {this.renderQuestion('Befindest du dich mehrheutlicht zu Hause?')}
-              <Separator/>
-              {this.renderQuestion('Hast du eine Arztpraxis oder eine Notfallaufnahme kontaktiert?')}
-              <Separator/>
-              {this.renderQuestion('Wurdest du auf COVID-19 getestet?')}
-            </ScrollView>
-        </SafeAreaView>
+        <HeaderBanner title='Symptome erfassen'/>
+        <ScrollView
+            style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
+            contentInsetAdjustmentBehavior="automatic">
+            <View>
+                <Text style={[AppStyle.textQuestion]}>
+                    Bitte wähle die zutreffenden Symptome aus:
+                </Text>
+            </View>
+            <Grid>
+              <Row>
+                <Col style={[styles.columns]}>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>Fieber</Text>
+                  </Button>
+                </Col>
+                <Col style={[styles.columns]}>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>Husten</Text>
+                  </Button>
+                </Col>
+                <Col>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>Müdigkeit</Text>
+                  </Button>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={[styles.columns]}>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>Halsschmerzen</Text>
+                  </Button>
+                </Col>
+                <Col style={[styles.columns]}>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>Atemnot</Text>
+                  </Button>
+                </Col>
+                <Col>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>Kopfschmerzen</Text>
+                  </Button>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={[styles.columns]}>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>Durchfall</Text>
+                  </Button>
+                </Col>
+                <Col style={[styles.columns]}>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>Übelkeit</Text>
+                  </Button>
+                </Col>
+                <Col>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>Andere</Text>
+                  </Button>
+                </Col>
+              </Row>
+              <Row>
+                  <Button style={[AppStyle.button]}>
+                    <Text style={[AppStyle.textButton]}>Ich habe keine Symptome</Text>
+                  </Button>
+              </Row>
+          </Grid>
+          <Separator/>
+          {this.renderQuestion('Hast du den Verdacht, an COVID-19 zu leiden?')}
+          <Separator/>
+          {this.renderQuestion('Ist jemand aus deinem nahen Umfeld infiziert?')}
+          <Separator/>
+          {this.renderQuestion('Befindest du dich mehrheutlicht zu Hause?')}
+          <Separator/>
+          {this.renderQuestion('Hast du eine Arztpraxis oder eine Notfallaufnahme kontaktiert?')}
+          <Separator/>
+          {this.renderQuestion('Wurdest du auf COVID-19 getestet?')}
+        </ScrollView>
       </>
     );
   };

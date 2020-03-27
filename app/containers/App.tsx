@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { SafeAreaView } from 'react-native'
 import { Provider } from 'react-redux';
 import {store, persistor} from '../store';
 import Impressum from './Impressum';
@@ -90,19 +91,22 @@ export default function App() {
       <Provider store={store}>
         <PersistGate
           persistor={persistor}>
-          <NavigationContainer>
-            <RootStack.Navigator mode="modal">
-              <RootStack.Screen
-                name="Main"
-                component={Root}
-                options={{ headerShown: false }}
-              />
-              <RootStack.Screen 
-                name="Impressum" 
-                component={Impressum} 
-                options={{ headerShown: false }} // TODO: fix header layout bug "...TransitionPresets.DefaultTransition"
-              />
-            </RootStack.Navigator>
+           <NavigationContainer>
+            <SafeAreaView style={{ flex: 0, backgroundColor: colors.headerGradientEnd }} />
+            <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
+              <RootStack.Navigator mode="modal">
+                <RootStack.Screen
+                  name="Main"
+                  component={Root}
+                  options={{ headerShown: false }}
+                />
+                <RootStack.Screen 
+                  name="Impressum" 
+                  component={Impressum} 
+                  options={{ headerShown: false }} // TODO: fix header layout bug "...TransitionPresets.DefaultTransition"
+                />
+              </RootStack.Navigator>
+            </SafeAreaView>
           </NavigationContainer>
         </PersistGate>
       </Provider>
