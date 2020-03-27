@@ -9,64 +9,56 @@ export const SYMPTOM_DATA = [
   {
     symptom: {
       display: 'Husten',
-      code: SYMPTOM_CODE.cough,
-      key: '0'
+      code: SYMPTOM_CODE.cough
     },
     answerOptions: SYMPTOM_ANSWER_OPTIONS
   },
   {
     symptom: {
       display: 'Müdigkeit',
-      code: SYMPTOM_CODE.fatigue,
-      key: '1'
+      code: SYMPTOM_CODE.fatigue
     },
     answerOptions: SYMPTOM_ANSWER_OPTIONS
   },
   {
     symptom: {
       display: 'Hals\u00ADschmerzen',
-      code: SYMPTOM_CODE.throatPain,
-      key: '2'
+      code: SYMPTOM_CODE.throatPain
     },
     answerOptions: SYMPTOM_ANSWER_OPTIONS
   },
   {
     symptom: {
       display: 'Atemnot in Ruhe',
-      code: SYMPTOM_CODE.dyspnea,
-      key: '3'
+      code: SYMPTOM_CODE.dyspnea
     },
     answerOptions: SYMPTOM_ANSWER_OPTIONS
   },
   {
     symptom: {
       display: 'Kopf\u00ADschmerzen',
-      code: SYMPTOM_CODE.headache,
-      key: '4'
+      code: SYMPTOM_CODE.headache
     },
     answerOptions: SYMPTOM_ANSWER_OPTIONS
   },
   {
     symptom: {
       display: 'Durchfall',
-      code: SYMPTOM_CODE.diarrhea,
-      key: '5'
+      code: SYMPTOM_CODE.diarrhea
     },
     answerOptions: SYMPTOM_ANSWER_OPTIONS
   },
   {
     symptom: {
       display: 'Übelkeit',
-      code: SYMPTOM_CODE.nausea,
-      key: '6'
+      code: SYMPTOM_CODE.nausea
     },
     answerOptions: SYMPTOM_ANSWER_OPTIONS
   },
   {
     symptom: {
       display: 'Geruchs- / Geschmacks\u00ADverlust',
-      code: SYMPTOM_CODE.anosmia,
-      key: '7'
+      code: SYMPTOM_CODE.anosmia
     },
     answerOptions: SYMPTOM_ANSWER_OPTIONS
   }

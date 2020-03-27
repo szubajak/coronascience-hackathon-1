@@ -11,8 +11,7 @@ export const SYMPTOM_SEVERITY_CODEABLE_CONCEPT = {
         code: '260413007',
         display: 'None (qualifier value)'
       }
-    ],
-    text: 'Symptom severity (finding)'
+    ]
   },
   mild: {
     coding: [
@@ -21,8 +20,7 @@ export const SYMPTOM_SEVERITY_CODEABLE_CONCEPT = {
         code: '255604002',
         display: 'Mild (qualifier value)'
       }
-    ],
-    text: 'Symptom severity (finding)'
+    ]
   },
   moderate: {
     coding: [
@@ -31,8 +29,7 @@ export const SYMPTOM_SEVERITY_CODEABLE_CONCEPT = {
         code: '6736007',
         display: 'Moderate (severity modifier) (qualifier value)'
       }
-    ],
-    text: 'Symptom severity (finding)'
+    ]
   },
   severe: {
     coding: [
@@ -41,8 +38,7 @@ export const SYMPTOM_SEVERITY_CODEABLE_CONCEPT = {
         code: '24484000',
         display: 'Severe (severity modifier) (qualifier value)'
       }
-    ],
-    text: 'Symptom severity (finding)'
+    ]
   }
 }
 
@@ -65,8 +61,8 @@ export const SYMPTOM_CODE = {
     coding: [
       {
         system: 'http://snomed.info/sct',
-        code: 'TODO!',
-        display: 'TODO!'
+        code: '84229001',
+        display: 'Fatigue (finding)'
       }
     ]
   },
@@ -74,8 +70,8 @@ export const SYMPTOM_CODE = {
     coding: [
       {
         system: 'http://snomed.info/sct',
-        code: 'TODO!',
-        display: 'TODO!'
+        code: '162397003',
+        display: 'Pain in throat (finding)'
       }
     ]
   },
@@ -83,8 +79,8 @@ export const SYMPTOM_CODE = {
     coding: [
       {
         system: 'http://snomed.info/sct',
-        code: 'TODO!',
-        display: 'TODO!'
+        code: '161941007',
+        display: 'Dyspnea at rest (finding)'
       }
     ]
   },
@@ -92,8 +88,8 @@ export const SYMPTOM_CODE = {
     coding: [
       {
         system: 'http://snomed.info/sct',
-        code: 'TODO!',
-        display: 'TODO!'
+        code: '25064002',
+        display: 'Headache (finding)'
       }
     ]
   },
@@ -101,8 +97,8 @@ export const SYMPTOM_CODE = {
     coding: [
       {
         system: 'http://snomed.info/sct',
-        code: 'TODO!',
-        display: 'TODO!'
+        code: '62315008',
+        display: 'Diarrhea (finding)'
       }
     ]
   },
@@ -110,8 +106,8 @@ export const SYMPTOM_CODE = {
     coding: [
       {
         system: 'http://snomed.info/sct',
-        code: 'TODO!',
-        display: 'TODO!'
+        code: '422587007',
+        display: 'Nausea (finding)'
       }
     ]
   },
@@ -119,15 +115,29 @@ export const SYMPTOM_CODE = {
     coding: [
       {
         system: 'http://snomed.info/sct',
-        code: 'TODO!',
-        display: 'TODO!'
+        code: '44169009',
+        display: 'Loss of sense of smell (finding)'
+      }
+    ]
+  },
+  bodyTemperature: {
+    coding: [
+      {
+        system: 'http://loinc.org',
+        code: '8310-5',
+        display: 'Body temperature'
+      },
+      {
+        system: 'http://snomed.info/sct',
+        code: '105723007',
+        display: 'Body temperature finding (finding)'
       }
     ]
   }
 }
 
 /**
- * HL7 codings for recource category.
+ * HL7 codings for resource category.
  * just add as the category property to the symptoms observation
  * resource.
  **/
@@ -142,5 +152,27 @@ export const SYMPTOM_CATEGORY = {
         }
       ]
     }
+  ],
+  vitalSigns: [
+    {
+      coding: [
+        {
+          system: 'http://terminology.hl7.org/CodeSystem/observation-category',
+          code: 'vital-signs',
+          display: 'Vital Signs'
+        }
+      ]
+    }
   ]
 }
+/**
+ * Codings for temperature value quantity
+ * just add as the valueQuantity property to the temperature observation
+ * resource (and don't forget to set the value!)
+ **/
+export const TEMPERATURE_VALUE_QUANTITY = {
+    value: undefined,
+    unit: '°C',
+    system: 'http://unitsofmeasure.org',
+    code: 'Cel'
+  }
