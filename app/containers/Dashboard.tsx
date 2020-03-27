@@ -112,7 +112,7 @@ class Dashboard extends Component<{navigation: any}> {
         <View style={{flex: 0.8, flexDirection: 'row', paddingHorizontal: 50, paddingVertical: 15}}>
             <Image
               style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
-              source={require('../../resources/images/virus.png')}
+              source={require('../../resources/images/logo.png')}
             />
           <View style={{flex: 3, flexDirection: 'row', alignItems: 'center'}}>
             <Text style={styles.logoText}>Gemeinsam bekämpfen wir COVID-19!</Text>

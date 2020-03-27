@@ -13,9 +13,6 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="bgCS" translatesAutoresizingMaskIntoConstraints="NO" id="Drr-Q0-15w">
-                    <rect key="frame" x="0.0" y="-76" width="480" height="556"/>
-                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gemeinsam bekämpfen wir COVID-19!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gzb-7k-SjZ">
                     <rect key="frame" x="95" y="187" width="291" height="82"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -25,18 +22,9 @@
                 </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstItem="Drr-Q0-15w" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="Mh1-jd-z74"/>
-                <constraint firstItem="Drr-Q0-15w" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="mZd-y0-Ab9"/>
-                <constraint firstAttribute="bottom" secondItem="Drr-Q0-15w" secondAttribute="bottom" id="rsF-tX-sq1"/>
-                <constraint firstAttribute="trailing" secondItem="Drr-Q0-15w" secondAttribute="trailing" constant="20" id="wO9-Jn-PBs"/>
-            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="547.20000000000005" y="454.43349753694582"/>
         </view>
     </objects>
-    <resources>
-        <image name="bgCS" width="1890" height="1417"/>
-    </resources>
 </document>

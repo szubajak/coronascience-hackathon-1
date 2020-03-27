@@ -9,9 +9,37 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../styles/App.style';
 import SplashScreen from 'react-native-splash-screen'
-import { StatusBar } from 'react-native';
+import { StatusBar, Image, StyleSheet } from 'react-native';
 
 const Tab = createBottomTabNavigator();
+
+const images = {
+  'dashboard' : {
+    actif : require('../../resources/images/dashboard/actif.png'),
+    inactif : require('../../resources/images/dashboard/inactif.png')
+  },
+  'informations' : {
+    actif : require('../../resources/images/informations/actif.png'),
+    inactif : require('../../resources/images/informations/inactif.png')
+  },
+  'symptom' : {
+    actif : require('../../resources/images/dashboard/actif.png'),
+    inactif : require('../../resources/images/dashboard/inactif.png')
+  },
+  'settings' : {
+    actif : require('../../resources/images/settings/actif.png'),
+    inactif : require('../../resources/images/settings/inactif.png')
+  },
+  'profile' : {
+    actif : require('../../resources/images/profile/actif.png'),
+    inactif : require('../../resources/images/profile/inactif.png')
+  }
+};
+
+function generateTabImage(tabId : string, isActive : boolean) {
+  const sourceImage = isActive ? images[tabId].actif : images[tabId].inactif;
+  return (<Image source={sourceImage} style={styles.menuItemImage}/>);
+}
 
 function HomeScreen() {
   const navigation = useNavigation();
@@ -19,6 +47,15 @@ function HomeScreen() {
     <Dashboard navigation={navigation} />
   );
 }
+
+const styles = StyleSheet.create({
+  menuItemImage: {
+    marginTop: '4%',
+    width: 29,
+    height: 29,
+    overflow: 'visible'
+  }
+});
 
 export default function App() {
   SplashScreen.hide(); // TODO: move this in componentDidMount
@@ -38,8 +75,8 @@ export default function App() {
             name="Home"
             component={HomeScreen}
             options={{
-              tabBarIcon: ({ color, size }) => (
-                <Icon name='home' color={color} size={size} />
+              tabBarIcon: ({ focused, color, size }) => (
+                generateTabImage('dashboard', focused)
               )
             }}
           />
@@ -48,8 +85,8 @@ export default function App() {
             name="Informations"
             component={Informations}
             options={{
-              tabBarIcon: ({ color, size }) => (
-                <Icon name='info' color={color} size={size} />
+              tabBarIcon: ({ focused, color, size }) => (
+                generateTabImage('informations', focused)
               )
             }}
           />
@@ -58,8 +95,8 @@ export default function App() {
             name="AddSymptoms"
             component={Symptom}
             options={{
-              tabBarIcon: ({ color, size }) => (
-                <Icon name='plussquare' color={color} size={size} />
+              tabBarIcon: ({ focused, color, size }) => (
+                generateTabImage('symptom', focused)
               )
             }}
           />
@@ -68,8 +105,8 @@ export default function App() {
             name="Settings"
             component={Settings}
             options={{
-              tabBarIcon: ({ color, size }) => (
-                <Icon name='setting' color={color} size={size} />
+              tabBarIcon: ({ focused, color, size }) => (
+                generateTabImage('settings', focused)
               )
             }}
           />
@@ -78,8 +115,8 @@ export default function App() {
             name="Profile"
             component={Profil}
             options={{
-              tabBarIcon: ({ color, size }) => (
-                <Icon name='user' color={color} size={size} />
+              tabBarIcon: ({ focused, color, size }) => (
+                generateTabImage('profile', focused)
               )
             }}
           />
