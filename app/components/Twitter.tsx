@@ -146,10 +146,10 @@ class Twitter extends Component<PropsType, State> {
 
     return(
       <View style={{backgroundColor:colors.white}}>
-      
+        <View style={{ paddingTop: 30}}>
         {isRetweeted ?
         (
-          <View style={{ flexDirection: 'row',paddingLeft: 14, paddingTop:15}}>
+          <View style={{ flexDirection: 'row', paddingTop: 15 ,paddingLeft: 14, position:'absolute'}}>
             <View style={{paddingRight: 8}}>
               <Svg  width={14} height={14} viewBox="0 0 24 24">
                 <G>   
@@ -165,12 +165,16 @@ class Twitter extends Component<PropsType, State> {
         (<View></View>)
         }
       
-        <View style={{ flexDirection: 'row', paddingBottom: 10, paddingTop: 10, paddingLeft: 10}}>
+        <View style={{ flexDirection: 'row', paddingBottom: 10, paddingTop: 5, paddingLeft: 10}}>
         <Image
             style={{width: 30, height: 30, borderRadius: 30/ 2}}
             source={{uri: myItem.user.profile_image_url_https}}
         />
-        <ScrollView style={{ paddingLeft: 5}}>
+        <ScrollView style={{ paddingLeft: 5}}
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: 'space-between'
+        }}>
             <Text style={styles.tweetScreenName}>{myItem.user.name}</Text>
             <View style={{flexDirection: 'row', paddingBottom: 5}}>
                 <Text style={styles.tweetUserName}>@{myItem.user.screen_name}</Text>
@@ -226,15 +230,17 @@ class Twitter extends Component<PropsType, State> {
                     myItem.entities.media.map(media => {
                         let height = (this.state.viewWidth * media.sizes.small.h)/media.sizes.small.w;
                         return (
-                            <Image style={{width: this.state.viewWidth, height: height}}
-                            resizeMode="contain"
+                            <Image 
+                             style={{width: this.state.viewWidth, height: height}}
+                             resizeMode="contain"
                             source={{uri: media.media_url_https}} />);
                     })
                 ):(
                     <View/>
                 )}
             </View>
-        </ScrollView> 
+        </ScrollView>
+        </View> 
       </View>
       <View style={{justifyContent:'flex-end',alignItems:'flex-end',alignSelf:'flex-end', position:'absolute'}}>
         <Image
@@ -270,6 +276,7 @@ class Twitter extends Component<PropsType, State> {
                       renderItem={this._renderItem}
                       sliderWidth={400}
                       itemWidth={300}
+                      sliderHeight={300}
                     />
                   </View>
                 </View>;
