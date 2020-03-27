@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
+import { Provider } from 'react-redux';
+import {store, persistor} from '../store';
 import Login from './Login';
 import Introduction from './Introduction';
 import Informations from './Informations';
@@ -10,6 +12,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../styles/App.style';
+import { PersistGate } from 'redux-persist/integration/react';
 
 function HomeScreen() {
   return (
@@ -27,7 +30,7 @@ function SettingsScreen() {
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+function Root() {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -89,5 +92,16 @@ export default function App() {
         />
       </Tab.Navigator>
     </NavigationContainer>
+  );
+}
+
+export default function App() {
+  return (
+    <Provider store={store}>
+      <PersistGate
+        persistor={persistor}>
+        <Root/>
+      </PersistGate>
+    </Provider>
   );
 }

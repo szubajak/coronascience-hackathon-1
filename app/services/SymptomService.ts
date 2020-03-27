@@ -1,4 +1,4 @@
-import MIDATAServiceManager, { MIDATABundle } from "./MIDATAServiceManager";
+import MiDataServiceStore, { MIDATABundle } from "../store/midataService/model";
 import AbstractObservationService from "./ObservationService";
 import moment from "moment";
 import BodyComponentSymptom from "../model/BodyComponentSymptom";

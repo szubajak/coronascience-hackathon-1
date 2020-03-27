@@ -1,22 +1,41 @@
 import Config from 'react-native-config';
-import Resource, { ValueCoding } from '../model/resource/Resource';
-import Patient from '../model/resource/Patient';
-import Observation, { CodeableConcept, Coding } from '../model/resource/Observation';
+import Resource, { ValueCoding } from '../../model/resource/Resource';
+import Patient from '../../model/resource/Patient';
+import Observation, { CodeableConcept, Coding } from '../../model/resource/Observation';
+import UserSession from '../../model/UserSession';
 
-class MIDATAServiceManager {
-    private accessToken: string | undefined = undefined;
-    private accessTokenExpirationDate: string | undefined = undefined;
-    private refreshToken: string | undefined = undefined;
+class MiDataServiceStore {
+    currentSession: UserSession = new UserSession();
 
-    public setAuthToken(accessToken: string, accessTokenExpirationDate: string, refreshToken: string) {
-        this.accessToken = accessToken;
-        this.accessTokenExpirationDate = accessTokenExpirationDate;
-        this.refreshToken = refreshToken;
+    constructor(miDataServiceStore?: MiDataServiceStore) {
+        if (miDataServiceStore) {
+            this.currentSession = new UserSession(miDataServiceStore.currentSession);
+        }
+    }
+    /**
+     * This function modify the store. Do not run it outside of a reducer.
+     * @param accessToken 
+     * @param accessTokenExpirationDate 
+     * @param refreshToken 
+     */
+    public authenticateUser(accessToken: string, accessTokenExpirationDate: string, refreshToken: string) {
+        this.currentSession.updateToken(accessToken, accessTokenExpirationDate, refreshToken);
+    }
+
+    /**
+     * This function modify the store. Do not run it outside of a reducer.
+     */
+    public logoutUser() {
+        this.currentSession.resetToken();
+    }
+
+    public isAuthenticated() {
+        return this.currentSession.isTokenValid(); // TODO check expiration date of the token ;-)
     }
 
     public async fetch(endpoint: string, method = 'GET', body: string|undefined = undefined) {
 
-        if (this.accessToken === undefined) {
+        if (this.currentSession.getAccessToken() === undefined) {
             return Promise.reject(new Error('Can\'t fetch when no user logged in first.'));
         }
     
@@ -25,7 +44,7 @@ class MIDATAServiceManager {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.accessToken
+                'Authorization': 'Bearer ' + this.currentSession.getAccessToken
             },
             body: body
         }).then(response => {
@@ -97,5 +116,5 @@ export interface MIDATABundle {
     type: string;
 }
 
-export default new MIDATAServiceManager;
+export default MiDataServiceStore;
   

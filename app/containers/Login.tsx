@@ -6,23 +6,25 @@ import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
 import { localeString } from '../locales';
 import { authorize } from 'react-native-app-auth';
-import MIDATAServiceManager from '../services/MIDATAServiceManager';
-import UserProfileService from '../services/UserProfileService';
-import SymptomData from '../model/SymptomData';
-import SymptomService from '../services/SymptomService';
+import MiDataServiceStore from '../store/midataService/model';
+import * as miDataServiceActions from '../store/midataService/actions';
 import Config from 'react-native-config';
 import Oberservation, { CodeableConcept, status } from '../model/resource/Observation';
 import Observation from '../model/resource/Observation';
+import { AppStore } from '../store/reducers';
+import { connect } from 'react-redux';
+import UserSession from '../model/UserSession';
 
 interface PropsType {
+    miDataServiceStore: MiDataServiceStore
+    authenticateUser: (accessToken: string, accessTokenExpirationDate: string, refreshToken: string) => void
+    logoutUser: () => void
 }
 
 interface State {
-        hasLoggedInOnce: boolean,
-        accessToken: string,
-        accessTokenExpirationDate: string,
-        refreshToken: string
+        hasLoggedInOnce: boolean
 }
+
 
 const config = {
     issuer: Config.HOST + '/fhir',
@@ -37,13 +39,13 @@ const config = {
 
   };
 
-class Informations extends Component<PropsType, State> {
+class Login extends Component<PropsType, State> {
 
   constructor(props: PropsType) {
     super(props);
-    this.setState({
+    this.state = {
         hasLoggedInOnce: false,
-    });
+    };
   }
 
   async login(){
@@ -57,11 +59,10 @@ class Informations extends Component<PropsType, State> {
             ...newAuthState
         })
         // TODO : remove loading or re-enable "Login button"
-        // Update Auth token for our service manager :
-        MIDATAServiceManager.setAuthToken(newAuthState.accessToken, newAuthState.accessTokenExpirationDate, newAuthState.refreshToken);
+        this.props.authenticateUser(newAuthState.accessToken, newAuthState.accessTokenExpirationDate, newAuthState.refreshToken);
         // FOR TEST : try to get the userprofile :
-        const user = await MIDATAServiceManager.fetch('/fhir/Patient', 'GET');
-        const observations = await MIDATAServiceManager.fetch('/fhir/Observation', 'GET');
+        const user = await this.props.miDataServiceStore.fetch('/fhir/Patient', 'GET');
+        const observations = await this.props.miDataServiceStore.fetch('/fhir/Observation', 'GET');
 
         let cc = new CodeableConcept();
 
@@ -85,11 +86,9 @@ class Informations extends Component<PropsType, State> {
     // use the client to make the auth request and receive the authState
     try {
         this.setState({
-            hasLoggedInOnce: false,
-            accessToken: '',
-            accessTokenExpirationDate: '',
-            refreshToken: '',
+            hasLoggedInOnce: false
         })
+        this.props.logoutUser();
         // result includes accessToken, accessTokenExpirationDate and refreshToken
     } catch (error) {
         console.log(error);
@@ -133,4 +132,17 @@ class Informations extends Component<PropsType, State> {
 
 }
 
-export default Informations;
+function mapStateToProps(state: AppStore) {
+    return {
+        miDataServiceStore: state.MiDataServiceStore
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        authenticateUser: (accessToken: string, accessTokenExpirationDate: string, refreshToken: string) => miDataServiceActions.authenticateUser(dispatch, accessToken, accessTokenExpirationDate, refreshToken),
+        logoutUser: () => miDataServiceActions.logoutUser(dispatch),
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

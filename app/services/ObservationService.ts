@@ -1,4 +1,4 @@
-import MIDATAServiceManager, { MIDATABundle } from "./MIDATAServiceManager";
+import MiDataServiceStore, { MIDATABundle } from "../store/midataService/model";
 import UrlHelper from "../helpers/UrlHelpers";
 
 abstract class AbstractObservationService {
@@ -15,7 +15,7 @@ abstract class AbstractObservationService {
             }
             const paramsUrl = UrlHelper.encodeData(allParams);
             const url = this.OBSERVATION_ENDPOINT + '?' + paramsUrl;
-            const response = await MIDATAServiceManager.fetch(url, 'GET');
+            const response = await MiDataServiceStore.fetch(url, 'GET');
             let bundle = JSON.parse(response) as MIDATABundle;
             return bundle;
         } catch (error) {
@@ -26,7 +26,7 @@ abstract class AbstractObservationService {
 
     protected async updateObservation(observationBody: string) {
         try {
-            const response = await MIDATAServiceManager.fetch(this.OBSERVATION_UPDATE_ENDPOINT, 'POST', observationBody);
+            const response = await MiDataServiceStore.fetch(this.OBSERVATION_UPDATE_ENDPOINT, 'POST', observationBody);
             let responseJSON = JSON.parse(response);
             return responseJSON;
         } catch(error) {
