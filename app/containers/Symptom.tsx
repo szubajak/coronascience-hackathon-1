@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, Image, FlatList, YellowBox, Alert } from 'react-native';
+import { SafeAreaView, StyleSheet, ScrollView, Image, FlatList, YellowBox, Alert, TextInput } from 'react-native';
 import AppStyle, { colors } from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
 import { View, Text, Button } from 'native-base';
 import Slider from '@react-native-community/slider';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { Observation, CodeableConcept, ObservationStatus, I4MIBundle, BundleType} from '@i4mi/fhir_r4'
+import { Observation, CodeableConcept, ObservationStatus, I4MIBundle, BundleType, BundleHTTPVerb} from '@i4mi/fhir_r4'
 import { localeString } from '../locales';
 import { SYMPTOM_DATA } from '../../resources/static/symptoms'
-import { SYMPTOM_CATEGORY, SYMPTOM_SEVERITY_CODEABLE_CONCEPT } from '../../resources/static/codings'
+import { SYMPTOM_CATEGORY, SYMPTOM_SEVERITY_CODEABLE_CONCEPT, SYMPTOM_CODE, TEMPERATURE_VALUE_QUANTITY } from '../../resources/static/codings'
 
 // well, we need the FlatList, and we need vertical scrolling, and we don't care if its not lazy-loading because the list is not that big
 YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
@@ -21,24 +21,27 @@ interface PropsType {
 interface State {
   showDatePicker: boolean;
   date: Date;
+  debugText: string;
 }
 
 /**
  * Main class defining the component.
  **/
 class Symptom extends Component<PropsType, State> {
-  symptomObservationGetters: {(): Observation}[] // TODO correct typisation
-  temperatureObservationGetter: any; // TODO correct typisation
+  symptomObservationGetters: {(): Observation}[]
+  temperatureObservationGetter: {(): Observation | undefined}; // undefined if no temperature was measured
 
   constructor(props: PropsType) {
     super(props);
     this.state = {
       showDatePicker: false,
-      date: new Date()
+      date: new Date(),
+      debugText: '...'
     };
 
     // initialize the array of observationGetter functions with the number of symptoms we have got
     this.symptomObservationGetters = new Array<{(): Observation}>(SYMPTOM_DATA.length);
+    this.temperatureObservationGetter = () => undefined; // set placeholder until it's set when temperature component is mounted
 
     // bind the registering and handling functions to this, they can access the ObservationGetters
     this.registerSymptomHandleFunction = this.registerSymptomHandleFunction.bind(this);
@@ -78,16 +81,30 @@ class Symptom extends Component<PropsType, State> {
     console.log('called createFhirBundle')
     const bundle = new I4MIBundle(BundleType.TRANSACTION);
     // TODO: iterate through the subcomponents:
-    // - get their observations
-    // - add effectiveDateTime to every observation
-    // - put observations into bundle
+    // - get their observations DONE
+    // - add effectiveDateTime to every observation DONE
+    // - put observations into bundle DONE
     // - save bundle to MIDATA
 
+    // fetch all symptoms observations and add them to the bundle
     this.symptomObservationGetters.forEach((getter) => {
-      console.log(getter)
-      const observation = getter();
-      console.log(observation)
-    })
+      const symptomFhir = getter();
+      // set observation date
+      symptomFhir.effectiveDateTime = this.state.date.toISOString();
+      bundle.addEntry(BundleHTTPVerb.POST, 'Observation', symptomFhir);
+    });
+
+    // get the temperature observations
+    const temperatureFhir = this.temperatureObservationGetter();
+    // if it's set (may be undefined because the user did not measure),
+    // we can add temperature and add it to the bundle
+    if (temperatureFhir) {
+      temperatureFhir.effectiveDateTime = this.state.date.toISOString();
+      bundle.addEntry(BundleHTTPVerb.POST, 'Observation', temperatureFhir);
+    }
+
+    // for debugging TODO remove
+    this.setState({debugText: JSON.stringify(bundle)})
   }
 
 
@@ -111,14 +128,14 @@ class Symptom extends Component<PropsType, State> {
               <Separator/>
             </View>
 
-            <TemperatureSlider display="Körpertemperatur (in °C)" minimum={36} maximum={42} default={36.8} coding={{code: '123'}} setHandleFunction={this.registerTemperatureHandleFunction}/>
+            <TemperatureSlider display="Körpertemperatur (in °C)" minimum={36} maximum={42} default={36.8} setHandleFunction={this.registerTemperatureHandleFunction}/>
 
             <FlatList
               data={SYMPTOM_DATA}
               renderItem={({ item, index }) =>
                 <SymptomSeverity symptom={item.symptom} index={index} answerOptions={item.answerOptions} setHandleFunction={this.registerSymptomHandleFunction}/>
               }
-              keyExtractor={item => item.symptom.key}
+              keyExtractor={(item, index) => index + '.' + item.symptom.display}
             />
 
             <View style={{flexDirection: 'row', marginTop: 25, marginBottom: 10, alignSelf: 'center'}}>
@@ -135,6 +152,8 @@ class Symptom extends Component<PropsType, State> {
             <Button style={[AppStyle.button, {marginBottom: 40}]}>
                 <Text style={AppStyle.textButton} onPress={() => this.createFhirBundle()}>Weiter</Text>
             </Button>
+
+              <TextInput style={{marginBottom: 300,fontSize: 12, borderWidth: 1}} value={this.state.debugText}></TextInput>
 
           </ScrollView>
 
@@ -258,8 +277,7 @@ interface TemperatureSliderPropsType {
   minimum: number;
   maximum: number;
   default: number;
-  coding: any; // TODO, probably CodeableConcept
-  setHandleFunction(func: () => Observation): void;
+  setHandleFunction(func: () => Observation | undefined): void;
 }
 
 interface TemperatureSliderState {
@@ -291,18 +309,24 @@ class TemperatureSlider extends Component<TemperatureSliderPropsType, Temperatur
     for (let i = props.minimum; i <= props.maximum; i++) {
       this.labelNumbers.push(i);
     }
+
+    // prepare FHIR resource
     this.temperatureFhir = {
       resourceType: 'Observation',
       status: ObservationStatus.PRELIMINARY,
-      code: {}
-      // TODO more to come
+      category: SYMPTOM_CATEGORY.vitalSigns,
+      code: SYMPTOM_CODE.bodyTemperature,
+      valueQuantity: TEMPERATURE_VALUE_QUANTITY
     }
 
     this.getTemperatureAsFhir = this.getTemperatureAsFhir.bind(this);
   }
 
-  private temperatureToString(temperature: number) {
+  componentDidMount() {
+    this.props.setHandleFunction(this.getTemperatureAsFhir);
+  }
 
+  private temperatureToString(temperature: number) {
     return this.state.enabled ?
             temperature < this.props.minimum ?
               '<' + this.props.minimum.toString() + ' °C':
@@ -315,10 +339,14 @@ class TemperatureSlider extends Component<TemperatureSliderPropsType, Temperatur
   /**
    * Returns the current temperature as a fhir observation.
    * Just add effectiveDateTime and you're good to go.
+   * @return a fhir observation object, or undefined if the user did not measure an observation
    */
-  getTemperatureAsFhir(): Observation {
-    // TODO: correctly add temperature
-    return this.temperatureFhir;
+  getTemperatureAsFhir(): Observation | undefined {
+    Alert.alert('Temperature is ' + this.state.enabled);
+    if (this.temperatureFhir.valueQuantity) {
+      this.temperatureFhir.valueQuantity.value = this.state.temperature;
+    }
+    return this.state.enabled ? this.temperatureFhir : undefined;
   }
 
   render() {
