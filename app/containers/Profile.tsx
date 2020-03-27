@@ -9,9 +9,16 @@ import { localeString } from '../locales';
 import Login from '../components/Login';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { throwStatement } from '@babel/types';
+import Config from 'react-native-config';
+import { authorize } from 'react-native-app-auth';
+import MiDataServiceStore from '../store/midataService/model';
+import * as miDataServiceActions from '../store/midataService/actions';
 
 interface PropsType {
   navigation: StackNavigationProp<any>
+  miDataServiceStore: MiDataServiceStore
+  authenticateUser: (accessToken: string, accessTokenExpirationDate: string, refreshToken: string) => void
+  logoutUser: () => void
 }
 
 interface State {
@@ -19,15 +26,45 @@ interface State {
   isLoginPopupVisible: boolean
 }
 
+const config = {
+  issuer: Config.HOST + '/fhir',
+  clientId: Config.CLIENT_ID,
+  redirectUrl: Config.REDIRECT_URL,
+  scopes: ['user/*.*'],
+
+  serviceConfiguration: {
+      authorizationEndpoint: Config.HOST + Config.AUTHORIZATION_ENDPOINT,
+      tokenEndpoint: Config.HOST + Config.TOKEN_ENDPOINT
+  }
+
+};
+
 class Profile extends Component<PropsType, State> {
 
   constructor(props: PropsType) {
     super(props);
     this.state = {
-      isLogged: true,
+      isLogged: false,
       isLoginPopupVisible: true
     };
     this.props.navigation.addListener('focus', this.onScreenFocus)
+  }
+
+  async login(){
+    // use the client to make the auth request and receive the authState
+    try {
+        // TODO : add loading ore disable "Login button"
+        const newAuthState = await authorize(config); // result includes accessToken, accessTokenExpirationDate and refreshToken
+        // TODO : Check is no error happend (valid access token, so on)
+        this.setState({
+            hasLoggedInOnce: true,
+            ...newAuthState
+        })
+        // TODO : remove loading or re-enable "Login button"
+        this.props.authenticateUser(newAuthState.accessToken, newAuthState.accessTokenExpirationDate, newAuthState.refreshToken);
+    } catch (error) {
+        console.log("Error while login : " + JSON.stringify(error));
+    }
   }
 
   openURL( _url : string){
@@ -39,6 +76,7 @@ class Profile extends Component<PropsType, State> {
         }
       });
   }
+
   onScreenFocus = () => {
     // Screen was focused, our on focus logic goes here
     this.setState({isLoginPopupVisible: true});
