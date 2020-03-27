@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, Image, StyleSheet } from 'react-native'
 import { Provider } from 'react-redux';
 import {store, persistor} from '../store';
 import Impressum from './Impressum';
@@ -8,7 +8,6 @@ import Informations from './Informations';
 import Settings from './Settings'
 import Profile from './Profile'
 import Symptom from './Symptom'
-import Icon from 'react-native-vector-icons/AntDesign';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../styles/App.style';
@@ -17,6 +16,34 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+const images : any = {
+  'dashboard' : {
+    actif : require('../../resources/images/dashboard/actif.png'),
+    inactif : require('../../resources/images/dashboard/inactif.png')
+  },
+  'informations' : {
+    actif : require('../../resources/images/informations/actif.png'),
+    inactif : require('../../resources/images/informations/inactif.png')
+  },
+  'symptom' : {
+    actif : require('../../resources/images/dashboard/actif.png'),
+    inactif : require('../../resources/images/dashboard/inactif.png')
+  },
+  'settings' : {
+    actif : require('../../resources/images/settings/actif.png'),
+    inactif : require('../../resources/images/settings/inactif.png')
+  },
+  'profile' : {
+    actif : require('../../resources/images/profile/actif.png'),
+    inactif : require('../../resources/images/profile/inactif.png')
+  }
+};
+
+function generateTabImage(tabId : string, isActive : boolean) {
+  const sourceImage = isActive ? images[tabId].actif : images[tabId].inactif;
+  return (<Image source={sourceImage} style={styles.menuItemImage}/>);
+}
 
 function Root() {
   return (
@@ -33,8 +60,8 @@ function Root() {
         name="Dashboard"
         component={Dashboard}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Icon name='home' color={color} size={size} />
+          tabBarIcon: ({ focused, color, size }) => (
+            generateTabImage('dashboard', focused)
           )
         }}
       />
@@ -43,8 +70,8 @@ function Root() {
         name="Informations"
         component={Informations}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Icon name='info' color={color} size={size} />
+          tabBarIcon: ({ focused, color, size }) => (
+            generateTabImage('informations', focused)
           )
         }}
       />
@@ -53,8 +80,8 @@ function Root() {
         name="AddSymptoms"
         component={Symptom}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Icon name='plussquare' color={color} size={size} />
+          tabBarIcon: ({ focused, color, size }) => (
+            generateTabImage('symptom', focused)
           )
         }}
       />
@@ -63,8 +90,8 @@ function Root() {
         name="Settings"
         
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Icon name='setting' color={color} size={size} />
+          tabBarIcon: ({ focused, color, size }) => (
+            generateTabImage('settings', focused)
           )
         }}
       >
@@ -75,8 +102,8 @@ function Root() {
         name="Profile"
         component={Profile}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Icon name='user' color={color} size={size} />
+          tabBarIcon: ({ focused, color, size }) => (
+            generateTabImage('profile', focused)
           )
         }}
       />
@@ -84,6 +111,16 @@ function Root() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  menuItemImage: {
+    marginTop: '4%',
+    width: 29,
+    height: 29,
+    overflow: 'visible'
+  }
+});
+
 
 export default function App() {
   return (
