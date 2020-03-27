@@ -1,27 +1,30 @@
 import UserLocation, { City, LOCATION_TYPE_PRINCIPAL} from './UserLocation';
 import UserName from './UserName';
-import IClonable from './IClonable';
 
-
-export default class UserProfile implements IClonable<UserProfile> {
-    
-    id: string;
-    name: UserName;
-    address: Array<City>;
+export default class UserProfile {
+  
+    id: string | undefined = undefined;
+    name: UserName | undefined = undefined
+    address: Array<City> | undefined = undefined;
     locations: Array<UserLocation> = [];
-    versionId: string;
+    versionId: string | undefined = undefined;
 
-    constructor(id: string, family: string, given: string[], address: Array<City>, versionId: string) {
-        this.id = id;
-        this.address = address;
-        this.versionId = versionId;
-        this.name = new UserName(family, given);
+    constructor(userProfile?: Partial<UserProfile>) {
+        if(userProfile) {
+            this.updateProfile(userProfile);
+        }
     }
 
-    clone(): UserProfile {
-        const clone = new UserProfile( this.id, this.name.family, this.name.given, this.address, this.versionId);
-        clone.setLocations(this.locations);
-        return clone
+    updateProfile(attributs: Partial<UserProfile>) {
+        if(attributs.id != undefined) this.id = attributs.id;
+        if(attributs.address != undefined) this.address = attributs.address;
+        if(attributs.versionId != undefined) this.versionId = attributs.versionId;
+        if(attributs.name != undefined) this.name = attributs.name.clone();
+        if(attributs.locations != undefined) this.setLocations(attributs.locations);
+    }
+
+    isUpToDate() {
+        return this.id != undefined;
     }
 
     setAddress(address: Array<City>) {
@@ -55,6 +58,10 @@ export default class UserProfile implements IClonable<UserProfile> {
                 this.locations.push(location);
             });
         }
+    }
+
+    getFullName() {
+        return this.name ? this.name.getFullName() : "";
     }
 
 }

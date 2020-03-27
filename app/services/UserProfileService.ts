@@ -3,15 +3,23 @@ import AbstractObservationService from "./ObservationService";
 import moment from 'moment';
 import UserProfile from "../model/UserProfile";
 import { City } from "../model/UserLocation";
+import Patient from "../model/resource/Patient";
+import UserName from "../model/UserName";
 
 
 class UserProfileService {
     readonly USERPROFILE_ENDPOINT = "/fhir/Patient";
 
+    private miDataServiceStore: MiDataServiceStore;
+
+    constructor(midataService: MiDataServiceStore) {
+        this.miDataServiceStore = midataService;
+    }
+
     async getUserProfile(): Promise<UserProfile> {
         try {
-            const response = await MiDataServiceStore.fetch(this.USERPROFILE_ENDPOINT, 'GET');
-            let bundle = JSON.parse(response) as MIDATABundle;
+            const response = await this.miDataServiceStore.fetch(this.USERPROFILE_ENDPOINT, 'GET');
+            let bundle = response[0] as Patient;
             var userProfile = this.parseUserProfileBundle(bundle);
             if(userProfile !== undefined) {
                 return userProfile;
@@ -24,17 +32,14 @@ class UserProfileService {
         }
     }
 
-    private parseUserProfileBundle(bundle: MIDATABundle) {
+    private parseUserProfileBundle(bundle: Patient) {
         var user = undefined;
-        if (bundle.total > 0) {
-            let resource = bundle.entry[0].resource;
-            let family = resource.name[0].family;
-            let given = resource.name[0].given;
-            let id = resource.id;
-            let address = this.parseAdress(resource.address);
-            let versionId = resource.meta.versionId;
-            user = new UserProfile(id, family, given, address, versionId);
-        } 
+            let family = bundle.name[0].family;
+            let given = bundle.name[0].given;
+            let id = bundle.identifier.value;
+            let address = this.parseAdress(bundle.address);
+            let name = new UserName(family, given);
+            user = new UserProfile({id, name});
         return user;
     }
 
