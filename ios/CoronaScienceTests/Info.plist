@@ -20,5 +20,9 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CFBundleURLSchemes</key>
+    <array>
+      <string>corona.science</string>
+    </array>
 </dict>
 </plist>
