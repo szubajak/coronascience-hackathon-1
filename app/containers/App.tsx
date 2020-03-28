@@ -16,7 +16,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { createStackNavigator } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
