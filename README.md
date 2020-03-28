@@ -1,5 +1,6 @@
 # get started:
 - clone repo with `git clone https://github.com/heg2/coronascience-hackathon/`
+- if needed: set up your environment: https://reactnative.dev/docs/environment-setup
 - run a `npm install` in the project directory
 - when you want to build in ios simulator: run `pod install` in the ios subfolder
 
