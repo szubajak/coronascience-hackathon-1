@@ -3,6 +3,7 @@
 - if needed: set up your environment: https://reactnative.dev/docs/environment-setup
 - run a `npm install` in the project directory
 - when you want to build in ios simulator: run `pod install` in the ios subfolder
+- run it with `npx react-native run-ios` or `npx react-native run-android` 
 
 
 <h1 align="center">
