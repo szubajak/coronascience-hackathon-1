@@ -1,7 +1,7 @@
 import React, { Component, Props } from 'react';
 import { ScrollView, Linking, Switch } from 'react-native';
 import { View, Text, ListItem, Left, Right, Icon, Button } from 'native-base';
-import AppStyle from '../styles/App.style';
+import AppStyle, {TextSize} from '../styles/App.style';
 import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
 import Login from '../components/Login';
@@ -114,9 +114,9 @@ class Profile extends Component<PropsType, State> {
                   </Text>
               </View>
               <Separator/>
-            <ListItem noIndent itemDivider={false}>
+            <ListItem noIndent itemDivider={false} style={{opacity:0}}>
               <Left>
-                <Text>Deutch</Text>
+                <Text style={[AppStyle.textQuestion, {fontSize:TextSize.normal}]}>Deutch</Text>
               </Left>
               <Right>
                 <Icon name="arrow-forward" />
@@ -125,7 +125,7 @@ class Profile extends Component<PropsType, State> {
             <View style={{height:25}}>
 
             </View>
-            <View>
+            <View style={{opacity:0}}>
                 <Text style={[AppStyle.sectionTitle,{marginBottom: 5}]}>
                     Erinnerungen
                 </Text>
@@ -134,9 +134,9 @@ class Profile extends Component<PropsType, State> {
                 </Text>
             </View>
 
-            <ListItem noIndent>
+            <ListItem noIndent style={{opacity:0}}>
               <Left>
-                <Text>Erinnerungen aktivieren</Text>
+                <Text style={[AppStyle.textQuestion, {fontSize:TextSize.normal}]}>Erinnerungen aktivieren</Text>
               </Left>
               <Right>
                 <Switch/>

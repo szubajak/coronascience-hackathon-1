@@ -44,7 +44,7 @@ class Informations extends Component<PropsType, State> {
             <Separator/>
             <View>
                 <Text style={[AppStyle.textQuestion]}>
-                    {localeString('informations.infoLine')}: <Text onPress={() => this.openURL('tel:' + localeString('informations.authorityInfolineNumber').replace(/\s/g, ""))}>{localeString('informations.authorityInfolineNumber')}</Text>
+                    {localeString('informations.infoLine')}: <Text style={[AppStyle.textQuestion]} onPress={() => this.openURL('tel:' + localeString('informations.authorityInfolineNumber').replace(/\s/g, ""))}>{localeString('informations.authorityInfolineNumber')}</Text>
                 </Text>
                 {INFORMATION_SITES.map((language, index) => {
                     if(language.lang == getCurrentLanguage()){
@@ -76,7 +76,7 @@ class Informations extends Component<PropsType, State> {
             <Separator/>
             <View>
                 <Text style={[AppStyle.textQuestion]}>
-                {localeString('informations.infoLine')}: <Text onPress={() => this.openURL('tel:' + localeString('informations.serviceInfoLineNumber').replace(/\s/g, ""))}>{localeString('informations.serviceInfoLineNumber')}</Text>
+                {localeString('informations.infoLine')}: <Text style={[AppStyle.textQuestion]} onPress={() => this.openURL('tel:' + localeString('informations.serviceInfoLineNumber').replace(/\s/g, ""))}>{localeString('informations.serviceInfoLineNumber')}</Text>
                 </Text>
                 <Button style={[AppStyle.button]}
                     onPress={() => this.openURL(localeString('informations.serviceInternetSiteURL'))}>

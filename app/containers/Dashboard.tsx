@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, TouchableOpacity, Dimensions, Platform, StatusBar } from 'react-native';
 import { View, Text, Icon, Card, CardItem, Body } from 'native-base';
-import AppStyle, { colors, TextSize } from '../styles/App.style';
+import AppStyle, { colors, TextSize, AppFonts } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { localeString } from '../locales';
@@ -169,8 +169,8 @@ const styles = StyleSheet.create({
     marginRight: -10,
     marginLeft: 20,
     fontSize: 20,
-    fontWeight: 'bold',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    fontFamily: AppFonts.bold
   },
   linearGradient: {
     flexDirection: 'row',
@@ -197,6 +197,7 @@ const styles = StyleSheet.create({
     marginRight: 0,
     fontSize: TextSize.small,
     color: colors.white,
+    fontFamily: AppFonts.light
   },
 
   infoCard: {
@@ -222,11 +223,13 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     marginTop: 0.15 * TextSize.very_big,
     color: colors.headerGradientBegin,
-    fontSize: TextSize.very_big
+    fontSize: TextSize.very_big,
+    fontFamily: AppFonts.light
   },
   infoCardText: {
     fontWeight: 'normal',
     fontSize: TextSize.very_small,
+    fontFamily: AppFonts.light
   }
 });
 

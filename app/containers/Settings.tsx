@@ -4,7 +4,7 @@ import { Separator } from '../components/Separator'
 import { HeaderBanner } from '../components/HeaderBanner'
 import { localeString } from '../locales';
 import { View, Button, Text, ListItem, Left, Right, Icon } from 'native-base';
-import AppStyle, { colors } from '../styles/App.style';
+import AppStyle, { colors, TextSize } from '../styles/App.style';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -52,7 +52,7 @@ class Settings extends Component<PropsType, State> {
           <Separator/>
           <ListItem noIndent noBorder>
             <Left>
-              <Text>Deutch</Text>
+              <Text style={[AppStyle.textQuestion, {fontSize:TextSize.normal}]}>Deutch</Text>
             </Left>
             <Right>
               <Icon name="arrow-forward" />
@@ -71,7 +71,7 @@ class Settings extends Component<PropsType, State> {
 
           <ListItem noIndent>
             <Left>
-              <Text>
+              <Text style={[AppStyle.textQuestion, {fontSize:TextSize.normal}]}>
                 {localeString('settings.notifications.notificationActivation')}
               </Text>
             </Left>

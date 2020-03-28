@@ -2,9 +2,8 @@ import * as React from 'react';
 import {View} from "native-base";
 import {TouchableHighlight} from 'react-native';
 import Svg, {Defs, LinearGradient, Rect, Stop, Text} from 'react-native-svg';
-import {colors, TextSize} from '../styles/App.style';
+import {colors, TextSize, AppFonts} from '../styles/App.style';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 interface PropsType {
     title: string;
@@ -26,6 +25,7 @@ export const HeaderBanner: React.FunctionComponent<PropsType> = ({ title, btnClo
                     x="50%" y="60%"
                     fill={colors.white}
                     fontSize={TextSize.big}
+                    fontFamily={AppFonts.light}
                     textAnchor="middle">
                         {title}
                 </Text>
