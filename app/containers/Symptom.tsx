@@ -57,7 +57,7 @@ class Symptom extends Component<PropsType, State> {
   }
 
   private formattedDateTime(date: Date): string {
-    const month = localeString('month')[date.getMonth()];
+    const month = localeString('symptoms.month')[date.getMonth()];
     const hours = date.getHours();
     let minutes = date.getMinutes();
     return date.getDate() + '. ' + month + ' ' + date.getFullYear() + ', ' + hours + ':' + (minutes > 9 ? minutes.toString() : '0' + minutes.toString());
@@ -120,7 +120,7 @@ class Symptom extends Component<PropsType, State> {
                   <Text style={[AppStyle.sectionTitle]}>Symptome</Text>
                   <View style={{flexDirection: 'row', marginTop: 5}}>
                     <Text style={[AppStyle.textQuestion]} onPress={() => this.setState({showDatePicker: true})}>vom {this.formattedDateTime(this.state.date)}</Text>
-                    <Image source={require('../../resources/images/icon_add.png')} style={{width: 15, height: 15}} />
+                    <Image source={require('../../resources/images/icons/symptoms/edit.png')} style={{width: 15, height: 15}} />
                   </View>
                 </View>
               <Separator/>
@@ -138,12 +138,12 @@ class Symptom extends Component<PropsType, State> {
 
             <View style={{flexDirection: 'row', marginTop: 25, marginBottom: 10, alignSelf: 'center'}}>
               <View style={{marginRight: '10%'}}>
-              <Text style={[AppStyle.textQuestion]}>0 = {localeString('severity.none')}</Text>
-              <Text style={[AppStyle.textQuestion]}>+ = {localeString('severity.mild')}</Text>
+              <Text style={[AppStyle.textQuestion]}>0 = {localeString('symptoms.severity.none')}</Text>
+              <Text style={[AppStyle.textQuestion]}>+ = {localeString('symptoms.severity.mild')}</Text>
               </View>
               <View>
-              <Text style={[AppStyle.textQuestion]}>++ = {localeString('severity.moderate')}</Text>
-              <Text style={[AppStyle.textQuestion]}>+++ = {localeString('severity.severe')}</Text>
+              <Text style={[AppStyle.textQuestion]}>++ = {localeString('symptoms.severity.moderate')}</Text>
+              <Text style={[AppStyle.textQuestion]}>+++ = {localeString('symptoms.severity.severe')}</Text>
               </View>
             </View>
 

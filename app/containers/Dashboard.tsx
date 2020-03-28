@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { SafeAreaView, Image, StyleSheet, TouchableOpacity, Dimensions, Platform, StatusBar } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, Dimensions, Platform, StatusBar } from 'react-native';
 import { View, Text, Icon, Card, CardItem, Body } from 'native-base';
-import AppStyle, { colors, TextSize } from '../styles/App.style';
+import AppStyle, { colors, TextSize, AppFonts } from '../styles/App.style';
 import LinearGradient from 'react-native-linear-gradient';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { localeString } from '../locales';
+import Twitter from '../components/Twitter'
+import SplashScreen from 'react-native-splash-screen';
 
 const SMALLSCREEN_CUTOFF = 360;
 
@@ -35,34 +38,39 @@ class Dashboard extends Component<PropsType, State> {
     }
   }
 
+  componentDidMount(){
+    SplashScreen.hide();
+  }
+
   render() {
     return (
       <>
-      <SafeAreaView style={{ flex: 1, backgroundColor: colors.lightGray}}>
-        <View style={{flex: 0.8, flexDirection: 'row', paddingHorizontal: 50, paddingVertical: 15}}>
-            <Image
-              style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
-              source={require('../../resources/images/virus.png')}
-            />
-          <View style={{flex: 3, flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={styles.logoText}>Gemeinsam bekämpfen wir COVID-19!</Text>
-          </View>
+      <View style={{flex: 0.8, flexDirection: 'row', paddingHorizontal: 50, paddingTop: 65, paddingBottom: 35}}>
+        <Image
+          style={{flex: 1, resizeMode: 'contain', alignSelf: 'flex-start', height: '100%'}}
+          source={require('../../resources/images/logo.png')}
+        />
+        <View style={{flex: 3, flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={styles.logoText}>{localeString('dashboard.slogan')}</Text>
         </View>
-        <View style={{paddingHorizontal: 20}}>
-          <LargeButton title="Gesundheitszustand erfassen"
-                       target="AddSymptoms"
-                       icon="add-circle"
-                       navigation={this.props.navigation} />
-          <LargeButton title="Profilangaben vervollständigen"
-                       target="Profile"
-                       icon="person"
-                       navigation={this.props.navigation} />
-        </View>
-        <View style={{flex: 2, marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', margin: 5}}>
-          <InfoCard item={{text: 'Nutzerinnen und Nutzer', icon: 'people', count: 174}}/>
-          <InfoCard item={{text: 'gespendete Datensätze', icon: 'gift', count: 1901}} />
-        </View>
-      </SafeAreaView>
+      </View>
+      <View style={{paddingHorizontal: 20}}>
+        <LargeButton title="Gesundheitszustand erfassen"
+                      target="AddSymptoms"
+                      icon="add-circle"
+                      navigation={this.props.navigation} />
+        <LargeButton title="Profilangaben vervollständigen"
+                      target="Profile"
+                      icon="person"
+                      navigation={this.props.navigation} />
+      </View>
+      <View style={{flex: 2, marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, maxHeight:160}}>
+        <InfoCard item={{text: 'Nutzerinnen und Nutzer', icon: 'people', count: 174}}/>
+        <InfoCard item={{text: 'gespendete Datensätze', icon: 'gift', count: 1901}} />
+      </View>
+      <View style={{flex: 3}}>
+        <Twitter/>
+      </View>
       </>
     );
   };
@@ -160,10 +168,9 @@ const styles = StyleSheet.create({
     marginRight: -10,
     marginLeft: 20,
     fontSize: 20,
-    fontWeight: 'bold',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    fontFamily: AppFonts.bold
   },
-
   linearGradient: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -189,6 +196,7 @@ const styles = StyleSheet.create({
     marginRight: 0,
     fontSize: TextSize.small,
     color: colors.white,
+    fontFamily: AppFonts.light
   },
 
   infoCard: {
@@ -214,11 +222,13 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     marginTop: 0.15 * TextSize.very_big,
     color: colors.headerGradientBegin,
-    fontSize: TextSize.very_big
+    fontSize: TextSize.very_big,
+    fontFamily: AppFonts.light
   },
   infoCardText: {
     fontWeight: 'normal',
     fontSize: TextSize.very_small,
+    fontFamily: AppFonts.light
   }
 });
 

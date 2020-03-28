@@ -134,6 +134,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [appAuthRedirectScheme: 'com.redirectScheme.comm']
     }
     splits {
         abi {
@@ -180,6 +181,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-app-auth')
     implementation project(':@react-native-community_datetimepicker')
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])

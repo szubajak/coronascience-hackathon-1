@@ -1,11 +1,103 @@
 {
-  "lang" : "English",
-  "login" : "Connect to MIDATA",
-  "month": ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.","Sept.","Oct.","Nov.","Dec."],
-  "severity": {
-    "none": "none",
-    "mild": "mild",
-    "moderate": "moderate",
-    "severe": "severe"
-  }
+    "dashboard":{ 
+        "slogan" : "Gemeinsam bekämpfen wir COVID-19!",
+        "enterSymptom" : "Gesundheitszustand erfassen",
+        "completeProfileDetails" : "Profilangaben vervollständigen",
+        "totalUser" : "Nutzerinnen und Nutzer",
+        "totalCollectedData" : "gespendete Datensätze"
+    },
+    "informations":{
+        "title" : "Informationen",
+        "authorityName" : "Bundesamt für Gesunheit",
+        "infoLine" : "Infoline (täglich 24h)",
+        "authorityInfolineNumber" : "+41 58 463 00 00",
+        "serviceName" : "Aertefon",
+        "serviceInfoLineNumber" : "0800 33 66 55",
+        "serviceInternetSiteName" : "Website Aertefon",
+        "serviceInternetSiteURL" : "https://i4mi.bfh.ch"
+    },
+    "symptom":{},
+    "settings":{
+        "title" : "Einstellungen",
+        "userInterface":{
+            "title" : "Benutzeroberfläche"
+        },
+         "notifications" :{
+            "title" : "Erinnerungen",
+            "notificationsInformation" : "Erinnerungen werden nur aktiviert, wenn im gewählten Intervall keine Symptome erfasst wurde.",
+            "notificationActivation" : "Erinnerungen aktivieren",
+        },
+        "other":{
+            "title" : "Weiteres",
+            "impressum" : "Impressum",
+            "termsOfUse" : {
+                "title" : "Nutzungsbedingungen",
+                "url" : "https://midata.coop",
+            },
+            "privacyPolicy" : {
+                "title" : "Datenschutzerklärung",
+                "url" : "https://www.midata.coop/datenschutzerklaerung/",
+            },
+            "feedback" : {
+                "title" : "App Feedback",
+                "url" : "mailto:info@coronascience.ch",
+            }
+        },
+        "donate" : "Ich möchte spenden!"
+    },
+    "Profile":{
+    },
+    "impressum":{
+        "categories":{
+            "editor" : "Herausgeber der App und Datenhaltung",
+            "conception" : "Konzeption und Entwicklung",
+            "sponsors" : "Sponsoren",
+            "technonlogy" : "Entwicklung und Standards",
+            "communication" : "Kommunikation und Medienarbeit",
+            "logo" : "Logo"
+        },
+        "partners":{
+            "corona":{
+                "hyperlink" : "https://coronascience.ch"
+            },
+            "midata":{
+                "hyperlink" : "https://midata.coop"
+            },
+            "bfh":{
+                "hyperlink" : "https://i4mi.bfh.ch"
+            },
+            "roche":{
+                "hyperlink" : "https://www.roche.com"
+            },
+            "galenica":{
+                "hyperlink" : "https://www.galenica.com/de/"
+            },
+            "elca":{
+                "hyperlink" : "https://elca.ch"
+            },
+            "ahdis":{
+                "hyperlink" : "http://www.ahdis.ch"
+            },
+            "koberg":{
+                "hyperlink" : "https://i4mi.bfh.ch"
+            },
+            "richner":{
+                "hyperlink" : "https://www.atelierrichner.ch"
+            }
+        }
+    },
+    "login":{
+        "title" : "Registration",
+        "texte" : "Um die weiteren Funktionen von Corona Science zu nutzen ist eine Registration notwendig.",
+        "loginButton" : "Registration/Login bei MIDATA"
+    },
+    "symptoms": {
+        "month": ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.","Sept.","Oct.","Nov.","Dec."],
+        "severity": {
+          "none": "none",
+          "mild": "mild",
+          "moderate": "moderate",
+          "severe": "severe"
+        }
+    }
 }

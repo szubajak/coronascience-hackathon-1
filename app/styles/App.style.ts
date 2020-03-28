@@ -2,8 +2,9 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 // Fonts
 export const AppFonts = {
-    normal: 'Roboto-Book',
-    bold: 'Roboto-Bold'
+    normal: 'RobotoCondensed-Regular',
+    light: 'RobotoCondensed-Light',
+    bold: 'RobotoCondensed-Regular'
 };
 
 // Text Size
@@ -65,6 +66,7 @@ export default StyleSheet.create({
         textAlign: 'center',
         fontSize: TextSize.very_small,
         borderRadius: 10,
+        fontFamily: AppFonts.light
     },
 
     button:{
@@ -75,7 +77,6 @@ export default StyleSheet.create({
         marginTop: 15,
         height: 35,
     },
-
     buttonFilled:{
         backgroundColor: colors.secondaryNormal,
         borderWidth: 1,
@@ -94,8 +95,10 @@ export default StyleSheet.create({
     sectionTitle:{
         fontSize: TextSize.normal,
         color: colors.secondaryNormal,
+        fontFamily: AppFonts.light
     },
     textQuestion:{
-        fontSize: TextSize.very_small
+        fontSize: TextSize.very_small,
+        fontFamily: AppFonts.light
     },
 });

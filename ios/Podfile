@@ -38,6 +38,8 @@ target 'CoronaScience' do
 
   pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
 
+  pod 'react-native-app-auth', :path => '../node_modules/react-native-app-auth'
+
   target 'CoronaScienceTests' do
     inherit! :search_paths
     # Pods for testing
