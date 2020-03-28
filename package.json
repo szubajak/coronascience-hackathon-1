@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.6",
+    "@i4mi/fhir_r4": "^1.0.8",
     "@react-native-community/datetimepicker": "^2.3.0",
     "@react-native-community/masked-view": "^0.1.7",
+    "@react-native-community/slider": "^2.0.9",
     "@react-navigation/bottom-tabs": "^5.2.3",
     "@react-navigation/native": "^5.1.2",
     "@react-navigation/stack": "^5.2.8",

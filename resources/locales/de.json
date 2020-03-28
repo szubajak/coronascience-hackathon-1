@@ -31,15 +31,15 @@
             "title" : "Weiteres",
             "impressum" : "Impressum",
             "termsOfUse" : {
-                "title" : "Nutzungsbedingungen", 
+                "title" : "Nutzungsbedingungen",
                 "url" : "https://midata.coop",
             },
             "privacyPolicy" : {
-                "title" : "Datenschutzerklärung", 
+                "title" : "Datenschutzerklärung",
                 "url" : "https://www.midata.coop/datenschutzerklaerung/",
             },
             "feedback" : {
-                "title" : "App Feedback", 
+                "title" : "App Feedback",
                 "url" : "mailto:info@coronascience.ch",
             }
         },
@@ -90,5 +90,14 @@
         "title" : "Registration",
         "texte" : "Um die weiteren Funktionen von Corona Science zu nutzen ist eine Registration notwendig.",
         "loginButton" : "Registration/Login bei MIDATA"
+    },
+    "symptoms":{
+        "month": ["Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.","Sept.","Okt.","Nov.","Dez."],
+        "severity": {
+          "none": "keine",
+          "mild": "leicht",
+          "moderate": "mittel",
+          "severe": "stark"
+        }
     }
 }

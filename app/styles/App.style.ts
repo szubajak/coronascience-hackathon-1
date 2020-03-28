@@ -51,7 +51,7 @@ export const colors = {
     thirdLevel: 'rgb(255, 200, 60)',
     fourthLevel: 'rgb(250, 125, 90)',
     fithLevel: 'rgb(190, 100, 255)'
-    
+
 };
 
 export default StyleSheet.create({
@@ -76,6 +76,21 @@ export default StyleSheet.create({
         width: '100%',
         marginTop: 15,
         height: 35,
+    },
+    buttonFilled:{
+        backgroundColor: colors.secondaryNormal,
+        borderWidth: 1,
+        borderColor: colors.secondaryNormal,
+        width: '100%',
+        marginTop: 15,
+        height: 35,
+    },
+    textButtonFilled:{
+        color: colors.white,
+        width: '100%',
+        textAlign: 'center',
+        fontSize: TextSize.very_small,
+        borderRadius: 10,
     },
     sectionTitle:{
         fontSize: TextSize.normal,

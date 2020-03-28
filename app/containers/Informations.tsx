@@ -34,7 +34,7 @@ class Informations extends Component<PropsType, State> {
       <>
         <HeaderBanner title={localeString('informations.title')}/>
         <ScrollView
-            style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
+            style={{height: '100%', paddingHorizontal:'10%', paddingTop: 20}}
             contentInsetAdjustmentBehavior="automatic">
             <View>
                 <Text style={[AppStyle.sectionTitle]}>
@@ -65,9 +65,9 @@ class Informations extends Component<PropsType, State> {
                             </>
                         )
                     }
-                })}  
+                })}
             </View>
-            
+
             <View style={{marginTop:25}}>
                 <Text style={[AppStyle.sectionTitle]}>
                     {localeString('informations.serviceName')}

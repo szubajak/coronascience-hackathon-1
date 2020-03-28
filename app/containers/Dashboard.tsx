@@ -6,7 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { localeString } from '../locales';
 import Twitter from '../components/Twitter'
-import SplahScreen from 'react-native-splash-screen';
+import SplashScreen from 'react-native-splash-screen';
 
 const SMALLSCREEN_CUTOFF = 360;
 
@@ -17,17 +17,11 @@ interface PropsType {
 interface State {
 }
 
-class Dashboard extends Component<{navigation: any}> {
-  userCard: React.RefObject<unknown>;
-  dataCard: React.RefObject<unknown>;
-
+class Dashboard extends Component<PropsType, State> {
   navigation = this.props.navigation;
 
   constructor(props: {navigation: any}) {
     super(props);
-    this.userCard = React.createRef();
-    this.dataCard = React.createRef();
-    // this.userCard.current.setState(123);
 
     // status bar stuff that only matters on android
     if (Platform.OS === 'android') {
@@ -45,7 +39,7 @@ class Dashboard extends Component<{navigation: any}> {
   }
 
   componentDidMount(){
-    SplahScreen.hide();
+    SplashScreen.hide();
   }
 
   render() {
@@ -115,7 +109,7 @@ class LargeButton extends Component<{navigation: any, target: string, icon: stri
 /**
  * Component to display a numerical value with a description text and an icon
  **/
-class InfoCard extends Component<{item: {text: string, icon: string, count: number}}> {
+class InfoCard extends Component<{item: {text: string, icon: string, count: number}},{numberText: string} > {
   smallScreen = Dimensions.get('window').width < SMALLSCREEN_CUTOFF;
   constructor(props: {item: {text: string, icon: string, count: number}}) {
       super(props);

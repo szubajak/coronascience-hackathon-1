@@ -99,7 +99,7 @@ function Root() {
 
       <Tab.Screen
         name="Settings"
-        
+
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             generateTabImage('settings', focused)
@@ -157,9 +157,9 @@ export default function App() {
                   component={Root}
                   options={{ headerShown: false }}
                 />
-                <RootStack.Screen 
-                  name="Impressum" 
-                  component={Impressum} 
+                <RootStack.Screen
+                  name="Impressum"
+                  component={Impressum}
                   options={{ headerShown: false }} // TODO: fix header layout bug "...TransitionPresets.DefaultTransition"
                 />
               </RootStack.Navigator>

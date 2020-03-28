@@ -12,7 +12,7 @@ interface PropsType {
 }
 
 export const HeaderBanner: React.FunctionComponent<PropsType> = ({ title, btnClose = false, onClose }) =>
-    <View style={{marginBottom: 20}}>
+    <View>
             <Svg width='100%' height='60'>
                 <Defs>
                 <LinearGradient id="linearMain" x1="0" y1="100%" x2="0" y2="0">
@@ -33,5 +33,5 @@ export const HeaderBanner: React.FunctionComponent<PropsType> = ({ title, btnClo
             {btnClose && <TouchableHighlight onPress={onClose} style={{left:20, top: "50%", position: "absolute"}}>
                 <Icon name='close' color={colors.white} size={25} style={{left:20, top: "-50%"}} />
             </TouchableHighlight> }
-    </View>  
+    </View>
     ;

@@ -75,7 +75,7 @@ class Profile extends Component<PropsType, State> {
         this.props.updateUserProfile(response);
       });
     }
-  } 
+  }
 
   render() {
     return (
@@ -90,7 +90,7 @@ class Profile extends Component<PropsType, State> {
       </>
     );
   }
-  
+
 
   renderUserProfile() {
     return (<>
@@ -102,11 +102,11 @@ class Profile extends Component<PropsType, State> {
                 <Text style={[AppStyle.textButton]}>
                     Logout
                 </Text>
-            </Button></>) : 
+            </Button></>) :
         (<>
         <HeaderBanner title={this.props.userProfile.getFullName() }/>
           <ScrollView
-              style={{height: '100%', marginLeft:'10%', marginRight:'10%'}}
+              style={{height: '100%', paddingHorizontal:'10%', paddingTop: 20}}
               contentInsetAdjustmentBehavior="automatic">
               <View>
                   <Text style={[AppStyle.sectionTitle]}>
