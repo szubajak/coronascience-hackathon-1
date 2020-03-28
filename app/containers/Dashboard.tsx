@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { localeString } from '../locales';
 import Twitter from '../components/Twitter'
+import SplahScreen from 'react-native-splash-screen';
 
 const SMALLSCREEN_CUTOFF = 360;
 
@@ -41,6 +42,10 @@ class Dashboard extends Component<{navigation: any}> {
         StatusBar.setBarStyle('light-content');
       });
     }
+  }
+
+  componentDidMount(){
+    SplahScreen.hide();
   }
 
   render() {
