@@ -1,3 +1,9 @@
+# get started:
+- clone repo with `git clone https://github.com/heg2/coronascience-hackathon/`
+- run a `npm install` in the project directory
+- when you want to build in ios simulator: run `pod install` in the ios subfolder
+
+
 <h1 align="center">
   <a href="https://corona-science.ch/">
     Corona Science
