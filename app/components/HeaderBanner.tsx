@@ -27,7 +27,7 @@ export const HeaderBanner: React.FunctionComponent<PropsType> = ({ title, btnClo
                     fontSize={TextSize.big}
                     fontFamily={AppFonts.light}
                     textAnchor="middle">
-                        {title}
+                {title}
                 </Text>
             </Svg>
             {btnClose && <TouchableHighlight onPress={onClose} style={{left:20, top: "50%", position: "absolute"}}>
