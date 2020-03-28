@@ -85,5 +85,10 @@
                 "hyperlink" : "https://www.atelierrichner.ch"
             }
         }
+    },
+    "login":{
+        "title" : "Registration",
+        "texte" : "Um die weiteren Funktionen von Corona Science zu nutzen ist eine Registration notwendig.",
+        "loginButton" : "Registration/Login bei MIDATA"
     }
 }

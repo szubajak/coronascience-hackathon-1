@@ -13,6 +13,7 @@ import MiDataServiceStore from '../store/midataService/model';
 import * as miDataServiceActions from '../store/midataService/actions';
 import { AppStore } from '../store/reducers';
 import { connect } from 'react-redux';
+import { localeString } from '../locales';
 
 type PropType = {
   isLoginOpen: boolean;
@@ -71,14 +72,14 @@ class Login extends Component<PropType> {
                 <Icon name='close' color={colors.white} size={25} />
             </TouchableHighlight>
             <Text style={styles.titleText}>
-              Identification
+              {localeString('login.title')}
             </Text>
             <Text style={styles.mainText}>
-              Um die weiteren Funktionen von Corona Science zu nutzen ist eine Registration notwendig.
+              {localeString('login.texte')}
             </Text>
             <Button style={[AppStyle.button, styles.button]} onPress={this.login.bind(this)}>
               <Text style={[AppStyle.textButton]}>
-                Registration/Login bei MIDATA
+                {localeString('login.loginButton')}
               </Text>
             </Button>
           </View>
@@ -106,13 +107,13 @@ const styles = StyleSheet.create({
     fontSize: TextSize.big,
     textAlign: "center",
     color: colors.white,
-    width: 300,
+    width: '80%'
   },
   mainText: {
     color: colors.white,
     fontSize: TextSize.normal,
     textAlign: "center",
-    width: 375,
+    width: '95%',
     top: 50,
     position: "absolute",
   },
